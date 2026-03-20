@@ -69,11 +69,22 @@ const BLOG_URL_MAP: Record<string, string> = {
   freelancehub: "freelancehub-jin",
 };
 
+// Simple in-memory cache (30s TTL)
+const cache = new Map<string, { data: unknown; ts: number }>();
+const CACHE_TTL = 30_000;
+
 function readJson<T>(filename: string): T | null {
   try {
+    const now = Date.now();
+    const cached = cache.get(filename);
+    if (cached && now - cached.ts < CACHE_TTL) {
+      return cached.data as T;
+    }
     const filePath = path.join(DATA_DIR, filename);
     const content = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(content) as T;
+    const parsed = JSON.parse(content) as T;
+    cache.set(filename, { data: parsed, ts: now });
+    return parsed;
   } catch {
     return null;
   }
