@@ -1,8 +1,10 @@
 import fs from "fs";
 import path from "path";
 
-// 기존 blogctl 데이터 경로
-const DATA_DIR = path.resolve("/mnt/c/jin/projects/my-resume/blogs/scripts");
+// 데이터 경로: Linux FS 우선 (WSL2 성능), Windows FS 폴백
+const DATA_DIR = fs.existsSync("/tmp/blogctl-data/publish_log.json")
+  ? "/tmp/blogctl-data"
+  : path.resolve("/mnt/c/jin/projects/my-resume/blogs/scripts");
 
 interface KeywordEntry {
   keyword: string;
