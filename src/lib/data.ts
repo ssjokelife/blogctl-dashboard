@@ -6,10 +6,11 @@ const DATA_DIR = fs.existsSync("/tmp/blogctl-data/publish_log.json")
   ? "/tmp/blogctl-data"
   : path.resolve("/mnt/c/jin/projects/my-resume/blogs/scripts");
 
-interface KeywordEntry {
+export interface KeywordEntry {
   keyword: string;
   priority: string;
   status: string;
+  category?: string;
   published_at?: string;
   prediction?: {
     monthly_search: number;
