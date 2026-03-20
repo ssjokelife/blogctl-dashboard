@@ -1,0 +1,332 @@
+{
+  "blog": "log-memo.tistory.com",
+  "created_at": "2026-03-18",
+  "description": "건강정보 블로그 키워드 풀",
+  "categories": {
+    "건강검진 가이드": {
+      "keywords": [
+        {
+          "keyword": "국가건강검진 항목 나이별 정리",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "published_at": "2026-03-19T11:13:04.586460"
+        },
+        {
+          "keyword": "위내시경 대장내시경 준비 방법",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "how-to",
+          "published_at": "2026-03-19T11:17:42.016650"
+        },
+        {
+          "keyword": "건강검진 결과 보는 법",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "종합건강검진 비용 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "CT MRI 차이 언제 찍어야",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "혈액검사 수치 정상 범위",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "published_at": "2026-03-20T19:01:44"
+        },
+        {
+          "keyword": "간수치 높으면 원인 대처법",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "published_at": "2026-03-20T19:06:04"
+        },
+        {
+          "keyword": "콜레스테롤 수치 낮추는 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "당화혈색소 정상 수치 기준",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "갑상선 검사 필요한 경우",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        }
+      ]
+    },
+    "증상별 대처법": {
+      "keywords": [
+        {
+          "keyword": "공복혈당 높으면 낮추는 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "두통 종류별 원인 대처법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "손발 저림 원인 병원",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "속쓰림 원인 위산과다 대처",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "만성피로 원인 해결 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "어깨 통증 원인 스트레칭",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "불면증 해결 방법 수면위생",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "눈 떨림 원인 마그네슘",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "허리 디스크 초기 증상 대처",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "변비 해결 방법 식이섬유",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "how-to"
+        }
+      ]
+    },
+    "건강 식단": {
+      "keywords": [
+        {
+          "keyword": "혈당 낮추는 음식 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "고혈압 좋은 음식 DASH 식단",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "장건강 좋은 음식 프리바이오틱스",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "항염증 식단 음식 정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "간에 좋은 음식 나쁜 음식",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "눈 건강 좋은 음식 루테인",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "면역력 높이는 음식 겨울",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "탈모 예방 음식 영양소",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "갱년기 좋은 음식 여성",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "근육 키우는 식단 단백질 음식",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        }
+      ]
+    },
+    "영양제 비타민": {
+      "keywords": [
+        {
+          "keyword": "비타민D 효능 부작용 복용법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "루테인 추천 순위 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "오메가3 효능 고르는 법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "유산균 추천 장건강",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "마그네슘 부족 증상 보충제",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "콜라겐 효과 있을까 진실",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "철분제 추천 빈혈 예방",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "종합비타민 추천 남성 여성",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "글루코사민 관절 영양제 효과",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "비타민C 메가도스 부작용",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        }
+      ]
+    },
+    "운동 다이어트": {
+      "keywords": [
+        {
+          "keyword": "홈트레이닝 초보 루틴 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "걷기 운동 효과 하루 만보",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "간헐적 단식 방법 효과 주의점",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "단백질 하루 권장 섭취량",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "내장지방 빼는 운동 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "스트레칭 루틴 아침 10분",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "러닝 초보 시작 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "체중 감량 정체기 극복 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "플랭크 자세 효과 시간",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "40대 근력 운동 시작 가이드",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        }
+      ]
+    }
+  }
+}

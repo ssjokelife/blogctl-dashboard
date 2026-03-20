@@ -1,10 +1,8 @@
 import fs from "fs";
 import path from "path";
 
-// 데이터 경로: Linux FS 우선 (WSL2 성능), Windows FS 폴백
-const DATA_DIR = fs.existsSync("/tmp/blogctl-data/publish_log.json")
-  ? "/tmp/blogctl-data"
-  : path.resolve("/mnt/c/jin/projects/my-resume/blogs/scripts");
+// 데이터 경로: 프로젝트 내 data/ 디렉토리 (Vercel 배포 호환)
+const DATA_DIR = path.resolve(process.cwd(), "data");
 
 export interface KeywordEntry {
   keyword: string;

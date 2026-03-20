@@ -1,0 +1,743 @@
+{
+  "blog": "lukulu.tistory.com",
+  "created_at": "2026-02-23",
+  "description": "생활형 수익 블로그 키워드 풀 - 생활꿀팁, 맛집, 트렌드, 캠핑, 책리뷰",
+  "categories": {
+    "생활꿀팁": {
+      "priority_rank": 1,
+      "keywords": [
+        {
+          "keyword": "정부지원금 신청방법 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-04",
+          "filename": "government-support-application-2026",
+          "note": "시즌 무관 상시 검색량 높음"
+        },
+        {
+          "keyword": "전기세 절약 방법",
+          "priority": "high",
+          "status": "published",
+          "note": "여름/겨울 시즌에 트래픽 급증",
+          "published_at": "2026-03-05T22:57:53.730052"
+        },
+        {
+          "keyword": "쿠팡 와우 멤버십 혜택 정리",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-07T11:43:45.024915"
+        },
+        {
+          "keyword": "중고거래 사기 예방 방법",
+          "priority": "medium",
+          "status": "published",
+          "published_at": "2026-03-09T08:55:14.575349"
+        },
+        {
+          "keyword": "냉장고 정리 방법",
+          "priority": "medium",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "택배 보내는 방법 비교",
+          "priority": "medium",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-16T20:01:20.646956"
+        },
+        {
+          "keyword": "무지출 챌린지 방법",
+          "priority": "medium",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-17T08:25:25.460394"
+        },
+        {
+          "keyword": "여름 제습기 추천",
+          "priority": "medium",
+          "status": "published",
+          "note": "시즌: 5-8월",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T08:52:51.837485"
+        },
+        {
+          "keyword": "카카오페이 혜택 정리",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "냉장고 정리 수납 다이소 꿀팁",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-10",
+          "filename": "refrigerator-organizing-tips",
+          "search_volume": 500,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "롱테일 파생 - 블로그 경쟁자 위주"
+        },
+        {
+          "keyword": "드럼세탁기 셀프 청소 방법 과탄산소다",
+          "priority": "high",
+          "status": "published",
+          "search_volume": 800,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "롱테일 파생 - 생활꿀팁 핵심",
+          "published_at": "2026-03-10T11:39:52.716560"
+        },
+        {
+          "keyword": "장마철 빨래 빨리 말리는 방법 7가지",
+          "priority": "high",
+          "status": "published",
+          "search_volume": 600,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "시즌 키워드 (6-8월)"
+        },
+        {
+          "keyword": "여름 전기요금 절약 방법 누진제 피하기",
+          "priority": "high",
+          "status": "published",
+          "published_date": "2026-03-12",
+          "search_volume": 700,
+          "difficulty": "medium",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "시즌 키워드 (6-8월)"
+        },
+        {
+          "keyword": "화장실 곰팡이 제거 방법 베이킹소다",
+          "priority": "high",
+          "status": "published",
+          "search_volume": 500,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "롱테일 파생 - 천연세제 관심 높음",
+          "published_at": "2026-03-13T22:49:14.349081"
+        },
+        {
+          "keyword": "원룸 미니냉장고 정리 수납 아이디어",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": 300,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "롱테일 파생 - 1인가구 타겟"
+        },
+        {
+          "keyword": "에어컨 필터 셀프 청소 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": 600,
+          "difficulty": "medium",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "시즌 키워드 (5-7월)"
+        },
+        {
+          "keyword": "편의점 택배 보내는 방법 가격 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": 400,
+          "difficulty": "low",
+          "search_intent": "comparison",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "택배 키워드 파생"
+        },
+        {
+          "keyword": "무지출 챌린지 1주일 후기 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": 300,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "롱테일 파생 - 재테크 관심"
+        },
+        {
+          "keyword": "욕실 실리콘 곰팡이 제거 락스 없이",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": 400,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:20:51.366319",
+          "note": "롱테일 파생 - 친환경 청소"
+        },
+        {
+          "keyword": "가스레인지 기름때 제거 방법 베이킹소다",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "주방 청소 시리즈. 천연세제 관심 높음",
+          "published_at": "2026-03-18T22:27:36.346488"
+        },
+        {
+          "keyword": "싱크대 배수구 냄새 제거 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "여름 시즌 검색량 증가. 생활 불편 해결형"
+        },
+        {
+          "keyword": "빨래 냄새 안 나게 하는 방법 꿀팁",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "장마철+여름 시즌. 빨래 시리즈 확장"
+        },
+        {
+          "keyword": "전자레인지 청소 방법 식초 레몬",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "주방 가전 청소 시리즈. 간단 실천형"
+        },
+        {
+          "keyword": "여름철 음식물 쓰레기 냄새 잡는 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "시즌 키워드 (6-9월). 생활 불편 해결형"
+        },
+        {
+          "keyword": "옷장 습기 제거 방법 옷 눅눅할 때",
+          "priority": "medium",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "장마철 시즌. 제습제+수납 팁 혼합",
+          "published_at": "2026-03-20T19:01:21"
+        },
+        {
+          "keyword": "매트리스 청소 방법 베이킹소다 집에서",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "침구 관리 시리즈. 진드기 제거 관심 높음"
+        },
+        {
+          "keyword": "다리미 없이 옷 구김 펴는 방법 5가지",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "1인가구+자취생 타겟. 간단 실천형"
+        },
+        {
+          "keyword": "스텐 냄비 탄 자국 제거 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "주방 청소 시리즈. 요리 후 관리 팁"
+        },
+        {
+          "keyword": "화장실 물때 제거 구연산 사용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "욕실 청소 시리즈 확장. 친환경 세제"
+        },
+        {
+          "keyword": "여름 이불 빨래 방법 세탁기 코스 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "시즌 키워드 (5-6월). 침구 관리 시리즈"
+        },
+        {
+          "keyword": "신발 냄새 제거 방법 베이킹소다 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": false,
+          "verified_at": null,
+          "note": "여름 시즌. 운동화/실내화 관리 팁"
+        },
+        {
+          "keyword": "봄맞이 대청소 꿀팁",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 200,
+            "difficulty": 4,
+            "expected_clicks_4w": 30,
+            "expected_impressions_4w": 300,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "high",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "미세먼지 대비 실내 공기 청정법",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 150,
+            "difficulty": 5,
+            "expected_clicks_4w": 20,
+            "expected_impressions_4w": 200,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "high",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "봄 나들이 추천 장소",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 180,
+            "difficulty": 4,
+            "expected_clicks_4w": 25,
+            "expected_impressions_4w": 250,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "high",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "계절별 식물 관리 방법",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 피부 관리 팁",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "생활비 절약 꿀팁",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "옷장 정리 방법",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 장보기 체크리스트",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "친환경 생활용품 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "홈 가드닝 시작하기",
+          "priority": "low",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 알레르기 대처법",
+          "priority": "low",
+          "status": "pending"
+        },
+        {
+          "keyword": "생활 속 스트레스 해소법",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "자연 친화적인 라이프스타일",
+          "priority": "low",
+          "status": "pending"
+        }
+      ]
+    },
+    "모여봐요트렌드": {
+      "priority_rank": 2,
+      "keywords": [
+        {
+          "keyword": "2026 최저임금 얼마",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-06",
+          "filename": "2026-minimum-wage-overview"
+        },
+        {
+          "keyword": "벚꽃 개화 시기 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-05",
+          "filename": "cherry-blossom-blooming-2026-guide",
+          "note": "시즌: 2-3월"
+        },
+        {
+          "keyword": "건강보험료 계산 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "2026 설날 연휴 기간",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "요즘 인기 OTT 드라마 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "육아휴직 신청방법 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "2026 봄 패션 트렌드",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "홈카페 만들기 아이디어",
+          "priority": "low",
+          "status": "pending"
+        },
+        {
+          "keyword": "2026 여름 휴가 계획",
+          "priority": "low",
+          "status": "pending"
+        }
+      ]
+    },
+    "냠냠🍜": {
+      "priority_rank": 3,
+      "keywords": [
+        {
+          "keyword": "에어프라이어 삼겹살 굽기",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "다이어트 식단 일주일 계획",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "편의점 꿀조합 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "집에서 만드는 마라탕 레시피",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "한살림 추천 제품",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "에어프라이어로 만드는 봄철 간식",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 100,
+            "difficulty": 4,
+            "expected_clicks_4w": 15,
+            "expected_impressions_4w": 150,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "간편한 봄철 샐러드 레시피",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 건강식품 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "다이어트 간식 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "2026 인기 카페 리스트",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "식물성 식단의 장점",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "제철 과일 활용 레시피",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 피크닉 도시락 아이디어",
+          "priority": "medium",
+          "status": "pending"
+        }
+      ]
+    },
+    "캠핑🎪": {
+      "priority_rank": 4,
+      "keywords": [
+        {
+          "keyword": "캠핑 초보 준비물 리스트",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "글램핑 추천 경기도",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "캠핑 음식 메뉴 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "4인가족 캠핑 용품 세트",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "캠핑 음식 준비 요령",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄 캠핑 필수 아이템",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "캠핑 안전 수칙",
+          "priority": "low",
+          "status": "pending"
+        },
+        {
+          "keyword": "가성비 좋은 캠핑장 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "초보자를 위한 캠핑 장비",
+          "priority": "low",
+          "status": "pending"
+        }
+      ]
+    },
+    "책리뷰 📝": {
+      "priority_rank": 5,
+      "keywords": [
+        {
+          "keyword": "2026 베스트셀러 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "자기계발 책 추천 30대",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이와 함께 읽는 그림책 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "효과적인 독서 습관",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄에 읽기 좋은 책 추천",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "자녀와 함께 읽는 동화책 추천",
+          "priority": "medium",
+          "status": "pending"
+        }
+      ]
+    }
+  }
+}

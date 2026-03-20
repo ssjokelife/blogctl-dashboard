@@ -1,0 +1,382 @@
+{
+  "blog": "codefirst",
+  "created_at": "2026-03-11",
+  "description": "Coding education keywords — beginner-friendly tutorials for self-taught developers",
+  "categories": {
+    "Python Basics": {
+      "keywords": [
+        {
+          "keyword": "python for beginners complete guide 2026",
+          "priority": "high",
+          "status": "published",
+          "published_date": "2026-03-12",
+          "search_intent": "how-to",
+          "estimated_volume": 6200
+        },
+        {
+          "keyword": "python list comprehension explained simply",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "how to read and write files in python",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 4100,
+          "published_at": "2026-03-17"
+        },
+        {
+          "keyword": "python virtual environments explained for beginners",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 2800,
+          "published_at": "2026-03-18T09:30:00"
+        },
+        {
+          "keyword": "python dictionaries tutorial with examples",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3100
+        },
+        {
+          "keyword": "how to use python pip install packages",
+          "priority": "medium",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "how-to",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "python error handling try except explained",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "python classes and objects beginner tutorial",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2900
+        },
+        {
+          "keyword": "python automation scripts for everyday tasks",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 4500,
+          "published_date": "2026-03-13"
+        },
+        {
+          "keyword": "python string methods cheat sheet with examples",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2200
+        }
+      ]
+    },
+    "JavaScript": {
+      "keywords": [
+        {
+          "keyword": "javascript for beginners where to start 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 5400
+        },
+        {
+          "keyword": "javascript async await explained simply",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "var vs let vs const javascript differences",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "javascript array methods map filter reduce tutorial",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "how to fetch API data in javascript",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4100
+        },
+        {
+          "keyword": "javascript DOM manipulation beginner guide",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "typescript vs javascript which should I learn first",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "javascript closures explained with real examples",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "how to debug javascript in browser dev tools",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1900
+        },
+        {
+          "keyword": "javascript ES6 features every beginner should know",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2600
+        }
+      ]
+    },
+    "Web Development": {
+      "keywords": [
+        {
+          "keyword": "how to build your first website from scratch",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 5800
+        },
+        {
+          "keyword": "React vs Next.js which to learn first 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 4600
+        },
+        {
+          "keyword": "CSS flexbox vs grid when to use which",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3900
+        },
+        {
+          "keyword": "how to deploy a website for free 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "responsive web design tutorial for beginners",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "REST API explained with simple examples",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3100
+        },
+        {
+          "keyword": "how to use Git and GitHub beginner tutorial",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4800
+        },
+        {
+          "keyword": "frontend vs backend development which to choose",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "how to build a portfolio website as a developer",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "tailwind CSS tutorial for beginners 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2900
+        }
+      ]
+    },
+    "Career Tips": {
+      "keywords": [
+        {
+          "keyword": "how to get a developer job without a CS degree",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4800
+        },
+        {
+          "keyword": "self-taught developer resume tips that work",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "coding bootcamp vs self-learning which is better",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "how to prepare for coding interviews as a beginner",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4100
+        },
+        {
+          "keyword": "best programming language to learn for jobs 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 5200
+        },
+        {
+          "keyword": "how long does it take to learn coding and get hired",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "junior developer salary expectations 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "how to build coding projects for your portfolio",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "freelance developer vs full time which is better",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1900
+        },
+        {
+          "keyword": "imposter syndrome in tech how to deal with it",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2200
+        }
+      ]
+    },
+    "Projects": {
+      "keywords": [
+        {
+          "keyword": "beginner python projects to build for practice",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 5600
+        },
+        {
+          "keyword": "build a to-do app with javascript step by step",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "how to build a weather app with API for beginners",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "python web scraping project tutorial",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "build a personal blog with React tutorial",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "python discord bot tutorial step by step",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4100
+        },
+        {
+          "keyword": "beginner web development projects for portfolio",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "build a calculator app with HTML CSS JavaScript",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "python automation project ideas for beginners",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "full stack project tutorial for beginners 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3800
+        }
+      ]
+    }
+  }
+}

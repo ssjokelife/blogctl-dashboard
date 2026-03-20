@@ -1,0 +1,747 @@
+{
+  "blog": "lifezig.tistory.com",
+  "created_at": "2026-03-06",
+  "description": "쿠팡 파트너스 생활용품 리뷰 블로그 키워드 풀",
+  "categories": {
+    "제품 리뷰": {
+      "priority_rank": 1,
+      "keywords": [
+        {
+          "keyword": "무선 청소기 추천 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-07T12:08:08",
+          "content_type": "review"
+        },
+        {
+          "keyword": "공기청정기 추천 가성비",
+          "priority": "high",
+          "status": "published",
+          "content_type": "review",
+          "published_at": "2026-03-09T09:18:13.596271"
+        },
+        {
+          "keyword": "로봇 청소기 추천 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-10",
+          "filename": "robot-cleaner-recommendations-2026",
+          "content_type": "review",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "전기포트 추천 가성비",
+          "priority": "medium",
+          "status": "published",
+          "published_date": "2026-03-12",
+          "content_type": "review",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "블루투스 이어폰 가성비 추천",
+          "priority": "high",
+          "status": "published",
+          "content_type": "review",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "전동 칫솔 추천 가성비",
+          "priority": "high",
+          "content_type": "review",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "헤어 드라이기 추천 2026",
+          "priority": "high",
+          "content_type": "review",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-20T19:00:36"
+        },
+        {
+          "keyword": "전자레인지 추천 1인가구",
+          "priority": "high",
+          "content_type": "review",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무선 다리미 추천 가성비",
+          "priority": "medium",
+          "content_type": "review",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "체중계 추천 가성비 2026",
+          "priority": "medium",
+          "content_type": "review",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "핸드블렌더 추천 가성비",
+          "priority": "medium",
+          "content_type": "review",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무선 충전기 추천 2026",
+          "priority": "medium",
+          "content_type": "review",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "미니 세탁기 추천 1인가구",
+          "priority": "high",
+          "content_type": "review",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "해외직구 뷰티템 추천",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "가성비 좋은 주방 용품 추천",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 150,
+            "difficulty": 5,
+            "expected_clicks_4w": 20,
+            "expected_impressions_4w": 200,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "봄철 피부 관리 제품 추천",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 120,
+            "difficulty": 5,
+            "expected_clicks_4w": 20,
+            "expected_impressions_4w": 200,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "가성비 좋은 운동 기구 추천",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "가성비 높은 식료품 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 다이어트 간식 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "자취생을 위한 요리도구 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "가성비 좋은 세탁 세제 추천",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "여름철 아이스커피 메이커 추천",
+          "priority": "low",
+          "status": "pending"
+        }
+      ]
+    },
+    "TOP5 비교": {
+      "priority_rank": 2,
+      "keywords": [
+        {
+          "keyword": "에어프라이어 추천 TOP5 비교",
+          "priority": "high",
+          "status": "published",
+          "content_type": "top5",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_date": "2026-03-13"
+        },
+        {
+          "keyword": "제습기 추천 TOP5 2026",
+          "priority": "high",
+          "status": "published",
+          "content_type": "top5",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-16T15:14:47.103699"
+        },
+        {
+          "keyword": "선풍기 추천 TOP5 비교",
+          "priority": "medium",
+          "status": "published",
+          "content_type": "top5",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-17T08:28:01.356758"
+        },
+        {
+          "keyword": "가습기 추천 TOP5 비교",
+          "priority": "medium",
+          "status": "published",
+          "content_type": "top5",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T08:52:23.862110"
+        },
+        {
+          "keyword": "음식물 처리기 추천 비교",
+          "priority": "high",
+          "status": "published",
+          "content_type": "top5",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T22:29:45.862967"
+        },
+        {
+          "keyword": "전기밥솥 추천 TOP5 비교",
+          "priority": "high",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "안마의자 추천 TOP5 가성비",
+          "priority": "high",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "식기세척기 추천 TOP5 2026",
+          "priority": "high",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "노트북 거치대 추천 TOP5",
+          "priority": "medium",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "커피머신 추천 TOP5 가성비",
+          "priority": "medium",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "건조기 추천 TOP5 비교 2026",
+          "priority": "high",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "공유기 추천 TOP5 가성비",
+          "priority": "medium",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "전기면도기 추천 TOP5 비교",
+          "priority": "medium",
+          "content_type": "top5",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "미세먼지 관련 필수 아이템 TOP5",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 120,
+            "difficulty": 5,
+            "expected_clicks_4w": 20,
+            "expected_impressions_4w": 200,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "스마트폰 보조배터리 추천 TOP5",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 100,
+            "difficulty": 5,
+            "expected_clicks_4w": 15,
+            "expected_impressions_4w": 150,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "봄철 패션 아이템 추천 TOP5",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "반려동물 간식 추천 TOP5",
+          "priority": "medium",
+          "status": "pending"
+        }
+      ]
+    },
+    "계절 추천": {
+      "priority_rank": 3,
+      "keywords": [
+        {
+          "keyword": "여름 냉감 이불 추천",
+          "priority": "high",
+          "status": "published",
+          "content_type": "seasonal",
+          "note": "시즌: 5-8월",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-19T09:42:37.531234"
+        },
+        {
+          "keyword": "겨울 전기장판 추천",
+          "priority": "high",
+          "status": "pending",
+          "content_type": "seasonal",
+          "note": "시즌: 10-2월",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "봄 미세먼지 마스크 추천",
+          "priority": "medium",
+          "status": "pending",
+          "content_type": "seasonal",
+          "note": "시즌: 3-5월",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "여름 선크림 추천 2026",
+          "priority": "medium",
+          "status": "pending",
+          "content_type": "seasonal",
+          "note": "시즌: 5-8월",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "캠핑 의자 추천 가성비",
+          "priority": "medium",
+          "status": "pending",
+          "content_type": "seasonal",
+          "note": "시즌: 4-10월",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "여름 제습기 추천 원룸",
+          "priority": "high",
+          "content_type": "seasonal",
+          "note": "시즌: 6-9월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "겨울 핫초코 메이커 추천",
+          "priority": "medium",
+          "content_type": "seasonal",
+          "note": "시즌: 11-2월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "봄 꽃가루 공기청정기 추천",
+          "priority": "high",
+          "content_type": "seasonal",
+          "note": "시즌: 3-5월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "여름 휴대용 선풍기 추천",
+          "priority": "high",
+          "content_type": "seasonal",
+          "note": "시즌: 5-9월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "겨울 온풍기 추천 가성비",
+          "priority": "high",
+          "content_type": "seasonal",
+          "note": "시즌: 10-2월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "장마철 빨래 건조대 추천",
+          "priority": "medium",
+          "content_type": "seasonal",
+          "note": "시즌: 6-8월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "여름 모기 퇴치기 추천",
+          "priority": "medium",
+          "content_type": "seasonal",
+          "note": "시즌: 5-9월",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "봄맞이 청소용품 추천 TOP5",
+          "priority": "high",
+          "status": "pending",
+          "prediction": {
+            "monthly_search": 100,
+            "difficulty": 4,
+            "expected_clicks_4w": 15,
+            "expected_impressions_4w": 150,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "봄철 캠핑 용품 추천",
+          "priority": "high",
+          "status": "pending"
+        },
+        {
+          "keyword": "여름철 수영용품 추천",
+          "priority": "low",
+          "status": "pending"
+        },
+        {
+          "keyword": "봄철 정원 가꾸기 용품 추천",
+          "priority": "low",
+          "status": "pending"
+        }
+      ]
+    },
+    "꿀딜 모음": {
+      "priority_rank": 4,
+      "keywords": [
+        {
+          "keyword": "쿠팡 로켓배송 생필품 추천",
+          "priority": "high",
+          "status": "pending",
+          "content_type": "deal",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "자취생 필수템 추천 리스트",
+          "priority": "high",
+          "status": "pending",
+          "content_type": "deal",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "신혼부부 가전 추천 리스트",
+          "priority": "medium",
+          "status": "pending",
+          "content_type": "deal",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "주방 정리 용품 추천",
+          "priority": "medium",
+          "status": "pending",
+          "content_type": "deal",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "욕실 용품 추천 가성비",
+          "priority": "medium",
+          "status": "pending",
+          "content_type": "deal",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "대학생 기숙사 필수템 추천",
+          "priority": "high",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "재택근무 데스크 셋업 추천",
+          "priority": "high",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "육아맘 필수 가전 추천",
+          "priority": "high",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "원룸 수납 용품 추천 가성비",
+          "priority": "medium",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "반려동물 용품 추천 가성비",
+          "priority": "medium",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "차량용 용품 추천 가성비",
+          "priority": "medium",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "홈카페 용품 추천 입문자",
+          "priority": "medium",
+          "content_type": "deal",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "여름철 필수 아이템 꿀딜 모음",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "가전제품 할인 꿀딜 모음",
+          "priority": "medium",
+          "status": "pending"
+        },
+        {
+          "keyword": "다용도 청소 용품 꿀딜 모음",
+          "priority": "low",
+          "status": "pending"
+        }
+      ]
+    }
+  }
+}

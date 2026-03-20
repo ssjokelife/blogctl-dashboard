@@ -1,0 +1,380 @@
+{
+  "blog": "freelancehub-jin.hashnode.dev",
+  "created_at": "2026-03-11",
+  "description": "Freelancing and remote work keywords — real strategies with actual numbers for growing a freelance business",
+  "categories": {
+    "Getting Started": {
+      "keywords": [
+        {
+          "keyword": "how to start freelancing with no experience",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 5400,
+          "published_at": "2026-03-19T10:17:13.571120"
+        },
+        {
+          "keyword": "best freelance platforms for beginners 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "comparison",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "Upwork vs Fiverr which is better for new freelancers",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "estimated_volume": 3800,
+          "published_at": "2026-03-20T19:01:29"
+        },
+        {
+          "keyword": "how to write a freelance profile that gets clients",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "freelancing skills most in demand 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "how to get your first freelance client step by step",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4100
+        },
+        {
+          "keyword": "freelance writing for beginners complete guide",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "how to create a freelance portfolio from scratch",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "mistakes to avoid when starting freelancing",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1900
+        },
+        {
+          "keyword": "freelance vs full time job pros and cons",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3600
+        }
+      ]
+    },
+    "Client Management": {
+      "keywords": [
+        {
+          "keyword": "how to deal with difficult freelance clients",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "freelance contract template what to include",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "how to handle scope creep as a freelancer",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "freelance client communication best practices",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "how to fire a bad client professionally",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1400
+        },
+        {
+          "keyword": "when to say no to freelance projects",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1200
+        },
+        {
+          "keyword": "how to get repeat clients as a freelancer",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "freelance proposal template that wins projects",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "how to ask for testimonials from clients",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1100
+        },
+        {
+          "keyword": "red flags when hiring freelance clients",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1500
+        }
+      ]
+    },
+    "Pricing": {
+      "keywords": [
+        {
+          "keyword": "how to price freelance services guide",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "hourly vs project based pricing for freelancers",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "how much do freelancers actually make 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "how to raise your freelance rates without losing clients",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "value based pricing for freelancers explained",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "freelance rate calculator how to use",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "how to negotiate freelance rates with confidence",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "freelancer tax deductions you might be missing",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "should freelancers charge for revisions",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1400
+        },
+        {
+          "keyword": "retainer agreements for freelancers how they work",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1200
+        }
+      ]
+    },
+    "Remote Tools": {
+      "keywords": [
+        {
+          "keyword": "best tools for freelancers to manage projects 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "best invoicing software for freelancers free",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "time tracking tools for freelancers comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "best video call tools for remote freelancers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "how to use Notion as a freelancer",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "best CRM tools for solo freelancers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "AI tools that save freelancers time 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "best password managers for freelancers",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1200
+        },
+        {
+          "keyword": "freelancer tech stack essentials guide",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1400
+        },
+        {
+          "keyword": "best accounting software for freelancers 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3100
+        }
+      ]
+    },
+    "Growth": {
+      "keywords": [
+        {
+          "keyword": "how to scale a freelance business to six figures",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "freelancer to agency transition guide",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "how to build a personal brand as a freelancer",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "passive income ideas for freelancers 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "how to get clients outside of freelance platforms",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "freelance burnout how to prevent and recover",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "how to productize your freelance services",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "freelance niche selection how to pick the right one",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "monthly income report freelancer $10K journey",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1400
+        },
+        {
+          "keyword": "how to create online courses as a freelancer",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1900
+        }
+      ]
+    }
+  }
+}

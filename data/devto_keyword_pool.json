@@ -1,0 +1,73 @@
+{
+  "blog": "devtoboost",
+  "created_at": "2026-03-11",
+  "description": "Dev.to cross-posting keywords — concise tech summaries across AI, coding, career, and productivity niches",
+  "categories": {
+    "AI": {
+      "keywords": [
+        {"keyword": "AI coding assistants comparison 2026 developer guide", "priority": "high", "status": "pending", "search_intent": "comparison", "estimated_volume": 4200},
+        {"keyword": "how AI is changing software development 2026", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 3800},
+        {"keyword": "vibe coding explained what developers need to know", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 3200},
+        {"keyword": "best AI tools for developers daily workflow", "priority": "high", "status": "pending", "search_intent": "comparison", "estimated_volume": 2800},
+        {"keyword": "agentic AI for developers practical guide", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2100},
+        {"keyword": "RAG pipeline tutorial for beginners", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2600},
+        {"keyword": "AI code review tools that actually help", "priority": "medium", "status": "pending", "search_intent": "comparison", "estimated_volume": 1800},
+        {"keyword": "MCP protocol explained for developers 2026", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 2200},
+        {"keyword": "will AI replace developers honest analysis", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 4600},
+        {"keyword": "how to use LLMs in your side projects", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 1900},
+        {"keyword": "Claude Code vs GitHub Copilot agent mode", "priority": "high", "status": "pending", "search_intent": "comparison", "estimated_volume": 3100},
+        {"keyword": "building AI agents with Python tutorial", "priority": "high", "status": "pending", "search_intent": "how-to", "estimated_volume": 3400},
+        {"keyword": "AI pair programming tips for productivity", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 1600}
+      ]
+    },
+    "Coding": {
+      "keywords": [
+        {"keyword": "clean code principles every developer should know", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 3600},
+        {"keyword": "git commands cheat sheet for daily use", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 4800},
+        {"keyword": "docker for beginners practical tutorial 2026", "priority": "high", "status": "pending", "search_intent": "how-to", "estimated_volume": 3200},
+        {"keyword": "Python vs JavaScript which to learn in 2026", "priority": "high", "status": "pending", "search_intent": "comparison", "estimated_volume": 4100},
+        {"keyword": "API design best practices for beginners", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2400},
+        {"keyword": "database design fundamentals for new developers", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2100},
+        {"keyword": "unit testing guide for beginners Python JavaScript", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2800},
+        {"keyword": "how to write better pull requests", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 1900},
+        {"keyword": "system design interview basics simplified", "priority": "high", "status": "pending", "search_intent": "how-to", "estimated_volume": 3400},
+        {"keyword": "web performance optimization checklist 2026", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 2200},
+        {"keyword": "monorepo vs polyrepo pros and cons", "priority": "medium", "status": "pending", "search_intent": "comparison", "estimated_volume": 1800},
+        {"keyword": "serverless vs containers when to use what", "priority": "medium", "status": "pending", "search_intent": "comparison", "estimated_volume": 2600},
+        {"keyword": "how to contribute to open source first time", "priority": "high", "status": "pending", "search_intent": "how-to", "estimated_volume": 3800}
+      ]
+    },
+    "Career": {
+      "keywords": [
+        {"keyword": "developer career roadmap 2026 what to learn", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 4400},
+        {"keyword": "software engineer salary trends 2026", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 3800},
+        {"keyword": "platform engineering career path explained", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 2200},
+        {"keyword": "how to negotiate a developer salary step by step", "priority": "high", "status": "pending", "search_intent": "how-to", "estimated_volume": 2800},
+        {"keyword": "remote developer jobs where to find them 2026", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 3600},
+        {"keyword": "side projects that helped me get hired as a developer", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 2100},
+        {"keyword": "developer portfolio mistakes to avoid", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 1800},
+        {"keyword": "tech interview preparation timeline guide", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2600},
+        {"keyword": "switching from backend to fullstack developer guide", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 1600},
+        {"keyword": "how to stand out on LinkedIn as a developer", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2400},
+        {"keyword": "burnout in tech how developers can recover", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 1900}
+      ]
+    },
+    "Productivity": {
+      "keywords": [
+        {"keyword": "developer productivity tips that actually work", "priority": "high", "status": "pending", "search_intent": "informational", "estimated_volume": 3200},
+        {"keyword": "best VS Code extensions for productivity 2026", "priority": "high", "status": "pending", "search_intent": "comparison", "estimated_volume": 4600},
+        {"keyword": "terminal tools every developer should use", "priority": "medium", "status": "pending", "search_intent": "comparison", "estimated_volume": 2800},
+        {"keyword": "how to set up a productive dev environment 2026", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2200},
+        {"keyword": "time management techniques for programmers", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 1800},
+        {"keyword": "keyboard shortcuts for faster coding", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 2400},
+        {"keyword": "dotfiles setup guide for developers", "priority": "low", "status": "pending", "search_intent": "how-to", "estimated_volume": 1400},
+        {"keyword": "CI/CD pipeline setup for side projects", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 2100},
+        {"keyword": "developer home office setup guide 2026", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 2600},
+        {"keyword": "automating repetitive dev tasks with scripts", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 1600},
+        {"keyword": "best note taking apps for developers 2026", "priority": "medium", "status": "pending", "search_intent": "comparison", "estimated_volume": 2400},
+        {"keyword": "second brain for developers how to build one", "priority": "medium", "status": "pending", "search_intent": "how-to", "estimated_volume": 1800},
+        {"keyword": "deep work for programmers practical strategies", "priority": "medium", "status": "pending", "search_intent": "informational", "estimated_volume": 1500}
+      ]
+    }
+  }
+}

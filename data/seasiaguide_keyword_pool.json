@@ -1,0 +1,382 @@
+{
+  "blog": "seasiaguide",
+  "created_at": "2026-03-11",
+  "description": "Southeast Asia travel and digital nomad living keywords — budget tips, local insights, practical guides",
+  "categories": {
+    "Thailand": {
+      "keywords": [
+        {
+          "keyword": "cost of living in Chiang Mai for digital nomads 2026",
+          "priority": "high",
+          "status": "published",
+          "published_date": "2026-03-12",
+          "search_intent": "informational",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "best coworking spaces in Bangkok 2026",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "estimated_volume": 2600,
+          "published_date": "2026-03-13"
+        },
+        {
+          "keyword": "Thailand digital nomad visa how to apply",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "cheapest places to live in Thailand as an expat",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "comparison",
+          "estimated_volume": 3100,
+          "published_at": "2026-03-17"
+        },
+        {
+          "keyword": "best islands in Thailand for remote work",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "comparison",
+          "estimated_volume": 2200,
+          "published_at": "2026-03-18T09:30:00"
+        },
+        {
+          "keyword": "Chiang Mai vs Bangkok for digital nomads",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "street food guide Bangkok budget eating",
+          "priority": "medium",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "how-to",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "how to rent an apartment in Thailand as a foreigner",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "Thailand health insurance for digital nomads",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "best Thai cooking classes for tourists in Chiang Mai",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1400
+        }
+      ]
+    },
+    "Vietnam": {
+      "keywords": [
+        {
+          "keyword": "cost of living in Ho Chi Minh City 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "best neighborhoods in Hanoi for expats",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "Vietnam digital nomad visa requirements 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "Da Nang vs Ho Chi Minh City for remote workers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1900
+        },
+        {
+          "keyword": "best cafes to work from in Ho Chi Minh City",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "how to get around Vietnam as a tourist",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "Vietnam street food must try dishes",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "is Vietnam safe for solo female travelers",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2900
+        },
+        {
+          "keyword": "best motorbike rental Vietnam tips and costs",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1500
+        },
+        {
+          "keyword": "Hanoi one week itinerary budget breakdown",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2000
+        }
+      ]
+    },
+    "Indonesia": {
+      "keywords": [
+        {
+          "keyword": "Bali cost of living for digital nomads 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 4500
+        },
+        {
+          "keyword": "Canggu vs Ubud for remote workers",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "best coworking spaces in Bali with fast wifi",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "Indonesia digital nomad visa how to get it",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3100
+        },
+        {
+          "keyword": "hidden gems in Bali away from tourists",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "best surf spots in Bali for beginners",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "how to find a villa rental in Bali long term",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "Jakarta vs Bali for expat living",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1200
+        },
+        {
+          "keyword": "best Indonesian food you must try",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2900
+        },
+        {
+          "keyword": "Bali scams to avoid as a tourist 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2200
+        }
+      ]
+    },
+    "Digital Nomad Life": {
+      "keywords": [
+        {
+          "keyword": "how to start as a digital nomad complete guide",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 4800
+        },
+        {
+          "keyword": "digital nomad packing list essentials",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "best travel insurance for digital nomads 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "how to manage taxes as a digital nomad",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "loneliness as a digital nomad how to cope",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "best apps for digital nomads 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2900
+        },
+        {
+          "keyword": "how to find wifi speed before booking accommodation",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1100
+        },
+        {
+          "keyword": "digital nomad monthly budget breakdown by country",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "co-living spaces in Southeast Asia review",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1500
+        },
+        {
+          "keyword": "how to build a remote work routine while traveling",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1900
+        }
+      ]
+    },
+    "Budget Travel": {
+      "keywords": [
+        {
+          "keyword": "Southeast Asia backpacking budget per day 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 4100
+        },
+        {
+          "keyword": "cheapest countries in Southeast Asia to visit",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "how to travel Southeast Asia on $30 a day",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "best budget airlines in Southeast Asia",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "overnight bus vs flight Southeast Asia comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "how to haggle in Southeast Asia markets",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1200
+        },
+        {
+          "keyword": "best hostels in Southeast Asia for solo travelers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "Southeast Asia two week itinerary on a budget",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3500
+        },
+        {
+          "keyword": "money saving tips for Southeast Asia travel",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "best time to visit Southeast Asia for cheap flights",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2600
+        }
+      ]
+    }
+  }
+}

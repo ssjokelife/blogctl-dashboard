@@ -1,0 +1,383 @@
+{
+  "blog": "aitoolspick",
+  "created_at": "2026-03-11",
+  "description": "AI tool review keywords — honest reviews and comparisons for professionals and creators",
+  "categories": {
+    "AI Writing Tools": {
+      "keywords": [
+        {
+          "keyword": "best AI writing tools for bloggers 2026",
+          "priority": "high",
+          "status": "published",
+          "published_date": "2026-03-12",
+          "search_intent": "comparison",
+          "estimated_volume": 4800
+        },
+        {
+          "keyword": "Jasper AI vs ChatGPT for content writing",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "estimated_volume": 3900,
+          "published_date": "2026-03-13"
+        },
+        {
+          "keyword": "AI tools for academic writing",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "informational",
+          "estimated_volume": 2800,
+          "published_at": "2026-03-17"
+        },
+        {
+          "keyword": "free AI writing tools that actually work",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "estimated_volume": 5200
+        },
+        {
+          "keyword": "AI email writing assistant review",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "informational",
+          "estimated_volume": 1800,
+          "published_at": "2026-03-18T09:30:00"
+        },
+        {
+          "keyword": "best AI copywriting tools for small business",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "Claude vs ChatGPT for long-form writing",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "comparison",
+          "estimated_volume": 4100
+        },
+        {
+          "keyword": "AI tools for SEO content writing",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "how-to",
+          "estimated_volume": 2600,
+          "published_at": "2026-03-20T19:00:46"
+        },
+        {
+          "keyword": "Writesonic review honest pros and cons",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1400
+        },
+        {
+          "keyword": "how to use AI writing tools without sounding robotic",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2200
+        }
+      ]
+    },
+    "AI Image Tools": {
+      "keywords": [
+        {
+          "keyword": "best AI image generators 2026 comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 6100
+        },
+        {
+          "keyword": "Midjourney vs DALL-E 3 vs Stable Diffusion",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 5400
+        },
+        {
+          "keyword": "free AI image generators no watermark",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 4800
+        },
+        {
+          "keyword": "AI background remover tools comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3100
+        },
+        {
+          "keyword": "best AI tools for product photography",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "AI image upscaler best free options",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3500
+        },
+        {
+          "keyword": "how to create consistent brand images with AI",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1900
+        },
+        {
+          "keyword": "AI headshot generator for LinkedIn",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "Canva AI vs Adobe Firefly for designers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "AI logo maker tools honest review",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2100
+        }
+      ]
+    },
+    "AI Productivity": {
+      "keywords": [
+        {
+          "keyword": "best AI productivity tools for remote workers",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "AI meeting summary tools comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3200
+        },
+        {
+          "keyword": "how to automate daily tasks with AI tools",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "best AI scheduling assistants 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2100
+        },
+        {
+          "keyword": "AI tools for project management review",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1800
+        },
+        {
+          "keyword": "Notion AI vs Clickup AI vs Monday AI",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2900
+        },
+        {
+          "keyword": "best AI presentation makers 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 4500
+        },
+        {
+          "keyword": "AI tools to summarize long documents",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "best AI transcription tools free and paid",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "AI personal assistant apps worth paying for",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1600
+        }
+      ]
+    },
+    "AI Coding Tools": {
+      "keywords": [
+        {
+          "keyword": "GitHub Copilot vs Cursor vs Claude Code comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 5800
+        },
+        {
+          "keyword": "best AI coding assistants for beginners",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 4200
+        },
+        {
+          "keyword": "is GitHub Copilot worth paying for in 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3600
+        },
+        {
+          "keyword": "AI tools for debugging code review",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "how to use AI for code refactoring",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to",
+          "estimated_volume": 1900
+        },
+        {
+          "keyword": "best free AI code generators 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3800
+        },
+        {
+          "keyword": "vibe coding tools comparison 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "AI tools for API testing automation",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1500
+        },
+        {
+          "keyword": "Cursor IDE review after 3 months of use",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2200
+        },
+        {
+          "keyword": "AI code review tools for teams",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 1800
+        }
+      ]
+    },
+    "AI Comparison": {
+      "keywords": [
+        {
+          "keyword": "ChatGPT Plus vs Claude Pro which is better",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 7200
+        },
+        {
+          "keyword": "best AI chatbots for business 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 4600
+        },
+        {
+          "keyword": "free vs paid AI tools is the upgrade worth it",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 3400
+        },
+        {
+          "keyword": "AI tools pricing comparison chart 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2600
+        },
+        {
+          "keyword": "best AI tools under $20 per month",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 3100
+        },
+        {
+          "keyword": "Gemini vs ChatGPT vs Claude real world test",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 5500
+        },
+        {
+          "keyword": "AI tools I use every day as a content creator",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2800
+        },
+        {
+          "keyword": "best AI tools for solopreneurs 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison",
+          "estimated_volume": 2400
+        },
+        {
+          "keyword": "AI tool stack for small marketing teams",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 1600
+        },
+        {
+          "keyword": "overrated AI tools you should skip in 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "estimated_volume": 2000
+        }
+      ]
+    }
+  }
+}

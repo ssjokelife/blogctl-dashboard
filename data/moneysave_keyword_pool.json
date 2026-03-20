@@ -1,0 +1,337 @@
+{
+  "blog": "savemoney-note.tistory.com",
+  "created_at": "2026-03-18",
+  "description": "생활재테크 블로그 키워드 풀",
+  "categories": {
+    "카드 혜택 정리": {
+      "keywords": [
+        {
+          "keyword": "2026 체크카드 캐시백 추천",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-19T10:45:06.989446"
+        },
+        {
+          "keyword": "신용카드 연회비 무료 추천",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-19T10:49:40.205459"
+        },
+        {
+          "keyword": "교통카드 할인 체크카드 비교",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-20T15:55:17"
+        },
+        {
+          "keyword": "마트 할인 신용카드 추천",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-20T15:59:15"
+        },
+        {
+          "keyword": "해외 결제 수수료 없는 카드",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "카드 포인트 현금화 방법",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "how-to",
+          "published_at": "2026-03-20T18:51:19"
+        },
+        {
+          "keyword": "온라인 쇼핑 할인 카드 추천",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-20T18:55:29"
+        },
+        {
+          "keyword": "주유 할인 카드 비교 2026",
+          "priority": "medium",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-20T18:59:24"
+        },
+        {
+          "keyword": "카드 실적 채우기 꿀팁",
+          "priority": "low",
+          "status": "published",
+          "search_intent": "how-to",
+          "published_at": "2026-03-20T19:08:37"
+        },
+        {
+          "keyword": "신용등급 올리는 카드 사용법",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "how-to"
+        }
+      ]
+    },
+    "청년 금융": {
+      "keywords": [
+        {
+          "keyword": "청년도약계좌 신청 방법 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "청년 전세대출 조건 정리",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "청년내일저축계좌 자격 조건",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "사회초년생 재테크 시작 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "청년 월세 지원금 신청",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "주택청약 가점 계산 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "청년 우대 적금 금리 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "대학생 용돈 관리 앱 추천",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "신용등급 처음 만드는 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "청년 창업 지원금 총정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        }
+      ]
+    },
+    "생활 절약 꿀팁": {
+      "keywords": [
+        {
+          "keyword": "전기세 줄이는 방법 여름",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "통신비 절약 알뜰폰 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "식비 절약 방법 자취생",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "보험료 줄이는 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "구독 서비스 정리 절약",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "중고거래 플랫폼 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "가스비 절약 방법 겨울",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "무료 문화생활 즐기는 법",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "자동차 보험 싸게 드는 법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "생활비 가계부 앱 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        }
+      ]
+    },
+    "적금 예금 비교": {
+      "keywords": [
+        {
+          "keyword": "2026 적금 금리 비교 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "파킹통장 추천 금리 비교",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "CMA 통장 vs 파킹통장 차이",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "주거래 은행 혜택 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "비대면 적금 추천 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "예금자 보호 한도 5000만원 초과 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "토스뱅크 vs 카카오뱅크 적금 비교",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "정기예금 만기 자동해지 이자 계산",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "ISA 계좌 장단점 정리",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "월급 200만원 저축 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        }
+      ]
+    },
+    "연말정산 세금": {
+      "keywords": [
+        {
+          "keyword": "연말정산 소득공제 체크리스트",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "월세 세액공제 신청 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "의료비 세액공제 대상 정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "종합소득세 신고 방법 프리랜서",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "부양가족 공제 기준 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "기부금 세액공제 한도",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "홈택스 연말정산 간소화 사용법",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "퇴직금 세금 계산 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "how-to"
+        },
+        {
+          "keyword": "사업자 절세 방법 정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "자녀 교육비 세액공제 정리",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        }
+      ]
+    }
+  }
+}

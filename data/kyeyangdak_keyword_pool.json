@@ -1,0 +1,554 @@
+{
+  "blog": "kyeyangdak.tistory.com",
+  "created_at": "2026-03-17",
+  "description": "kyeyangdak 기술 블로그 키워드풀 — 증권 API/자동매매/데이터 처리 중심",
+  "categories": {
+    "증권사 API": {
+      "priority_rank": 1,
+      "keywords": [
+        {
+          "keyword": "한국투자증권 REST API 사용법 총정리",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "note": "트래픽 37% 차지하는 핵심 카테고리, KIS API 시리즈 확장",
+          "published_at": "2026-03-17",
+          "filename": "korean-investment-corp-rest-api-guide"
+        },
+        {
+          "keyword": "키움증권 OpenAPI vs REST API 비교 분석",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "note": "기존 발행 글과 연계, 비교 콘텐츠로 차별화",
+          "published_at": "2026-03-18T09:00:00"
+        },
+        {
+          "keyword": "미래에셋증권 해외주식 API 연동 가이드",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "note": "미래에셋 API 관련 글 이미 발행, 해외주식 특화",
+          "published_at": "2026-03-19T12:27:28.912951"
+        },
+        {
+          "keyword": "삼성증권 Open API 개발 가이드 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "informational",
+          "note": "삼성증권 API 글 이미 발행, 최신 업데이트 반영"
+        },
+        {
+          "keyword": "증권사 API 인증 방식 비교 총정리 OAuth HMAC",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "informational",
+          "note": "크로스 브로커 비교 → 유입 분산 효과"
+        },
+        {
+          "keyword": "증권 API WebSocket 실시간 주가 수신 구현",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "실시간 데이터 수신 실무 구현"
+        },
+        {
+          "keyword": "Python 증권 API 래퍼 라이브러리 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "개발자 타겟, 코드 중심 콘텐츠"
+        },
+        {
+          "keyword": "증권사 API 에러 처리 및 재시도 패턴 구현",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "실무 트러블슈팅 경험 기반"
+        },
+        {
+          "keyword": "해외주식 API 주문 체결 조회 자동화",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "informational",
+          "note": "해외주식 키워드 검색량 높음",
+          "published_at": "2026-03-20T19:10:31"
+        },
+        {
+          "keyword": "증권사 모의투자 API 환경 설정 가이드",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "입문자 타겟, 모의투자로 진입장벽 낮춤"
+        },
+        {
+          "keyword": "한국투자증권 API 연동 방법",
+          "priority": "high",
+          "status": "pending",
+          "note": "많은 사용자들이 API 연동 방법을 찾고 있어 검색량이 높을 것으로 예상.",
+          "source": "gsc_analysis_2026-03-20",
+          "prediction": {
+            "monthly_search": 150,
+            "difficulty": 6,
+            "expected_clicks_4w": 20,
+            "expected_impressions_4w": 200,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "미래에셋증권 API 사용법",
+          "priority": "high",
+          "status": "pending",
+          "note": "사용자들이 API 활용법에 대한 정보를 자주 검색.",
+          "source": "gsc_analysis_2026-03-20",
+          "prediction": {
+            "monthly_search": 120,
+            "difficulty": 5,
+            "expected_clicks_4w": 15,
+            "expected_impressions_4w": 150,
+            "expected_ctr": 10.0,
+            "expected_rank": 5.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "키움증권 API 가격 비교",
+          "priority": "high",
+          "status": "pending",
+          "note": "비용 비교를 위한 검색 수요가 높을 것으로 보임.",
+          "source": "gsc_analysis_2026-03-20",
+          "prediction": {
+            "monthly_search": 100,
+            "difficulty": 7,
+            "expected_clicks_4w": 12,
+            "expected_impressions_4w": 120,
+            "expected_ctr": 10.0,
+            "expected_rank": 6.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "증권사 API 특징 분석",
+          "priority": "high",
+          "status": "pending",
+          "note": "특징에 대한 분석을 원하는 사용자들이 많음.",
+          "source": "gsc_analysis_2026-03-20",
+          "prediction": {
+            "monthly_search": 90,
+            "difficulty": 5,
+            "expected_clicks_4w": 12,
+            "expected_impressions_4w": 120,
+            "expected_ctr": 10.0,
+            "expected_rank": 6.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "주식 자동매매 API 추천",
+          "priority": "high",
+          "status": "pending",
+          "note": "자동매매에 적합한 API를 찾는 사용자들이 검색할 가능성이 높음.",
+          "source": "gsc_analysis_2026-03-20",
+          "prediction": {
+            "monthly_search": 80,
+            "difficulty": 6,
+            "expected_clicks_4w": 10,
+            "expected_impressions_4w": 100,
+            "expected_ctr": 10.0,
+            "expected_rank": 6.0,
+            "confidence": "medium",
+            "predicted_at": "2026-03-20",
+            "evaluate_after": "2026-04-17"
+          }
+        },
+        {
+          "keyword": "키움증권 API 사용 후기",
+          "priority": "high",
+          "status": "pending",
+          "note": "사용자 경험에 대한 정보가 필요한 검색자들이 많음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "미래에셋증권 API 수수료",
+          "priority": "high",
+          "status": "pending",
+          "note": "API 사용 시 발생하는 수수료에 대한 정보 수요가 존재.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "API 통합 관리 도구",
+          "priority": "medium",
+          "status": "pending",
+          "note": "여러 API를 통합 관리할 수 있는 도구에 대한 관심 증가.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "증권사 API 업데이트 정보",
+          "priority": "medium",
+          "status": "pending",
+          "note": "API 관련 업데이트에 대한 정보 수요가 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "키움증권 Open API 차별점",
+          "priority": "medium",
+          "status": "pending",
+          "note": "다른 API와의 차별점을 알고 싶어하는 사용자들이 많음.",
+          "source": "gsc_analysis_2026-03-20"
+        }
+      ]
+    },
+    "자동매매 시스템": {
+      "priority_rank": 2,
+      "keywords": [
+        {
+          "keyword": "주식 자동매매 시스템 아키텍처 설계 실전",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "기존 자동매매 시리즈 후속, 아키텍처 심화"
+        },
+        {
+          "keyword": "자동매매 백테스트 시스템 구현 Python",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "백테스트 수요 높음, 코드 예제 포함"
+        },
+        {
+          "keyword": "자동매매 봇 다중 전략 포트폴리오 관리",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "심화 주제, 기존 독자 리텐션"
+        },
+        {
+          "keyword": "주식 자동매매 데이터베이스 설계 패턴",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "DB 설계 실무 경험 기반"
+        },
+        {
+          "keyword": "자동매매 시스템 로깅과 디버깅 전략",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "운영 경험 기반 실전 팁"
+        },
+        {
+          "keyword": "자동매매 봇 장애 복구 자동화 구현",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "기존 안정성 설계 글 후속"
+        },
+        {
+          "keyword": "RSI MACD 볼린저밴드 복합 전략 자동매매",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "기술지표 조합 전략, 검색량 있음"
+        },
+        {
+          "keyword": "자동매매 수익률 리포트 자동 생성 시스템",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "부가 기능, 실용적"
+        },
+        {
+          "keyword": "Python으로 주식 자동매매 구현하기",
+          "priority": "high",
+          "status": "pending",
+          "note": "Python을 활용한 자동매매 구현에 대한 정보 수요가 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 자동매매 알고리즘 개발",
+          "priority": "high",
+          "status": "pending",
+          "note": "알고리즘 개발에 대한 관심이 많아 검색될 가능성이 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "자동매매 시스템 성능 개선 방법",
+          "priority": "medium",
+          "status": "pending",
+          "note": "시스템 성능 향상을 위한 검색 수요가 존재.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 자동매매 패턴 인식",
+          "priority": "medium",
+          "status": "pending",
+          "note": "패턴 인식을 통한 자동매매에 대한 정보 수요가 있음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "자동매매 시스템 오류 처리 방법",
+          "priority": "medium",
+          "status": "pending",
+          "note": "오류 처리에 대한 가이드를 찾는 사용자들이 많음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "자동매매 봇 성능 분석",
+          "priority": "medium",
+          "status": "pending",
+          "note": "봇 성능 평가를 원하는 사용자들이 검색할 가능성이 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "자동매매 리스크 관리 기법",
+          "priority": "medium",
+          "status": "pending",
+          "note": "리스크 관리에 대한 정보 수요가 존재.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 자동매매 시뮬레이션 도구",
+          "priority": "low",
+          "status": "pending",
+          "note": "시뮬레이션 도구에 대한 검색 수요가 적지만 필요함.",
+          "source": "gsc_analysis_2026-03-20"
+        }
+      ]
+    },
+    "주식 데이터 분석": {
+      "priority_rank": 3,
+      "keywords": [
+        {
+          "keyword": "Python Pandas 주식 기술지표 계산 총정리",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "검색량 높은 범용 키워드"
+        },
+        {
+          "keyword": "주식 데이터 수집 자동화 시스템 구축",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "데이터 파이프라인 구축 실무"
+        },
+        {
+          "keyword": "시계열 분석으로 주식 추세 예측 Python",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "데이터 분석 + 주식 교차 키워드"
+        },
+        {
+          "keyword": "주식 포트폴리오 리스크 분석 자동화",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "리스크 관리 실무"
+        },
+        {
+          "keyword": "주식 캔들차트 시각화 Python matplotlib",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "시각화 수요 있음, 코드 예제"
+        },
+        {
+          "keyword": "FinanceDataReader vs yfinance 한국 주식 데이터",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "비교 콘텐츠, 한국 특화"
+        },
+        {
+          "keyword": "주식 데이터 분석 기법",
+          "priority": "high",
+          "status": "pending",
+          "note": "주식 데이터 분석에 대한 정보 수요가 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "시계열 데이터 분석 방법",
+          "priority": "medium",
+          "status": "pending",
+          "note": "시계열 데이터 분석에 대한 관심이 많아 검색될 가능성이 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 데이터 시각화 도구",
+          "priority": "medium",
+          "status": "pending",
+          "note": "시각화 도구에 대한 정보 수요가 존재.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 데이터 클리닝 기법",
+          "priority": "medium",
+          "status": "pending",
+          "note": "데이터 클리닝에 대한 정보 수요가 존재.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 데이터 피처 엔지니어링",
+          "priority": "low",
+          "status": "pending",
+          "note": "피처 엔지니어링에 대한 정보 수요가 적지만 필요.",
+          "source": "gsc_analysis_2026-03-20"
+        }
+      ]
+    },
+    "모니터링 알림": {
+      "priority_rank": 4,
+      "keywords": [
+        {
+          "keyword": "텔레그램 봇으로 주식 자동매매 알림 구현",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "기존 카카오톡 발송 글 후속, 텔레그램 인기 상승"
+        },
+        {
+          "keyword": "Prometheus Grafana 트레이딩 시스템 모니터링",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "인프라 모니터링 실무"
+        },
+        {
+          "keyword": "슬랙 웹훅으로 자동매매 거래 알림 받기",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "슬랙 사용 개발자 타겟"
+        },
+        {
+          "keyword": "자동매매 거래 결과 이메일 리포트 자동 발송",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "부가 기능"
+        }
+      ]
+    },
+    "배포 인프라": {
+      "priority_rank": 5,
+      "keywords": [
+        {
+          "keyword": "Docker로 주식 자동매매 봇 배포 가이드",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "Docker + 자동매매 교차 검색 수요"
+        },
+        {
+          "keyword": "AWS Lambda 증권 API 호출 서버리스 자동화",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "서버리스 트렌드 반영"
+        },
+        {
+          "keyword": "클라우드 서버 자동매매 봇 24시간 운영 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "실전 운영 경험 기반"
+        },
+        {
+          "keyword": "GitHub Actions CI/CD 주식 시스템 배포 자동화",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "DevOps 연계"
+        },
+        {
+          "keyword": "Docker로 주식 API 배포하기",
+          "priority": "high",
+          "status": "pending",
+          "note": "Docker를 활용한 배포에 대한 관심이 많음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "AWS에서 주식 봇 배포하기",
+          "priority": "high",
+          "status": "pending",
+          "note": "AWS를 활용한 배포 방법에 대한 정보 수요가 있음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "CI/CD로 주식 시스템 자동 배포",
+          "priority": "medium",
+          "status": "pending",
+          "note": "CI/CD에 대한 관심이 많아 검색될 가능성이 높음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "서버리스 아키텍처 주식 시스템",
+          "priority": "medium",
+          "status": "pending",
+          "note": "서버리스 아키텍처에 대한 정보 수요가 존재.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "주식 데이터베이스 설계",
+          "priority": "medium",
+          "status": "pending",
+          "note": "데이터베이스 설계에 대한 정보 수요가 많음.",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "클라우드 환경에서 주식 API 운영",
+          "priority": "low",
+          "status": "pending",
+          "note": "클라우드 환경에서의 운영에 대한 정보 수요가 적지만 필요.",
+          "source": "gsc_analysis_2026-03-20"
+        }
+      ]
+    },
+    "웹 크롤링 스크래핑": {
+      "priority_rank": 6,
+      "keywords": [
+        {
+          "keyword": "Playwright vs Selenium 금융 데이터 크롤링 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "기존 크롤링 콘텐츠 확장"
+        },
+        {
+          "keyword": "네이버 금융 주식 데이터 크롤링 Python",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "네이버 금융 크롤링 수요 높음"
+        },
+        {
+          "keyword": "금융 데이터 웹 크롤링 법적 고려사항 정리",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "법적 이슈 관심 증가"
+        },
+        {
+          "keyword": "증권사 공시 데이터 자동 수집 시스템",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational",
+          "note": "공시 데이터 활용"
+        }
+      ]
+    }
+  }
+}

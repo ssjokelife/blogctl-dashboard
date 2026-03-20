@@ -1,0 +1,2839 @@
+{
+  "blog": "jokelife.tistory.com",
+  "created_at": "2026-02-18",
+  "description": "실용 IT 블로그 키워드 풀 - 애드센스 수익 최적화 목적",
+  "categories": {
+    "엑셀 스프레드시트": {
+      "keywords": [
+        {
+          "keyword": "엑셀 VLOOKUP 사용법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 IF 함수 여러 조건",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 SUMIF 함수 사용법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 조건부 서식 색상 변경",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 피벗테이블 만들기",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 중복값 찾기 제거",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 셀 합치기 방법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 드롭다운 목록 만들기",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 날짜 함수 정리",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 COUNTIF 함수 사용법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 틀 고정 방법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 자동 필터 사용법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 CONCATENATE 함수 텍스트 합치기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 INDEX MATCH 함수",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 차트 만들기 종류별",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 매크로 만들기 초보",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 VBA 기초 시작하기",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 인쇄 영역 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 행 열 바꾸기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 특수문자 입력 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 IFERROR 함수 오류 처리",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 LEFT RIGHT MID 함수",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 ROUND 함수 반올림",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 TEXT 함수 서식 변환",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 INDIRECT 함수 사용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 하이퍼링크 설정 제거",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 암호 설정 해제 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 데이터 유효성 검사",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 SUBSTITUTE 함수 텍스트 바꾸기",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 SUMPRODUCT 함수 활용",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 조건부 서식 수식 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 XLOOKUP 함수 사용법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 가계부 만들기 템플릿",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-02-22"
+        },
+        {
+          "keyword": "엑셀 근무표 만들기",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 재고관리 양식 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 사용법 기초",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 함수 정리 모음",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 IMPORTRANGE 사용법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 QUERY 함수 사용법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 공유 권한 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 매크로 자동화",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 차트 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 조건부 서식",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 ARRAYFORMULA 사용법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 구글시트 차이점 비교",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 수식 안 먹힐 때 해결",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 느려졌을 때 해결법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 파일 복구 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 셀 서식 사용자 지정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 DATEDIF 함수 날짜 차이",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 OFFSET 함수 동적 범위",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 CHOOSE 함수 사용법",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "엑셀 급여명세서 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 vs 엑셀 실무 비교 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글시트 자동화 Apps Script 기초",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT vs Claude 가격 비교 2026",
+          "priority": "high",
+          "status": "pending",
+          "note": "GSC 노출 급등 중, 가격 비교 전용",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "ChatGPT 무료 vs 유료 차이점",
+          "priority": "high",
+          "status": "pending",
+          "note": "검색량 높은 비교 키워드",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "Claude AI 코딩 활용법 실전 예제",
+          "priority": "high",
+          "status": "pending",
+          "note": "Claude Desktop 노출 하락 보완",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "AI 챗봇 업무 활용법 직장인 필수",
+          "priority": "high",
+          "status": "pending",
+          "note": "타겟 특정형 키워드",
+          "source": "gsc_analysis_2026-03-20"
+        },
+        {
+          "keyword": "Gemini vs ChatGPT vs Claude 3종 비교",
+          "priority": "high",
+          "status": "pending",
+          "note": "3종 비교 검색 수요",
+          "source": "gsc_analysis_2026-03-20"
+        }
+      ],
+      "priority_rank": 5,
+      "competition_level": "극심",
+      "cpc_potential": "낮음 ($0.05~$0.15)",
+      "entry_difficulty": "매우 어려움",
+      "strategy": "엑셀 핵심 키워드 회피, 구글시트 및 업무별 롱테일 키워드 집중",
+      "main_competitor": "오빠두엑셀(oppadu.com) - 거의 모든 엑셀 키워드 1~3위 독점"
+    },
+    "AI 도구 활용법": {
+      "keywords": [
+        {
+          "keyword": "ChatGPT 사용법 초보 가이드",
+          "priority": "low",
+          "status": "published",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": 3200,
+          "difficulty": "high",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-09T23:49:19.646404+00:00",
+          "published_at": "2026-03-17T08:25:16.811314"
+        },
+        {
+          "keyword": "ChatGPT 프롬프트 잘 쓰는 법",
+          "priority": "low",
+          "status": "published",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T08:47:10.133859"
+        },
+        {
+          "keyword": "ChatGPT 무료 유료 차이점",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT 업무 활용법 10가지",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-04T12:28:00",
+          "filename": "chatgpt-work-tips"
+        },
+        {
+          "keyword": "Claude AI 사용법 가이드",
+          "priority": "high",
+          "status": "published"
+        },
+        {
+          "keyword": "ChatGPT vs Claude 비교",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-07T11:35:39.094700"
+        },
+        {
+          "keyword": "AI 이미지 생성 무료 사이트",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-07T11:35:39"
+        },
+        {
+          "keyword": "미드저니 사용법 초보",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-09T08:51:26.048307"
+        },
+        {
+          "keyword": "DALL-E 이미지 생성 방법",
+          "priority": "medium",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 글쓰기 도구 추천",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-10",
+          "filename": "ai-writing-tools-recommendation",
+          "search_volume": 1000,
+          "difficulty": "high",
+          "search_intent": "comparison",
+          "verified": true,
+          "verified_at": "2026-03-10T09:19:50.877799"
+        },
+        {
+          "keyword": "AI 번역기 비교 추천",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "DeepL 번역기 사용법",
+          "priority": "medium",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-20T19:06:49"
+        },
+        {
+          "keyword": "AI PPT 자동 생성 방법",
+          "priority": "high",
+          "status": "published",
+          "published_date": "2026-03-11",
+          "search_volume": 800,
+          "difficulty": "medium",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:19:50.877799"
+        },
+        {
+          "keyword": "감마 AI PPT 만들기",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "published_at": "2026-03-05T22:42:28.125704"
+        },
+        {
+          "keyword": "AI 요약 도구 추천 비교",
+          "priority": "medium",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-20T19:13:01"
+        },
+        {
+          "keyword": "Notion AI 사용법 활용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT 엑셀 수식 만들기",
+          "priority": "high",
+          "status": "published",
+          "published_date": "2026-03-12",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT 이메일 작성 도우미",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 음성 합성 TTS 무료",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "published_at": "2026-02-20"
+        },
+        {
+          "keyword": "AI 배경 제거 사이트 무료",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": 2000,
+          "difficulty": "high",
+          "search_intent": "transactional",
+          "verified": true,
+          "verified_at": "2026-03-10T09:19:50.877799",
+          "published_date": "2026-03-13"
+        },
+        {
+          "keyword": "ChatGPT 코딩 도움 받기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 동영상 편집 도구 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "뤼튼 AI 사용법",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": 1500,
+          "difficulty": "medium",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:19:50.877799",
+          "published_at": "2026-03-11T11:22:50.255724"
+        },
+        {
+          "keyword": "AI 자기소개서 작성 방법",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-06",
+          "filename": "ai-cover-letter-writing-tips"
+        },
+        {
+          "keyword": "AI 면접 준비 도우미",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT 플러그인 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 논문 검색 도구",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "Copilot 사용법 윈도우",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-16T15:11:00.989662"
+        },
+        {
+          "keyword": "Google Gemini 사용법",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T22:28:14.182969"
+        },
+        {
+          "keyword": "AI 음악 생성 무료 사이트",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT GPTs 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 로고 만들기 무료",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T22:33:25.389565"
+        },
+        {
+          "keyword": "Perplexity AI 사용법",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-02-18",
+          "note": "jokelife 첫 테스트 발행"
+        },
+        {
+          "keyword": "AI 사진 보정 무료 앱",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 회의록 자동 작성",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-06",
+          "note": "숨은 기회 - 우선 공략"
+        },
+        {
+          "keyword": "ChatGPT 한국어 설정 팁",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 그림 그리기 초보 가이드",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 보고서 작성 도우미",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "Suno AI 음악 만들기",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-18T22:39:07.783499"
+        },
+        {
+          "keyword": "AI 영어 공부 활용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT 데이터 분석 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 프레젠테이션 도구 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 마케팅 도구 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "ChatGPT API 사용법 기초",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 얼굴 합성 사이트",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 자막 생성 도구",
+          "priority": "high",
+          "status": "published",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-19T09:23:10.662243"
+        },
+        {
+          "keyword": "ChatGPT 오류 해결 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 블로그 글쓰기 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "Stable Diffusion 설치 사용법",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "AI 무료 도구 총정리 2026",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-19T09:28:11.059295"
+        },
+        {
+          "keyword": "ChatGPT 엑셀 수식 자동 생성 방법",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-19T16:29:00"
+        },
+        {
+          "keyword": "Claude AI vs ChatGPT 실사용 비교 2026",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-02-23",
+          "filename": "claude-vs-chatgpt-2026"
+        },
+        {
+          "keyword": "Gamma AI PPT 자동 생성 사용법",
+          "priority": "high",
+          "status": "published",
+          "search_volume": 500,
+          "difficulty": "low",
+          "search_intent": "informational",
+          "verified": true,
+          "verified_at": "2026-03-10T09:19:50.877799",
+          "published_at": "2026-03-10T11:26:31.278840"
+        },
+        {
+          "keyword": "AI 무료 도구 카테고리별 추천 총정리",
+          "priority": "high",
+          "status": "published",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null,
+          "published_at": "2026-03-19T16:40:53.328071"
+        },
+        {
+          "keyword": "Perplexity AI 검색 엔진 사용법 가이드",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "Claude Desktop 사용법 코드 기능",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-02-24T14:07:39",
+          "filename": "claude-desktop-code-feature"
+        },
+        {
+          "keyword": "Claude Code 사용법",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-04T16:55:45",
+          "filename": "claude-code-usage-guide"
+        }
+      ],
+      "priority_rank": 1,
+      "competition_level": "중간 (틈새 키워드는 낮음)",
+      "cpc_potential": "중간 ($0.1~$0.3, B2B 연관 시 $0.5+)",
+      "entry_difficulty": "중간",
+      "strategy": "덜 알려진 AI 도구(Claude, Perplexity, Gamma) 선점 + 신모델 출시 직후 속도전",
+      "main_competitor": "이랜서, 스파르타클럽 등 기업 블로그 (빅키워드만)"
+    },
+    "윈도우 PC 관리": {
+      "keywords": [
+        {
+          "keyword": "윈도우 11 단축키 모음 정리",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-02-21T13:10:16",
+          "filename": "windows11-shortcuts-guide"
+        },
+        {
+          "keyword": "컴퓨터 느려졌을 때 해결법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 디스크 정리 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 시작프로그램 관리",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "블루스크린 원인 해결 방법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 업데이트 오류 해결",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "C드라이브 용량 부족 해결",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 캡처 방법 5가지",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 듀얼모니터 설정 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 다크모드 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 복구 초기화 방법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "USB 인식 안될 때 해결법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "와이파이 연결 안될 때 해결",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "프린터 연결 설정 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 작업관리자 사용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "컴퓨터 사양 확인하는 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "SSD HDD 차이 확인 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 방화벽 설정 해제",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 환경변수 설정 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "원격 데스크톱 연결 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 가상 데스크톱 사용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "레지스트리 편집기 사용법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 안전모드 부팅 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "컴퓨터 소음 줄이는 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 알림 끄기 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 파일 확장자 표시 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "바탕화면 아이콘 정리 팁",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 배터리 절약 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "컴퓨터 백업 하는 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 디펜더 사용법 끄기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "하드디스크 포맷 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 클립보드 기록 사용법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "노트북 발열 줄이는 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 터미널 PowerShell 기초",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 파티션 나누기 합치기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "컴퓨터 포맷 윈도우 재설치",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 11 위젯 설정 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "IP 주소 확인하는 방법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "DNS 변경 설정 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 파일 탐색기 팁",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "컴퓨터 부팅 속도 빠르게",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "멀티태스킹 윈도우 분할 화면",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 글꼴 설치 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "메모리 RAM 확인 증설 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "그래픽 드라이버 업데이트 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 화면 녹화 방법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "마우스 커서 사라짐 해결",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 자동 잠금 설정",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 야간 모드 블루라이트",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "휴지통 복구 삭제 파일 찾기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "윈도우 11 숨은 기능 꿀팁 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "SSD 교체 방법 및 추천 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "WSL 디스크 IO 100% 해결법",
+          "priority": "medium",
+          "status": "published",
+          "published_at": "2026-03-04T19:54:08",
+          "filename": "wsl-disk-io-100-fix"
+        }
+      ],
+      "priority_rank": 4,
+      "competition_level": "높음",
+      "cpc_potential": "낮음 ($0.03~$0.1)",
+      "entry_difficulty": "어려움",
+      "strategy": "빅키워드 회피, 특정 오류코드/프로그램별 롱테일 + 하드웨어 구매 연결 키워드",
+      "main_competitor": "HP, Intel, MS 공식 + 노랗IT월드 등 장기 운영 블로그"
+    },
+    "무료 툴 온라인 서비스": {
+      "keywords": [
+        {
+          "keyword": "PDF 합치기 무료 사이트",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "PDF 용량 줄이기 방법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "PDF JPG 변환 무료",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "PDF 편집 무료 프로그램",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "한글 PDF 변환 방법",
+          "priority": "low",
+          "status": "pending",
+          "note": "경쟁 극심 - 회피 권장",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "이미지 배경 제거 무료 사이트",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "이미지 용량 줄이기 무료",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "화면 녹화 프로그램 무료 추천",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "동영상 편집 무료 프로그램",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 포토샵 대체 프로그램",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "온라인 사진 편집 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 로고 만들기 사이트",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "QR코드 만들기 무료",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "파일 변환 사이트 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 화상회의 프로그램 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "캔바 사용법 디자인 만들기",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "Figma 사용법 기초",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 이력서 템플릿 사이트",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "온라인 설문조사 만들기 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 프로젝트 관리 도구",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "타이핑 연습 사이트 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "마인드맵 무료 프로그램",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 클라우드 저장소 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글 드라이브 사용법 정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "OCR 텍스트 인식 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "비밀번호 관리 프로그램 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 VPN 추천 비교",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "파일 압축 해제 프로그램",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 웹호스팅 사이트 추천",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "크롬 확장 프로그램 추천",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "노션 사용법 기초 가이드",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "트렐로 사용법 업무 관리",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스프레드시트 온라인 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "대용량 파일 전송 방법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "음성 파일 텍스트 변환",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "이미지 해상도 높이기 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "워터마크 제거 무료 사이트",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "GIF 만들기 무료 사이트",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "온라인 코딩 연습 사이트",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 앱 개발 도구",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "구글 폼 설문지 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 인포그래픽 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "온라인 화이트보드 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "Notion 템플릿 추천 모음",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "캡쳐 도구 프로그램 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 폰트 다운로드 사이트",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "이미지 형식 변환 PNG JPG WEBP",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "온라인 타이머 스톱워치",
+          "priority": "low",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "사진 콜라주 만들기 무료",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 메모 앱 프로그램 추천",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "캔바 vs 미리캔버스 비교 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 PDF 편집 사이트 TOP 5 비교",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "무료 이미지 편집 사이트 TOP 5 비교",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "노션 vs 트렐로 업무 도구 비교",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        }
+      ],
+      "priority_rank": 3,
+      "competition_level": "높음 (서비스 키워드) / 중간 (비교 리뷰)",
+      "cpc_potential": "중간 ($0.1~$0.3, SaaS 연관 시 $0.5+)",
+      "entry_difficulty": "중간",
+      "strategy": "서비스 직접 키워드 회피, 'TOP 5 비교/추천/리뷰' 형태 공략",
+      "main_competitor": "Smallpdf, iLovePDF, Canva 등 서비스 사이트 (직접 키워드만)"
+    },
+    "스마트폰 활용": {
+      "keywords": [
+        {
+          "keyword": "아이폰 숨은 기능 꿀팁",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 숨은 기능 꿀팁",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 배터리 절약 설정",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 배터리 절약 방법",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오톡 숨은 기능 팁",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오톡 용량 줄이기 정리",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오톡 예약 메시지 보내기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 사진 정리 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 사진 정리 용량 확보",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 저장공간 부족 해결",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 갤럭시 데이터 이동",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 화면 녹화 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 단축어 만들기 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 빅스비 루틴 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 백업 방법 총정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 위젯 설정 꾸미기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 위젯 설정 활용",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스팸 전화 차단 앱 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "네이버 앱 숨은 기능",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "유용한 무료 앱 추천",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 사진 잘 찍는 법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 스크린타임 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 디지털 웰빙 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "핸드폰 느려졌을 때 해결",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오톡 멀티프로필 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "네이버 페이 사용법 혜택",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오페이 사용법 혜택",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "에어드롭 사용법 설정",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 니어바이쉐어 사용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 와이파이 안될 때",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 업데이트 방법 주의사항",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 소프트웨어 업데이트",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 보안 설정 필수",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이클라우드 사용법 용량 관리",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "삼성 클라우드 사용법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "유튜브 광고 없이 보는 법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "핸드폰 분실 찾기 방법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 갤럭시 비교 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 카메라 설정 팁",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오톡 오픈채팅 만들기",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 키보드 설정 꿀팁",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 키보드 설정 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 화면 미러링 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "인스타그램 사용법 팁",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "틱톡 사용법 기초",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "배달앱 할인 꿀팁 정리",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "모바일 신분증 발급 방법",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "알뜰폰 요금제 추천 비교",
+          "priority": "high",
+          "status": "pending",
+          "note": "숨은 기회 - 우선 공략",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "eSIM 사용법 설정 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "스마트폰 초기화 방법",
+          "priority": "medium",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "카카오톡 숨은 기능 2026 총정리",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "갤럭시 One UI 7 새 기능 총정리",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        },
+        {
+          "keyword": "아이폰 iOS 19 새 기능 총정리",
+          "priority": "high",
+          "status": "pending",
+          "search_volume": null,
+          "difficulty": null,
+          "search_intent": null,
+          "verified": false,
+          "verified_at": null
+        }
+      ],
+      "priority_rank": 2,
+      "competition_level": "높음 (빅키워드) / 중간 (한국 앱/시즌 키워드)",
+      "cpc_potential": "중간 ($0.1~$0.3, 기기 비교 시 $0.5+)",
+      "entry_difficulty": "중간~쉬움",
+      "strategy": "OS 업데이트/신기기 출시 시즌 속도전 + 카카오톡 등 한국 특화 앱 키워드",
+      "main_competitor": "CIO Korea, 디지털투데이 등 미디어 (블로그도 진입 가능)"
+    }
+  },
+  "updated_at": "2026-02-18",
+  "analysis_notes": "경쟁도 분석 완료. 공략 순서: AI도구(1) > 스마트폰(2) > 무료툴(3) > PC관리(4) > 엑셀(5)"
+}

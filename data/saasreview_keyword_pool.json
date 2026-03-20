@@ -1,0 +1,331 @@
+{
+  "blog": "saasscout-review.blogspot.com",
+  "created_at": "2026-03-18",
+  "description": "SaaS and software review keywords",
+  "categories": {
+    "Project Management Tools": {
+      "keywords": [
+        {
+          "keyword": "Notion vs Obsidian comparison 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best project management tools for small teams",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-19T13:15:56.229269"
+        },
+        {
+          "keyword": "Trello vs Asana vs Monday comparison",
+          "priority": "high",
+          "status": "published",
+          "published_at": "2026-03-20",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "ClickUp review pros and cons",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "Jira alternatives for non-developers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Linear app review project management",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "free project management tools comparison",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-20T19:01:30"
+        },
+        {
+          "keyword": "Basecamp vs Notion for team collaboration",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best Kanban board tools 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Smartsheet vs Excel for project tracking",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        }
+      ]
+    },
+    "CRM & Sales Tools": {
+      "keywords": [
+        {
+          "keyword": "best CRM for small business 2026",
+          "priority": "high",
+          "status": "published",
+          "search_intent": "comparison",
+          "published_at": "2026-03-20T14:30:48.545168"
+        },
+        {
+          "keyword": "HubSpot vs Salesforce comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "free CRM tools for startups",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Pipedrive review pros and cons",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "best email marketing tools comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Mailchimp vs ConvertKit vs Beehiiv",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "sales automation tools for solopreneurs",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Zoho CRM review 2026",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "best invoicing software for freelancers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "customer support tools comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        }
+      ]
+    },
+    "Design & Creative Tools": {
+      "keywords": [
+        {
+          "keyword": "Figma vs Canva for non-designers",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best AI design tools 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Canva Pro review is it worth it",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "Adobe Express vs Canva comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best free stock photo sites",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "video editing tools for beginners",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Loom vs Vidyard screen recording comparison",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best presentation tools beyond PowerPoint",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Miro vs FigJam for whiteboarding",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best brand kit tools for startups",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison"
+        }
+      ]
+    },
+    "Productivity & Note-taking": {
+      "keywords": [
+        {
+          "keyword": "Notion vs Obsidian vs Logseq comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best second brain tools 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Todoist vs TickTick vs Things 3",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best calendar apps for productivity",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Notion templates for freelancers",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "best focus and pomodoro apps",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Readwise Reader review 2026",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "informational"
+        },
+        {
+          "keyword": "best habit tracker apps comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Coda vs Notion for documents",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best AI meeting assistant tools",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        }
+      ]
+    },
+    "Developer Tools": {
+      "keywords": [
+        {
+          "keyword": "GitHub Copilot vs Cursor vs Cody comparison",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best CI CD tools for small teams",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Vercel vs Netlify vs Cloudflare Pages",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best API testing tools Postman alternatives",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Supabase vs Firebase comparison 2026",
+          "priority": "high",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best database GUI tools comparison",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Terraform vs Pulumi infrastructure comparison",
+          "priority": "low",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best error monitoring tools Sentry alternatives",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "Docker Desktop alternatives 2026",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        },
+        {
+          "keyword": "best low code platforms for developers",
+          "priority": "medium",
+          "status": "pending",
+          "search_intent": "comparison"
+        }
+      ]
+    }
+  }
+}
