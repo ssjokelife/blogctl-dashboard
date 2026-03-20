@@ -41,46 +41,46 @@ export default function Dashboard() {
   const totalBlogs = Object.keys(keywordStats).length;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <header className="border-b border-zinc-800 px-6 py-4">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+      <header className="border-b border-zinc-200 px-6 py-4">
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center text-sm font-bold">B</div>
+            <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center text-sm font-bold text-white">B</div>
             <h1 className="text-lg font-semibold">BlogCtl Dashboard</h1>
           </div>
-          <nav className="flex gap-6 text-sm text-zinc-400">
-            <a href="/" className="text-zinc-100">대시보드</a>
-            <a href="/keywords" className="hover:text-zinc-100 transition-colors">키워드</a>
-            <a href="/publish-log" className="hover:text-zinc-100 transition-colors">발행 로그</a>
+          <nav className="flex gap-6 text-sm text-zinc-500">
+            <a href="/" className="text-zinc-900 font-medium">대시보드</a>
+            <a href="/keywords" className="hover:text-zinc-900 transition-colors">키워드</a>
+            <a href="/publish-log" className="hover:text-zinc-900 transition-colors">발행 로그</a>
           </nav>
         </div>
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-8 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-white border-zinc-200 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-400">총 발행</CardTitle>
+              <CardTitle className="text-sm font-medium text-zinc-500">총 발행</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">{publishStats.totalPublished.toLocaleString()}</div>
-              <p className="text-sm text-zinc-500 mt-1">오늘 +{publishStats.todayPublished}</p>
+              <p className="text-sm text-zinc-400 mt-1">오늘 +{publishStats.todayPublished}</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-white border-zinc-200 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-400">키워드 대기</CardTitle>
+              <CardTitle className="text-sm font-medium text-zinc-500">키워드 대기</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">{totalPending}</div>
-              <p className="text-sm text-zinc-500 mt-1">{totalBlogs}개 블로그</p>
+              <p className="text-sm text-zinc-400 mt-1">{totalBlogs}개 블로그</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-white border-zinc-200 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-400">쿠팡 클릭</CardTitle>
+              <CardTitle className="text-sm font-medium text-zinc-500">쿠팡 클릭</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold">7<span className="text-lg text-zinc-500">/일</span></div>
@@ -88,13 +88,13 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-white border-zinc-200 shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-zinc-400">수익</CardTitle>
+              <CardTitle className="text-sm font-medium text-zinc-500">수익</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-zinc-500">&#8361;0</div>
-              <p className="text-sm text-zinc-500 mt-1">쿠팡 + 애드센스</p>
+              <div className="text-3xl font-bold text-zinc-300">&#8361;0</div>
+              <p className="text-sm text-zinc-400 mt-1">쿠팡 + 애드센스</p>
             </CardContent>
           </Card>
         </div>
@@ -107,19 +107,19 @@ export default function Dashboard() {
           </TabsList>
 
           <TabsContent value="blogs">
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="bg-white border-zinc-200 shadow-sm">
               <CardHeader>
                 <CardTitle className="text-base">블로그별 발행 현황</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-zinc-800 hover:bg-zinc-800/50">
-                      <TableHead className="text-zinc-400">블로그</TableHead>
-                      <TableHead className="text-zinc-400 text-right">총 발행</TableHead>
-                      <TableHead className="text-zinc-400 text-right">오늘</TableHead>
-                      <TableHead className="text-zinc-400 text-right">키워드 대기</TableHead>
-                      <TableHead className="text-zinc-400">상태</TableHead>
+                    <TableRow className="border-zinc-100 hover:bg-zinc-50">
+                      <TableHead className="text-zinc-500">블로그</TableHead>
+                      <TableHead className="text-zinc-500 text-right">총 발행</TableHead>
+                      <TableHead className="text-zinc-500 text-right">오늘</TableHead>
+                      <TableHead className="text-zinc-500 text-right">키워드 대기</TableHead>
+                      <TableHead className="text-zinc-500">상태</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -128,14 +128,14 @@ export default function Dashboard() {
                       .map(([blog, counts]) => {
                         const kwStat = keywordStats[blog];
                         return (
-                          <TableRow key={blog} className="border-zinc-800 hover:bg-zinc-800/50">
+                          <TableRow key={blog} className="border-zinc-100 hover:bg-zinc-50">
                             <TableCell className="font-medium">{BLOG_LABELS[blog] || blog}</TableCell>
                             <TableCell className="text-right font-mono">{counts.total}</TableCell>
                             <TableCell className="text-right font-mono">
                               {counts.today > 0 ? (
-                                <span className="text-emerald-400">+{counts.today}</span>
+                                <span className="text-emerald-600">+{counts.today}</span>
                               ) : (
-                                <span className="text-zinc-600">0</span>
+                                <span className="text-zinc-300">0</span>
                               )}
                             </TableCell>
                             <TableCell className="text-right font-mono">{kwStat?.pending || "-"}</TableCell>
@@ -152,22 +152,22 @@ export default function Dashboard() {
           </TabsContent>
 
           <TabsContent value="recent">
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="bg-white border-zinc-200 shadow-sm">
               <CardHeader>
                 <CardTitle className="text-base">최근 발행 글</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-zinc-800 hover:bg-zinc-800/50">
-                      <TableHead className="text-zinc-400">블로그</TableHead>
-                      <TableHead className="text-zinc-400">제목</TableHead>
-                      <TableHead className="text-zinc-400">발행일</TableHead>
+                    <TableRow className="border-zinc-100 hover:bg-zinc-50">
+                      <TableHead className="text-zinc-500">블로그</TableHead>
+                      <TableHead className="text-zinc-500">제목</TableHead>
+                      <TableHead className="text-zinc-500">발행일</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {recentPublished.map((entry) => (
-                      <TableRow key={entry.slug} className="border-zinc-800 hover:bg-zinc-800/50">
+                      <TableRow key={entry.slug} className="border-zinc-100 hover:bg-zinc-50">
                         <TableCell>
                           <Badge variant="outline" className="text-xs">
                             {BLOG_LABELS[entry.blog] || entry.blog}
@@ -178,7 +178,7 @@ export default function Dashboard() {
                             href={entry.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-zinc-200 hover:text-emerald-400 transition-colors"
+                            className="text-zinc-800 hover:text-emerald-600 transition-colors"
                           >
                             {(entry.title || entry.slug).slice(0, 50)}
                             {(entry.title || "").length > 50 ? "..." : ""}
@@ -196,20 +196,20 @@ export default function Dashboard() {
           </TabsContent>
 
           <TabsContent value="keywords">
-            <Card className="bg-zinc-900 border-zinc-800">
+            <Card className="bg-white border-zinc-200 shadow-sm">
               <CardHeader>
                 <CardTitle className="text-base">키워드풀 현황</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-zinc-800 hover:bg-zinc-800/50">
-                      <TableHead className="text-zinc-400">블로그</TableHead>
-                      <TableHead className="text-zinc-400 text-right">전체</TableHead>
-                      <TableHead className="text-zinc-400 text-right">발행됨</TableHead>
-                      <TableHead className="text-zinc-400 text-right">대기</TableHead>
-                      <TableHead className="text-zinc-400 text-right">소진 예상</TableHead>
-                      <TableHead className="text-zinc-400">상태</TableHead>
+                    <TableRow className="border-zinc-100 hover:bg-zinc-50">
+                      <TableHead className="text-zinc-500">블로그</TableHead>
+                      <TableHead className="text-zinc-500 text-right">전체</TableHead>
+                      <TableHead className="text-zinc-500 text-right">발행됨</TableHead>
+                      <TableHead className="text-zinc-500 text-right">대기</TableHead>
+                      <TableHead className="text-zinc-500 text-right">소진 예상</TableHead>
+                      <TableHead className="text-zinc-500">상태</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -219,13 +219,13 @@ export default function Dashboard() {
                         const dailyRate = blog === "jokelife" ? 3 : ["kyeyangdak", "lukulu", "moneysave", "healthnote", "saasreview", "rukkuru"].includes(blog) ? 2 : 1;
                         const daysLeft = Math.floor(stat.pending / dailyRate);
                         return (
-                          <TableRow key={blog} className="border-zinc-800 hover:bg-zinc-800/50">
+                          <TableRow key={blog} className="border-zinc-100 hover:bg-zinc-50">
                             <TableCell className="font-medium">{BLOG_LABELS[blog] || blog}</TableCell>
                             <TableCell className="text-right font-mono">{stat.total}</TableCell>
                             <TableCell className="text-right font-mono text-zinc-500">{stat.published}</TableCell>
                             <TableCell className="text-right font-mono">{stat.pending}</TableCell>
                             <TableCell className="text-right font-mono">
-                              <span className={daysLeft <= 10 ? "text-red-400" : daysLeft <= 20 ? "text-yellow-400" : "text-zinc-400"}>
+                              <span className={daysLeft <= 10 ? "text-red-400" : daysLeft <= 20 ? "text-yellow-400" : "text-zinc-500"}>
                                 {daysLeft}일
                               </span>
                             </TableCell>
