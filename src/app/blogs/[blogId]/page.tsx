@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table'
+import { PublishButton } from '@/components/publish-button'
 import { updatePersona, addKeyword, updateKeywordStatus, deleteKeyword } from './actions'
 
 export default async function BlogDetailPage({
@@ -222,14 +223,8 @@ export default async function BlogDetailPage({
                         {kw.expected_clicks_4w || '-'}
                       </TableCell>
                       <TableCell>
-                        <div className="flex gap-1">
-                          <form action={updateKeywordStatus}>
-                            <input type="hidden" name="keywordId" value={kw.id} />
-                            <input type="hidden" name="blogId" value={blogId} />
-                            <input type="hidden" name="status" value="published" />
-                            <button type="submit" className="text-xs text-emerald-600 hover:text-emerald-800">발행</button>
-                          </form>
-                          <span className="text-gray-300">|</span>
+                        <div className="flex items-center gap-2">
+                          <PublishButton blogId={blogId} keywordId={kw.id} keyword={kw.keyword} />
                           <form action={deleteKeyword}>
                             <input type="hidden" name="keywordId" value={kw.id} />
                             <input type="hidden" name="blogId" value={blogId} />
@@ -247,7 +242,67 @@ export default async function BlogDetailPage({
             )}
           </CardContent>
         </Card>
+        {/* 발행 작업 이력 */}
+        <PublishJobsCard blogId={blogId} userId={user.id} />
       </main>
     </div>
+  )
+}
+
+async function PublishJobsCard({ blogId, userId }: { blogId: string; userId: string }) {
+  const supabase = await createClient()
+  const { data: jobs } = await supabase
+    .from('publish_jobs')
+    .select('*')
+    .eq('blog_id', blogId)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(10)
+
+  if (!jobs || jobs.length === 0) return null
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>최근 발행 작업</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>키워드</TableHead>
+              <TableHead>상태</TableHead>
+              <TableHead>제목</TableHead>
+              <TableHead>생성일</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {jobs.map((job) => (
+              <TableRow key={job.id}>
+                <TableCell className="font-medium">{job.keyword}</TableCell>
+                <TableCell>
+                  <Badge className={
+                    job.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
+                    job.status === 'failed' ? 'bg-red-100 text-red-700' :
+                    job.status === 'generating' ? 'bg-blue-100 text-blue-700' :
+                    'bg-gray-100 text-gray-600'
+                  }>
+                    {job.status === 'completed' ? '완료' :
+                     job.status === 'failed' ? '실패' :
+                     job.status === 'generating' ? '생성 중' : '대기'}
+                  </Badge>
+                </TableCell>
+                <TableCell className="text-sm text-gray-500 max-w-64 truncate">
+                  {(job.metadata as { title?: string })?.title || '-'}
+                </TableCell>
+                <TableCell className="text-sm text-gray-400 tabular-nums">
+                  {job.created_at?.replace('T', ' ').slice(0, 16)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   )
 }
