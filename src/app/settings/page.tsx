@@ -82,7 +82,9 @@ export default async function SettingsPage() {
                 <TableBody>
                   {blogs.map((blog) => (
                     <TableRow key={blog.id}>
-                      <TableCell className="font-medium">{blog.label}</TableCell>
+                      <TableCell className="font-medium">
+                        <a href={`/blogs/${blog.id}`} className="text-emerald-600 hover:underline">{blog.label}</a>
+                      </TableCell>
                       <TableCell className="text-gray-500 text-sm font-mono">{blog.id}</TableCell>
                       <TableCell>
                         <Badge variant="outline">{blog.platform}</Badge>
