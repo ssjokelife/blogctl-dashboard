@@ -77,7 +77,13 @@ ${description}
 
 키워드: ${keyword}
 
-HTML 본문만 작성해주세요. <!DOCTYPE>, <html>, <head>, <body> 태그는 제외하고 콘텐츠 부분만 작성합니다.`
+다음 JSON 형식으로 응답해주세요:
+{
+  "title": "SEO에 최적화된 블로그 제목",
+  "html": "HTML 본문 (h2/h3 구조화, <p>, <ul> 등 사용. <!DOCTYPE> 등 제외)",
+  "tags": ["태그1", "태그2", "태그3", "태그4", "태그5"],
+  "meta_description": "검색 결과에 표시될 150자 이내 요약"
+}`
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o',
@@ -87,13 +93,22 @@ HTML 본문만 작성해주세요. <!DOCTYPE>, <html>, <head>, <body> 태그는 
       ],
       max_tokens: 4000,
       temperature: 0.7,
+      response_format: { type: 'json_object' },
     })
 
-    const contentHtml = completion.choices[0]?.message?.content || ''
+    const raw = completion.choices[0]?.message?.content || '{}'
+    let parsed: { title?: string; html?: string; tags?: string[]; meta_description?: string }
+    try {
+      parsed = JSON.parse(raw)
+    } catch {
+      // JSON 파싱 실패 시 raw를 HTML로 취급
+      parsed = { html: raw, title: keyword, tags: [], meta_description: '' }
+    }
 
-    // 제목 추출 (첫 번째 h2 또는 키워드 기반)
-    const titleMatch = contentHtml.match(/<h2[^>]*>(.*?)<\/h2>/i)
-    const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '') : keyword
+    const title = parsed.title || keyword
+    const contentHtml = parsed.html || raw
+    const tags = parsed.tags || []
+    const metaDescription = parsed.meta_description || ''
 
     // Telegram 알림
     const telegramSent = await sendTelegramNotification(
@@ -109,7 +124,10 @@ HTML 본문만 작성해주세요. <!DOCTYPE>, <html>, <head>, <body> 태그는 
         content_html: contentHtml,
         completed_at: new Date().toISOString(),
         telegram_sent: telegramSent,
-        metadata: { title, model: 'gpt-4o', tokens: completion.usage?.total_tokens },
+        metadata: {
+          title, tags, meta_description: metaDescription,
+          model: 'gpt-4o', tokens: completion.usage?.total_tokens,
+        },
       })
       .eq('id', job.id)
 
@@ -125,6 +143,7 @@ HTML 본문만 작성해주세요. <!DOCTYPE>, <html>, <head>, <body> 태그는 
     return NextResponse.json({
       jobId: job.id,
       title,
+      tags,
       contentLength: contentHtml.length,
       tokens: completion.usage?.total_tokens,
     })
