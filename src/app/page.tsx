@@ -1,4 +1,4 @@
-import { getDashboardData, getRecentPublished } from "@/lib/data";
+import { getDashboardData, getRecentPublished, BLOG_LABELS } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,25 +11,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const BLOG_LABELS: Record<string, string> = {
-  kyeyangdak: "계양닭 (기술)",
-  jokelife: "조크라이프 (IT)",
-  lukulu: "루꾸루 (라이프)",
-  lifezig: "직구언니 (쿠팡)",
-  rukkuru: "새싹맘 (네이버)",
-  moneysave: "머니노트 (재테크)",
-  healthnote: "건강노트 (건강)",
-  aitoolspick: "AI Tools Pick",
-  seasiaguide: "SeAsia Guide",
-  codefirst: "CodeFirst",
-  saasreview: "SaaS Scout",
-  freelancehub: "FreelanceHub",
-  unknown: "기타",
-};
-
-export default function Dashboard() {
-  const { publishStats, keywordStats } = getDashboardData();
-  const recentPublished = getRecentPublished(15);
+export default async function Dashboard() {
+  const { publishStats, keywordStats } = await getDashboardData();
+  const recentPublished = await getRecentPublished(15);
   const totalPending = Object.values(keywordStats).reduce((s, v) => s + v.pending, 0);
   const totalBlogs = Object.keys(keywordStats).length;
 

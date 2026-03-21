@@ -1,4 +1,4 @@
-import { getRecentPublished } from "@/lib/data";
+import { getRecentPublished, BLOG_LABELS } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,22 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const BLOG_LABELS: Record<string, string> = {
-  kyeyangdak: "계양닭",
-  jokelife: "조크라이프",
-  lukulu: "루꾸루",
-  lifezig: "직구언니",
-  rukkuru: "새싹맘",
-  moneysave: "머니노트",
-  healthnote: "건강노트",
-  aitoolspick: "AI Tools",
-  seasiaguide: "SeAsia",
-  codefirst: "CodeFirst",
-  saasreview: "SaaS Scout",
-  freelancehub: "FreelanceHub",
-  unknown: "기타",
-};
 
 const BLOG_COLORS: Record<string, string> = {
   kyeyangdak: "bg-blue-100 text-blue-700",
@@ -41,8 +25,8 @@ const BLOG_COLORS: Record<string, string> = {
   freelancehub: "bg-violet-100 text-violet-700",
 };
 
-export default function PublishLogPage() {
-  const entries = getRecentPublished(100);
+export default async function PublishLogPage() {
+  const entries = await getRecentPublished(100);
 
   // Group by date
   const grouped: Record<string, typeof entries> = {};

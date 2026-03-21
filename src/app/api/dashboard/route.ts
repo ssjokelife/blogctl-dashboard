@@ -4,6 +4,6 @@ import { getDashboardData } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const data = getDashboardData();
+  const data = await getDashboardData();
   return NextResponse.json(data);
 }

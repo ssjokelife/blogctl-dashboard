@@ -1,4 +1,4 @@
-import { getAllKeywordStats, getKeywordPool } from "@/lib/data";
+import { getAllKeywordStats, getKeywordPool, BLOG_LABELS } from "@/lib/data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,21 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const BLOG_LABELS: Record<string, string> = {
-  kyeyangdak: "계양닭 (기술)",
-  jokelife: "조크라이프 (IT)",
-  lukulu: "루꾸루 (라이프)",
-  lifezig: "직구언니 (쿠팡)",
-  rukkuru: "새싹맘 (네이버)",
-  moneysave: "머니노트 (재테크)",
-  healthnote: "건강노트 (건강)",
-  aitoolspick: "AI Tools Pick",
-  seasiaguide: "SeAsia Guide",
-  codefirst: "CodeFirst",
-  saasreview: "SaaS Scout",
-  freelancehub: "FreelanceHub",
-};
 
 const BLOGS = Object.keys(BLOG_LABELS);
 
@@ -40,8 +25,8 @@ export default async function KeywordsPage({
 }) {
   const params = await searchParams;
   const selectedBlog = params.blog || "kyeyangdak";
-  const pool = getKeywordPool(selectedBlog);
-  const allStats = getAllKeywordStats();
+  const pool = await getKeywordPool(selectedBlog);
+  const allStats = await getAllKeywordStats();
 
   const pendingKeywords = pool?.keywords
     .filter((k) => k.status !== "published")
