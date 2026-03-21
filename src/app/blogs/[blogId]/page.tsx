@@ -7,6 +7,8 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table'
 import { PublishButton } from '@/components/publish-button'
+import { KeywordSuggest } from '@/components/keyword-suggest'
+import { RenovatePanel } from '@/components/renovate-panel'
 import { updatePersona, addKeyword, updateKeywordStatus, deleteKeyword } from './actions'
 
 export default async function BlogDetailPage({
@@ -153,6 +155,9 @@ export default async function BlogDetailPage({
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* AI 키워드 추천 */}
+            <KeywordSuggest blogId={blogId} />
+
             {/* 키워드 추가 */}
             <form action={addKeyword} className="flex gap-2 items-end">
               <input type="hidden" name="blogId" value={blogId} />
@@ -242,6 +247,17 @@ export default async function BlogDetailPage({
             )}
           </CardContent>
         </Card>
+        {/* 글 리노베이션 */}
+        <Card>
+          <CardHeader>
+            <CardTitle>글 리노베이션</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-500 mb-3">기존 발행 글을 AI가 분석하여 개선이 필요한 글을 추천합니다.</p>
+            <RenovatePanel blogId={blogId} />
+          </CardContent>
+        </Card>
+
         {/* 발행 작업 이력 */}
         <PublishJobsCard blogId={blogId} userId={user.id} />
       </main>
