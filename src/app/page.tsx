@@ -1,4 +1,6 @@
 import { getDashboardData, getRecentPublished, BLOG_LABELS } from "@/lib/data";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -12,6 +14,17 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default async function Dashboard() {
+  // 블로그가 없는 사용자 → 온보딩
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user) {
+    const { count } = await supabase
+      .from("blogs")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id);
+    if (!count || count === 0) redirect("/onboarding");
+  }
+
   const { publishStats, keywordStats } = await getDashboardData();
   const recentPublished = await getRecentPublished(15);
   const totalPending = Object.values(keywordStats).reduce((s, v) => s + v.pending, 0);
