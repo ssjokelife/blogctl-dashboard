@@ -36,10 +36,22 @@ export async function getPublishStats() {
   const supabase = await createClient();
   const today = new Date().toISOString().split("T")[0];
 
-  // 블로그별 총 발행 수
-  const { data: allLogs } = await supabase
+  // 블로그별 총 발행 수 (Supabase 기본 1000행 제한 해제)
+  const { count } = await supabase
     .from("publish_logs")
-    .select("blog_id, published_at");
+    .select("*", { count: "exact", head: true });
+
+  // 전체 데이터를 가져오기 위해 페이지네이션
+  const allLogs: { blog_id: string; published_at: string | null }[] = [];
+  const pageSize = 1000;
+  const totalRows = count || 0;
+  for (let offset = 0; offset < totalRows; offset += pageSize) {
+    const { data } = await supabase
+      .from("publish_logs")
+      .select("blog_id, published_at")
+      .range(offset, offset + pageSize - 1);
+    if (data) allLogs.push(...data);
+  }
 
   const blogCounts: Record<string, { total: number; today: number }> = {};
   let totalPublished = 0;
