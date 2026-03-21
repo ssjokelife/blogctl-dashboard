@@ -1,6 +1,7 @@
 import { getDashboardData, getRecentPublished, BLOG_LABELS } from "@/lib/data";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { Header } from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -32,20 +33,7 @@ export default async function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b px-6 py-4">
-        <div className="mx-auto max-w-7xl flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center text-sm font-bold text-white">B</div>
-            <h1 className="text-lg font-semibold text-gray-900">BlogCtl Dashboard</h1>
-          </div>
-          <nav className="flex gap-6 text-sm">
-            <a href="/" className="text-gray-900 font-medium">대시보드</a>
-            <a href="/keywords" className="text-gray-500 hover:text-gray-900">키워드</a>
-            <a href="/publish-log" className="text-gray-500 hover:text-gray-900">발행 로그</a>
-          </nav>
-        </div>
-      </header>
+      <Header active="dashboard" />
 
       <main className="mx-auto max-w-7xl px-6 py-8 space-y-6">
         {/* Summary Cards */}
