@@ -279,7 +279,9 @@ async function PublishJobsCard({ blogId, userId }: { blogId: string; userId: str
           <TableBody>
             {jobs.map((job) => (
               <TableRow key={job.id}>
-                <TableCell className="font-medium">{job.keyword}</TableCell>
+                <TableCell className="font-medium">
+                  <a href={`/jobs/${job.id}`} className="text-emerald-600 hover:underline">{job.keyword}</a>
+                </TableCell>
                 <TableCell>
                   <Badge className={
                     job.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :

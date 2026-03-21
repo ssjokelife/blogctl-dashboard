@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { sendTelegramNotification, formatPublishNotification } from '@/lib/telegram'
 
 export const maxDuration = 60
 
@@ -94,13 +95,20 @@ HTML 본문만 작성해주세요. <!DOCTYPE>, <html>, <head>, <body> 태그는 
     const titleMatch = contentHtml.match(/<h2[^>]*>(.*?)<\/h2>/i)
     const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '') : keyword
 
+    // Telegram 알림
+    const telegramSent = await sendTelegramNotification(
+      formatPublishNotification(blog.label, title, keyword)
+    )
+
     // 작업 업데이트
     await supabase
       .from('publish_jobs')
       .update({
         status: 'completed',
+        title,
         content_html: contentHtml,
         completed_at: new Date().toISOString(),
+        telegram_sent: telegramSent,
         metadata: { title, model: 'gpt-4o', tokens: completion.usage?.total_tokens },
       })
       .eq('id', job.id)

@@ -198,3 +198,31 @@ export async function getRecentPublished(limit = 20) {
     published_at: entry.published_at,
   }));
 }
+
+export async function getPublishTrend(days = 14) {
+  const supabase = await createClient();
+  const since = new Date();
+  since.setDate(since.getDate() - days);
+
+  const { data } = await supabase
+    .from("publish_logs")
+    .select("published_at")
+    .gte("published_at", since.toISOString());
+
+  const counts: Record<string, number> = {};
+  for (let i = 0; i < days; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - (days - 1 - i));
+    counts[d.toISOString().slice(0, 10)] = 0;
+  }
+
+  for (const log of data || []) {
+    const date = log.published_at?.slice(0, 10);
+    if (date && counts[date] !== undefined) counts[date]++;
+  }
+
+  return Object.entries(counts).map(([date, count]) => ({
+    date: date.slice(5), // MM-DD
+    count,
+  }));
+}

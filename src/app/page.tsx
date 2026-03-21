@@ -1,4 +1,4 @@
-import { getDashboardData, getRecentPublished, BLOG_LABELS } from "@/lib/data";
+import { getDashboardData, getRecentPublished, getPublishTrend, BLOG_LABELS } from "@/lib/data";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Header } from "@/components/header";
@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PublishChart } from "@/components/publish-chart";
 
 export default async function Dashboard() {
   // 블로그가 없는 사용자 → 온보딩
@@ -28,6 +29,7 @@ export default async function Dashboard() {
 
   const { publishStats, keywordStats } = await getDashboardData();
   const recentPublished = await getRecentPublished(15);
+  const publishTrend = await getPublishTrend(14);
   const totalPending = Object.values(keywordStats).reduce((s, v) => s + v.pending, 0);
   const totalBlogs = Object.keys(keywordStats).length;
 
@@ -78,6 +80,16 @@ export default async function Dashboard() {
             </CardContent>
           </Card>
         </div>
+
+        {/* 발행 추이 차트 */}
+        <Card>
+          <CardHeader>
+            <CardTitle>최근 14일 발행 추이</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PublishChart data={publishTrend} />
+          </CardContent>
+        </Card>
 
         {/* Tabs */}
         <Tabs defaultValue="blogs" className="space-y-4">
