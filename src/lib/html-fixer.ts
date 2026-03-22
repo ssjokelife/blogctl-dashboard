@@ -70,5 +70,23 @@ export function fixHtml(html: string, options: FixHtmlOptions): string {
     result = result.replace(/<h2([^>]*)>(.*?)<\/h2>/i, `<h2$1>$2 (${currentYear})</h2>`)
   }
 
+  // 11. Add internal blog links if fewer than 2 exist (Medium 8)
+  if (options.blogUrl) {
+    const escapedUrl = options.blogUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const internalLinkCount = (result.match(new RegExp(escapedUrl, 'gi')) || []).length
+    if (internalLinkCount < 2) {
+      const blogHome = options.blogUrl.startsWith('http') ? options.blogUrl : `https://${options.blogUrl}`
+      const linkHtml = `<p style="margin-top:2em;padding:1em;background:#f8f9fa;border-radius:8px;font-size:0.9em">
+<strong>관련 글 더 보기</strong><br>
+<a href="${blogHome}" target="_blank" rel="noopener noreferrer">${blogHome.replace('https://', '')} 블로그 홈</a>
+</p>`
+      if (result.includes('</article>')) {
+        result = result.replace('</article>', `${linkHtml}</article>`)
+      } else {
+        result += linkHtml
+      }
+    }
+  }
+
   return result
 }

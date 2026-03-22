@@ -18,9 +18,20 @@ export async function updatePersona(formData: FormData) {
   const categoriesRaw = (formData.get('categories') as string)?.trim() || ''
   const categories = categoriesRaw ? categoriesRaw.split(',').map(c => c.trim()).filter(Boolean) : []
 
+  // 목소리 설정 (Medium 6)
+  const perspective = (formData.get('perspective') as string)?.trim() || ''
+  const catchphrasesRaw = (formData.get('catchphrases') as string)?.trim() || ''
+  const emotionalRangeRaw = (formData.get('emotionalRange') as string)?.trim() || ''
+
+  const voice = perspective ? {
+    perspective,
+    catchphrases: catchphrasesRaw ? catchphrasesRaw.split(',').map(c => c.trim()).filter(Boolean) : [],
+    emotional_range: emotionalRangeRaw ? emotionalRangeRaw.split(',').map(c => c.trim()).filter(Boolean) : [],
+  } : null
+
   await supabase
     .from('blogs')
-    .update({ persona, description, target_audience: targetAudience, style, ending_form: endingForm, categories })
+    .update({ persona, description, target_audience: targetAudience, style, ending_form: endingForm, categories, voice })
     .eq('id', blogId)
     .eq('user_id', user.id)
 
