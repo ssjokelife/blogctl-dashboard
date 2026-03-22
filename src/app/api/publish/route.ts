@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { sendTelegramNotification, formatPublishNotification } from '@/lib/telegram'
+import { fixHtml } from '@/lib/html-fixer'
+import { validateContent, type QualityResult } from '@/lib/quality'
 
 export const maxDuration = 60
 
@@ -85,34 +87,58 @@ ${description}
   "meta_description": "검색 결과에 표시될 150자 이내 요약"
 }`
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
+    // 품질 검증 + 재시도 루프 (최대 2회 재생성)
+    const maxRetries = 2
+    let finalHtml = ''
+    let finalTitle = ''
+    let finalTags: string[] = []
+    let finalMetaDescription = ''
+    let totalTokens = 0
+    let qualityResult: QualityResult | null = null
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      const messages: { role: 'system' | 'user'; content: string }[] = [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      max_tokens: 4000,
-      temperature: 0.7,
-      response_format: { type: 'json_object' },
-    })
+        { role: 'user', content: attempt === 0 ? userPrompt : userPrompt + `\n\n[개선 피드백]\n이전 콘텐츠의 품질이 부족했습니다. 다음 사항을 개선해주세요:\n${qualityResult?.suggestions.join('\n') || '전반적 품질 향상'}` },
+      ]
 
-    const raw = completion.choices[0]?.message?.content || '{}'
-    let parsed: { title?: string; html?: string; tags?: string[]; meta_description?: string }
-    try {
-      parsed = JSON.parse(raw)
-    } catch {
-      // JSON 파싱 실패 시 raw를 HTML로 취급
-      parsed = { html: raw, title: keyword, tags: [], meta_description: '' }
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages,
+        max_tokens: 4000,
+        temperature: 0.7,
+        response_format: { type: 'json_object' },
+      })
+
+      const raw = completion.choices[0]?.message?.content || '{}'
+      totalTokens += completion.usage?.total_tokens || 0
+      let parsed: { title?: string; html?: string; tags?: string[]; meta_description?: string }
+      try {
+        parsed = JSON.parse(raw)
+      } catch {
+        parsed = { html: raw, title: keyword, tags: [], meta_description: '' }
+      }
+
+      finalTitle = parsed.title || keyword
+      finalHtml = fixHtml(parsed.html || raw, { keyword, blogId })
+      finalTags = parsed.tags || []
+      finalMetaDescription = parsed.meta_description || ''
+
+      // 품질 검증
+      qualityResult = validateContent(finalHtml, keyword)
+
+      if (qualityResult.passed) {
+        break // 품질 통과
+      }
+
+      if (attempt < maxRetries) {
+        console.log(`Quality retry ${attempt + 1}: score ${qualityResult.totalScore}/100`)
+      }
     }
-
-    const title = parsed.title || keyword
-    const contentHtml = parsed.html || raw
-    const tags = parsed.tags || []
-    const metaDescription = parsed.meta_description || ''
 
     // Telegram 알림
     const telegramSent = await sendTelegramNotification(
-      formatPublishNotification(blog.label, title, keyword)
+      formatPublishNotification(blog.label, finalTitle, keyword)
     )
 
     // 작업 업데이트
@@ -120,23 +146,26 @@ ${description}
       .from('publish_jobs')
       .update({
         status: 'completed',
-        title,
-        content_html: contentHtml,
+        title: finalTitle,
+        content_html: finalHtml,
         completed_at: new Date().toISOString(),
         telegram_sent: telegramSent,
         metadata: {
-          title, tags, meta_description: metaDescription,
-          model: 'gpt-4o-mini', tokens: completion.usage?.total_tokens,
+          title: finalTitle, tags: finalTags, meta_description: finalMetaDescription,
+          model: 'gpt-4o-mini', tokens: totalTokens,
+          quality_score: qualityResult?.totalScore,
+          quality_passed: qualityResult?.passed,
         },
       })
       .eq('id', job.id)
 
     return NextResponse.json({
       jobId: job.id,
-      title,
-      tags,
-      contentLength: contentHtml.length,
-      tokens: completion.usage?.total_tokens,
+      title: finalTitle,
+      tags: finalTags,
+      contentLength: finalHtml.length,
+      tokens: totalTokens,
+      qualityScore: qualityResult?.totalScore,
     })
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
