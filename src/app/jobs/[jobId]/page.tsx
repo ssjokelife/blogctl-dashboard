@@ -90,6 +90,30 @@ export default async function JobDetailPage({
           </Card>
         )}
 
+        {job.sns_status && (
+          <Card>
+            <CardContent className="py-4">
+              <p className="text-sm text-gray-500 mb-2">SNS 공유</p>
+              <div className="flex gap-3">
+                {Object.entries(job.sns_status as Record<string, string>).map(([platform, status]) => (
+                  <Badge
+                    key={platform}
+                    className={status === 'shared' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}
+                  >
+                    {platform === 'linkedin' ? 'LinkedIn' : platform === 'twitter' ? 'Twitter' : platform}
+                    {status === 'shared' ? ' v' : ' x'}
+                  </Badge>
+                ))}
+              </div>
+              {job.sns_shared_at && (
+                <p className="text-xs text-gray-400 mt-2">
+                  {new Date(job.sns_shared_at).toLocaleString('ko-KR')}
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
         {job.publish_error && (
           <Card>
             <CardContent className="py-4">
