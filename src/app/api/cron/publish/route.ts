@@ -81,7 +81,7 @@ export async function GET(request: Request) {
       const targetAudience = blog.target_audience || '일반 독자'
 
       const completion = await openai.chat.completions.create({
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
         messages: [
           {
             role: 'system',
@@ -91,16 +91,26 @@ HTML 형식으로 블로그 글 본문을 작성하세요. h2/h3로 구조화, �
           },
           {
             role: 'user',
-            content: `키워드: ${nextKeyword.keyword}\n\nHTML 본문만 작성하세요.`
+            content: `키워드: ${nextKeyword.keyword}\n\n다음 JSON 형식으로 응답해주세요:\n{\n  "title": "SEO에 최적화된 블로그 제목",\n  "html": "HTML 본문 (h2/h3 구조화, <p>, <ul> 등 사용. <!DOCTYPE> 등 제외)",\n  "tags": ["태그1", "태그2", "태그3", "태그4", "태그5"],\n  "meta_description": "검색 결과에 표시될 150자 이내 요약"\n}`
           },
         ],
         max_tokens: 4000,
         temperature: 0.7,
+        response_format: { type: 'json_object' },
       })
 
-      const contentHtml = completion.choices[0]?.message?.content || ''
-      const titleMatch = contentHtml.match(/<h2[^>]*>(.*?)<\/h2>/i)
-      const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '') : nextKeyword.keyword
+      const raw = completion.choices[0]?.message?.content || '{}'
+      let parsed: { title?: string; html?: string; tags?: string[]; meta_description?: string }
+      try {
+        parsed = JSON.parse(raw)
+      } catch {
+        parsed = { html: raw, title: nextKeyword.keyword, tags: [], meta_description: '' }
+      }
+
+      const title = parsed.title || nextKeyword.keyword
+      const contentHtml = parsed.html || raw
+      const tags = parsed.tags || []
+      const metaDescription = parsed.meta_description || ''
 
       const telegramSent = await sendTelegramNotification(
         formatPublishNotification(blog.label, title, nextKeyword.keyword)
@@ -109,19 +119,14 @@ HTML 형식으로 블로그 글 본문을 작성하세요. h2/h3로 구조화, �
       await supabase
         .from('publish_jobs')
         .update({
-          status: 'completed',
+          status: 'publish_requested',
           title,
           content_html: contentHtml,
           completed_at: new Date().toISOString(),
           telegram_sent: telegramSent,
-          metadata: { title, model: 'gpt-4o', tokens: completion.usage?.total_tokens, source: 'cron' },
+          metadata: { title, tags, meta_description: metaDescription, model: 'gpt-4o-mini', tokens: completion.usage?.total_tokens, source: 'cron' },
         })
         .eq('id', job.id)
-
-      await supabase
-        .from('keywords')
-        .update({ status: 'published', published_at: new Date().toISOString() })
-        .eq('id', nextKeyword.id)
 
       publishedCount++
     } catch (err) {
