@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { CopyButton } from '@/components/copy-button'
 import { PublishButtonPlatform } from '@/components/publish-button-platform'
+import { IndexButton } from '@/components/index-button'
 
 export default async function JobDetailPage({
   params,
@@ -80,7 +81,10 @@ export default async function JobDetailPage({
                     {job.published_url}
                   </a>
                 </div>
-                <CopyButton text={job.published_url} label="URL 복사" />
+                <div className="flex items-center gap-2">
+                  <CopyButton text={job.published_url} label="URL 복사" />
+                  <IndexButton jobId={job.id} initialStatus={job.index_status} />
+                </div>
               </div>
             </CardContent>
           </Card>
