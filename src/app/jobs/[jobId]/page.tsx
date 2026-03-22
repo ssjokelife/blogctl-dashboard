@@ -98,23 +98,70 @@ export default async function JobDetailPage({
           </Card>
         )}
 
-        {job.sns_status && (
+        {(job.sns_status || job.index_status) && (
           <Card>
-            <CardContent className="py-4">
-              <p className="text-sm text-gray-500 mb-2">SNS 공유</p>
-              <div className="flex gap-3">
-                {Object.entries(job.sns_status as Record<string, string>).map(([platform, status]) => (
-                  <Badge
-                    key={platform}
-                    className={status === 'shared' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}
-                  >
-                    {platform === 'linkedin' ? 'LinkedIn' : platform === 'twitter' ? 'Twitter' : platform}
-                    {status === 'shared' ? ' v' : ' x'}
+            <CardContent className="py-4 space-y-3">
+              {/* SNS 공유 상태 */}
+              {job.sns_status && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">SNS 공유</p>
+                  <div className="flex gap-2 mb-2">
+                    {Object.entries(job.sns_status as Record<string, string>).map(([platform, status]) => (
+                      <Badge
+                        key={platform}
+                        className={status === 'shared' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}
+                      >
+                        {platform === 'linkedin' ? 'LinkedIn' : platform === 'twitter' ? 'Twitter' : platform}
+                        {status === 'shared' ? ' ✓' : ' ✗'}
+                      </Badge>
+                    ))}
+                  </div>
+                  {Object.values(job.sns_status as Record<string, string>).some(s => s === 'failed') && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm">
+                      <p className="font-medium text-amber-800">SNS 세션 만료</p>
+                      <p className="text-amber-700 mt-1">워커 PC에서 세션을 재설정하세요:</p>
+                      <code className="block bg-amber-100 rounded px-2 py-1 mt-1 text-xs text-amber-900 font-mono">
+                        blogctl login --blog {job.blog_id}
+                      </code>
+                      <p className="text-amber-600 mt-1 text-xs">브라우저가 열리면 LinkedIn/Twitter에 로그인 후 Enter를 누르세요.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* GSC 인덱싱 상태 */}
+              {job.index_status && (
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">GSC 인덱싱</p>
+                  <Badge className={
+                    job.index_status === 'requested' ? 'bg-emerald-100 text-emerald-700' :
+                    job.index_status === 'failed' ? 'bg-red-100 text-red-700' :
+                    'bg-gray-100 text-gray-700'
+                  }>
+                    {job.index_status === 'requested' ? '요청됨' :
+                     job.index_status === 'failed' ? '실패' : job.index_status}
                   </Badge>
-                ))}
-              </div>
-              {job.sns_shared_at && (
-                <p className="text-xs text-gray-400 mt-2">
+                  {job.index_status === 'failed' && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm mt-2">
+                      <p className="font-medium text-amber-800">인덱싱 실패</p>
+                      <p className="text-amber-700 mt-1">가능한 원인:</p>
+                      <ul className="list-disc list-inside text-amber-700 text-xs mt-1 space-y-0.5">
+                        <li>GSC 속성에 Service Account가 소유자로 등록되지 않음</li>
+                        <li>blogctl-indexing@blogctl.iam.gserviceaccount.com 을 GSC에 추가 필요</li>
+                      </ul>
+                      <p className="text-amber-600 mt-2 text-xs">수동 인덱싱: 위의 &quot;GSC 인덱싱&quot; 버튼으로 재시도할 수 있습니다.</p>
+                    </div>
+                  )}
+                  {job.indexed_at && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      {new Date(job.indexed_at).toLocaleString('ko-KR')}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {job.sns_shared_at && !job.index_status && (
+                <p className="text-xs text-gray-400">
                   {new Date(job.sns_shared_at).toLocaleString('ko-KR')}
                 </p>
               )}
