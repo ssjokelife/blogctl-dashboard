@@ -1,4 +1,4 @@
-import { getDashboardData, getRecentPublished, getPublishTrend, BLOG_LABELS } from "@/lib/data";
+import { getDashboardData, getRecentPublished, getPublishTrend, getRevenueTrend, BLOG_LABELS } from "@/lib/data";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Header } from "@/components/header";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PublishChart } from "@/components/publish-chart";
+import { RevenueChart } from "@/components/revenue-chart";
 
 export default async function Dashboard() {
   // 블로그가 없는 사용자 → 온보딩
@@ -30,6 +31,9 @@ export default async function Dashboard() {
   const { publishStats, keywordStats } = await getDashboardData();
   const recentPublished = await getRecentPublished(15);
   const publishTrend = await getPublishTrend(14);
+  const revenueTrend = await getRevenueTrend(14);
+  const latestRevenue = revenueTrend.length > 0 ? revenueTrend[revenueTrend.length - 1] : null;
+  const totalRevenueToday = (latestRevenue?.adsense || 0) + (latestRevenue?.coupang || 0);
   const totalPending = Object.values(keywordStats).reduce((s, v) => s + v.pending, 0);
   const totalBlogs = Object.keys(keywordStats).length;
 
@@ -65,8 +69,11 @@ export default async function Dashboard() {
               <CardTitle className="text-sm font-medium text-gray-500">쿠팡 클릭</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-gray-900">7<span className="text-lg text-gray-400">/일</span></div>
-              <p className="text-sm text-emerald-600 mt-1">+133% vs 이전</p>
+              <div className="text-3xl font-bold text-gray-900">
+                {latestRevenue?.coupang !== undefined ? (latestRevenue.coupang > 0 ? Math.round(latestRevenue.coupang) : 0) : <span className="text-gray-300">-</span>}
+                <span className="text-lg text-gray-400">/일</span>
+              </div>
+              <p className="text-sm text-gray-400 mt-1">쿠팡 파트너스</p>
             </CardContent>
           </Card>
 
@@ -75,7 +82,9 @@ export default async function Dashboard() {
               <CardTitle className="text-sm font-medium text-gray-500">수익</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-gray-300">&#8361;0</div>
+              <div className={`text-3xl font-bold ${totalRevenueToday > 0 ? 'text-gray-900' : 'text-gray-300'}`}>
+                &#8361;{totalRevenueToday.toLocaleString()}
+              </div>
               <p className="text-sm text-gray-400 mt-1">쿠팡 + 애드센스</p>
             </CardContent>
           </Card>
@@ -88,6 +97,15 @@ export default async function Dashboard() {
           </CardHeader>
           <CardContent>
             <PublishChart data={publishTrend} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>최근 14일 수익 추이</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <RevenueChart data={revenueTrend} />
           </CardContent>
         </Card>
 

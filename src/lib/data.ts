@@ -199,6 +199,27 @@ export async function getRecentPublished(limit = 20) {
   }));
 }
 
+export async function getRevenueTrend(days = 14) {
+  const supabase = await createClient();
+  const since = new Date();
+  since.setDate(since.getDate() - days);
+
+  const { data } = await supabase
+    .from("measurements")
+    .select("measured_at, data")
+    .gte("measured_at", since.toISOString().slice(0, 10))
+    .order("measured_at", { ascending: true });
+
+  return (data || []).map((m) => {
+    const d = (m.data || {}) as Record<string, { revenue?: number }>;
+    return {
+      date: (m.measured_at as string).slice(5), // MM-DD
+      adsense: d.adsense?.revenue || 0,
+      coupang: d.coupang?.revenue || 0,
+    };
+  });
+}
+
 export async function getPublishTrend(days = 14) {
   const supabase = await createClient();
   const since = new Date();
