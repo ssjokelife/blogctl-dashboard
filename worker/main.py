@@ -79,16 +79,18 @@ async def auto_index(job_id: int, url: str):
 
 async def claim_and_process(job_id: int):
     """원자적 클레임 + 발행 처리"""
-    # 원자적 클레임: publish_requested → publishing (전체 컬럼 반환)
-    result = supabase.table("publish_jobs").update({
+    # 원자적 클레임: publish_requested → publishing
+    claim_result = supabase.table("publish_jobs").update({
         "status": "publishing",
-    }).eq("id", job_id).eq("status", "publish_requested").select("*").execute()
+    }).eq("id", job_id).eq("status", "publish_requested").execute()
 
-    if not result.data:
+    if not claim_result.data:
         logger.info(f"  Job {job_id}: 이미 다른 워커가 처리 중, skip")
         return
 
-    job = result.data[0]
+    # 전체 데이터 조회
+    job_result = supabase.table("publish_jobs").select("*").eq("id", job_id).single().execute()
+    job = job_result.data
     logger.info(f"  Job {job_id}: 클레임 성공 — blog={job['blog_id']}, keyword={job['keyword']}")
 
     # blogctl로 발행
