@@ -28,7 +28,7 @@ export default async function Dashboard() {
     if (!count || count === 0) redirect("/onboarding");
   }
 
-  const { publishStats, keywordStats } = await getDashboardData();
+  const { publishStats, keywordStats, blogList } = await getDashboardData();
   const recentPublished = await getRecentPublished(15);
   const publishTrend = await getPublishTrend(14);
   const revenueTrend = await getRevenueTrend(14);
@@ -127,6 +127,7 @@ export default async function Dashboard() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>블로그</TableHead>
+                      <TableHead>URL</TableHead>
                       <TableHead className="text-right">총 발행</TableHead>
                       <TableHead className="text-right">오늘</TableHead>
                       <TableHead className="text-right">키워드 대기</TableHead>
@@ -139,9 +140,24 @@ export default async function Dashboard() {
                       .map(([blog, counts]) => {
                         const kwStat = keywordStats[blog];
                         const pending = kwStat?.pending || 0;
+                        const info = blogList[blog];
+                        const blogUrl = info?.url?.startsWith("http") ? info.url
+                          : info?.platform === "naver" ? `https://blog.naver.com/${info?.url || blog}`
+                          : info?.url?.includes(".") ? `https://${info.url}`
+                          : `https://${info?.url || blog}.tistory.com`;
                         return (
                           <TableRow key={blog}>
-                            <TableCell className="font-medium">{BLOG_LABELS[blog] || blog}</TableCell>
+                            <TableCell className="font-medium">
+                              <a href={`/blogs/${blog}`} className="hover:text-emerald-600">
+                                {info?.label || BLOG_LABELS[blog] || blog}
+                              </a>
+                            </TableCell>
+                            <TableCell>
+                              <a href={blogUrl} target="_blank" rel="noopener noreferrer"
+                                 className="text-xs text-gray-400 hover:text-emerald-600 truncate block max-w-[160px]">
+                                {blogUrl.replace("https://", "")}
+                              </a>
+                            </TableCell>
                             <TableCell className="text-right tabular-nums">{counts.total}</TableCell>
                             <TableCell className="text-right tabular-nums">
                               {counts.today > 0 ? (

@@ -164,19 +164,36 @@ export async function getPredictions() {
   }));
 }
 
+export async function getBlogList() {
+  const supabase = await createClient();
+
+  const { data } = await supabase
+    .from("blogs")
+    .select("id, label, url, platform, adapter");
+
+  return (data || []).reduce(
+    (acc, b) => {
+      acc[b.id] = { label: b.label, url: b.url, platform: b.platform, adapter: b.adapter };
+      return acc;
+    },
+    {} as Record<string, { label: string; url: string; platform: string; adapter: string }>,
+  );
+}
+
 export async function getDashboardData() {
-  const [publishStats, keywordStats, latestMeasurement, predictions] = await Promise.all([
+  const [publishStats, keywordStats, latestMeasurement, predictions, blogList] = await Promise.all([
     getPublishStats(),
     getAllKeywordStats(),
     getLatestMeasurement(),
     getPredictions(),
+    getBlogList(),
   ]);
 
   const topPredictions = [...predictions]
     .sort((a, b) => (b.expected_clicks_4w || 0) - (a.expected_clicks_4w || 0))
     .slice(0, 10);
 
-  return { publishStats, keywordStats, latestMeasurement, topPredictions };
+  return { publishStats, keywordStats, latestMeasurement, topPredictions, blogList };
 }
 
 export async function getRecentPublished(limit = 20) {
