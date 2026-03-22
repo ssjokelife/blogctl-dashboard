@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { LogoutButton } from './logout-button'
+import { WorkerStatus } from './worker-status'
 
 export async function Header({ active }: { active: 'dashboard' | 'keywords' | 'publish-log' | 'settings' }) {
   const supabase = await createClient()
@@ -34,6 +35,7 @@ export async function Header({ active }: { active: 'dashboard' | 'keywords' | 'p
               </a>
             ))}
           </nav>
+          <WorkerStatus />
           {user && (
             <div className="flex items-center gap-3 border-l pl-4">
               {avatarUrl ? (
