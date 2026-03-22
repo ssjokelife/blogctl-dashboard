@@ -10,17 +10,19 @@ export async function POST(
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  // 원자적 상태 전환: completed → publish_requested
+  // 원자적 상태 전환: completed/publish_failed → publish_requested
+  // completed: 최초 발행 요청, publish_failed: 재시도
   const { data: job, error } = await supabase
     .from('publish_jobs')
     .update({
       status: 'publish_requested',
       publish_attempts: 0,
       publish_error: null,
+      publish_error_type: null,
     })
     .eq('id', Number(jobId))
     .eq('user_id', user.id)
-    .eq('status', 'completed')
+    .in('status', ['completed', 'publish_failed'])
     .select()
     .single()
 

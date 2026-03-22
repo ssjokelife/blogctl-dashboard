@@ -56,7 +56,7 @@ export default async function JobDetailPage({
           {job.telegram_sent && <Badge variant="outline">Telegram 전송됨</Badge>}
         </div>
 
-        {job.status === 'completed' && (
+        {(job.status === 'completed' || job.status === 'publish_failed') && (
           <PublishButtonPlatform jobId={job.id} />
         )}
 

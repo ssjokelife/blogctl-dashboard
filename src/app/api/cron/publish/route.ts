@@ -47,6 +47,12 @@ export async function GET(request: Request) {
 
     if (!nextKeyword) continue
 
+    // 키워드를 즉시 'generating' 상태로 변경 (다음 Cron에서 재선택 방지)
+    await supabase
+      .from('keywords')
+      .update({ status: 'generating' })
+      .eq('id', nextKeyword.id)
+
     // 오늘 이미 이 블로그에서 발행했는지 확인
     const today = new Date().toISOString().slice(0, 10)
     const { count } = await supabase

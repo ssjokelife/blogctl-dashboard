@@ -17,7 +17,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger("worker")
 
-supabase = get_supabase()
 running = True
 
 
@@ -33,10 +32,10 @@ signal.signal(signal.SIGTERM, handle_shutdown)
 
 async def claim_and_process(job_id: int):
     """원자적 클레임 + 발행 처리"""
-    # 원자적 클레임: publish_requested → publishing
+    # 원자적 클레임: publish_requested → publishing (전체 컬럼 반환)
     result = supabase.table("publish_jobs").update({
         "status": "publishing",
-    }).eq("id", job_id).eq("status", "publish_requested").execute()
+    }).eq("id", job_id).eq("status", "publish_requested").select("*").execute()
 
     if not result.data:
         logger.info(f"  Job {job_id}: 이미 다른 워커가 처리 중, skip")
@@ -118,6 +117,9 @@ async def poll_pending_jobs():
 
 
 async def main():
+    global supabase
+    supabase = get_supabase()
+
     logger.info("=" * 50)
     logger.info("BlogCtl Worker 시작")
     logger.info(f"  User ID: {WORKER_USER_ID}")
@@ -159,18 +161,21 @@ async def main():
     # 시작 시 미처리 job 확인
     await poll_pending_jobs()
 
-    # 메인 루프: heartbeat + 폴링
+    # 메인 루프: heartbeat + 폴링 (별도 카운터)
     heartbeat_counter = 0
+    poll_counter = 0
     while running:
         await asyncio.sleep(1)
         heartbeat_counter += 1
+        poll_counter += 1
 
         if heartbeat_counter >= HEARTBEAT_INTERVAL:
             await send_heartbeat()
             heartbeat_counter = 0
 
-        if heartbeat_counter % POLL_INTERVAL == 0:
+        if poll_counter >= POLL_INTERVAL:
             await poll_pending_jobs()
+            poll_counter = 0
 
     # 종료 처리
     logger.info("워커 종료 중...")
