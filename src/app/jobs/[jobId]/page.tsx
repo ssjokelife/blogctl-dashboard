@@ -214,7 +214,7 @@ export default async function JobDetailPage({
                 <CardTitle className="text-sm text-gray-500">작업 정보</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-4 text-sm">
                   <div>
                     <p className="text-gray-400">키워드</p>
                     <p className="font-medium">{job.keyword}</p>
@@ -234,6 +234,12 @@ export default async function JobDetailPage({
                   <div>
                     <p className="text-gray-400">모델</p>
                     <p className="font-mono">{(metadata.model as string) || '-'}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">품질</p>
+                    <p className={`font-mono ${(metadata.quality_score as number) >= 75 ? 'text-emerald-600' : 'text-amber-600'}`}>
+                      {(metadata.quality_score as number) || '-'}/100
+                    </p>
                   </div>
                 </div>
               </CardContent>
