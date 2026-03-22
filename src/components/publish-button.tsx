@@ -8,7 +8,7 @@ export function PublishButton({ blogId, keywordId, keyword }: {
   keyword: string
 }) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
-  const [result, setResult] = useState<{ title?: string; contentLength?: number; tokens?: number; error?: string } | null>(null)
+  const [result, setResult] = useState<{ title?: string; contentLength?: number; tokens?: number; error?: string; message?: string } | null>(null)
 
   const handlePublish = async () => {
     setStatus('loading')
@@ -52,8 +52,8 @@ export function PublishButton({ blogId, keywordId, keyword }: {
             : 'bg-emerald-600 text-white hover:bg-emerald-700'
         }`}
       >
-        {status === 'loading' ? '생성 중...' :
-         status === 'done' ? `완료 (${result?.tokens}토큰)` :
+        {status === 'loading' ? '요청 중...' :
+         status === 'done' ? (result?.message || '생성 요청됨') :
          status === 'error' ? '실패' :
          '글 생성'}
       </button>

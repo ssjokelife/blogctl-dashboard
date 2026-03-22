@@ -47,6 +47,8 @@ export default async function JobDetailPage({
         <div className="flex items-center gap-3">
           <a href={`/blogs/${job.blog_id}`} className="text-gray-400 hover:text-gray-600 text-sm">&larr; 블로그</a>
           <Badge className={
+            job.status === 'generate_requested' ? 'bg-amber-100 text-amber-700' :
+            job.status === 'generating' ? 'bg-purple-100 text-purple-700' :
             job.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
             job.status === 'published' ? 'bg-blue-100 text-blue-700' :
             job.status === 'publish_requested' ? 'bg-amber-100 text-amber-700' :
@@ -55,7 +57,9 @@ export default async function JobDetailPage({
             job.status === 'failed' ? 'bg-red-100 text-red-700' :
             'bg-blue-100 text-blue-700'
           }>
-            {job.status === 'completed' ? '생성 완료' :
+            {job.status === 'generate_requested' ? '생성 대기' :
+             job.status === 'generating' ? '생성 중' :
+             job.status === 'completed' ? '생성 완료' :
              job.status === 'published' ? '발행됨' :
              job.status === 'publish_requested' ? '발행 대기' :
              job.status === 'publishing' ? '발행 중' :
