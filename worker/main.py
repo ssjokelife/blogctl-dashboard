@@ -95,14 +95,26 @@ async def claim_and_process(job_id: int):
     pub_result = await publish_job(job)
 
     if pub_result["success"]:
-        # 발행 성공
-        supabase.table("publish_jobs").update({
+        # SNS 공유 결과 추출
+        results = pub_result.get("results", {})
+        sns_status = {}
+        if results.get("linkedin") is not None:
+            sns_status["linkedin"] = "shared" if results["linkedin"] else "failed"
+        if results.get("twitter") is not None:
+            sns_status["twitter"] = "shared" if results["twitter"] else "failed"
+
+        update_data = {
             "status": "published",
             "published_url": pub_result["published_url"],
             "published_at": datetime.now(timezone.utc).isoformat(),
             "publish_error": None,
             "publish_error_type": None,
-        }).eq("id", job_id).execute()
+        }
+        if sns_status:
+            update_data["sns_status"] = sns_status
+            update_data["sns_shared_at"] = datetime.now(timezone.utc).isoformat()
+
+        supabase.table("publish_jobs").update(update_data).eq("id", job_id).execute()
 
         # keyword status를 published로 변경
         if job.get("keyword_id"):
@@ -112,6 +124,8 @@ async def claim_and_process(job_id: int):
             }).eq("id", job["keyword_id"]).eq("user_id", WORKER_USER_ID).execute()
 
         logger.info(f"  Job {job_id}: 발행 성공 — {pub_result['published_url']}")
+        if sns_status:
+            logger.info(f"  Job {job_id}: SNS 공유 — {sns_status}")
 
         # GSC 자동 인덱싱 요청
         if pub_result["published_url"]:
