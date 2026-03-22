@@ -86,7 +86,7 @@ ${description}
 }`
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
@@ -126,19 +126,10 @@ ${description}
         telegram_sent: telegramSent,
         metadata: {
           title, tags, meta_description: metaDescription,
-          model: 'gpt-4o', tokens: completion.usage?.total_tokens,
+          model: 'gpt-4o-mini', tokens: completion.usage?.total_tokens,
         },
       })
       .eq('id', job.id)
-
-    // 키워드 상태 업데이트
-    if (keywordId) {
-      await supabase
-        .from('keywords')
-        .update({ status: 'published', published_at: new Date().toISOString() })
-        .eq('id', keywordId)
-        .eq('user_id', user.id)
-    }
 
     return NextResponse.json({
       jobId: job.id,

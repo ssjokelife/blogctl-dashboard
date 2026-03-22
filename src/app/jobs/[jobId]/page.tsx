@@ -4,6 +4,7 @@ import { Header } from '@/components/header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { CopyButton } from '@/components/copy-button'
+import { PublishButtonPlatform } from '@/components/publish-button-platform'
 
 export default async function JobDetailPage({
   params,
@@ -38,19 +39,67 @@ export default async function JobDetailPage({
           <a href={`/blogs/${job.blog_id}`} className="text-gray-400 hover:text-gray-600 text-sm">&larr; 블로그</a>
           <Badge className={
             job.status === 'completed' ? 'bg-emerald-100 text-emerald-700' :
+            job.status === 'published' ? 'bg-blue-100 text-blue-700' :
+            job.status === 'publish_requested' ? 'bg-amber-100 text-amber-700' :
+            job.status === 'publishing' ? 'bg-purple-100 text-purple-700' :
+            job.status === 'publish_failed' ? 'bg-red-100 text-red-700' :
             job.status === 'failed' ? 'bg-red-100 text-red-700' :
             'bg-blue-100 text-blue-700'
           }>
-            {job.status === 'completed' ? '완료' : job.status === 'failed' ? '실패' : '진행 중'}
+            {job.status === 'completed' ? '생성 완료' :
+             job.status === 'published' ? '발행됨' :
+             job.status === 'publish_requested' ? '발행 대기' :
+             job.status === 'publishing' ? '발행 중' :
+             job.status === 'publish_failed' ? '발행 실패' :
+             job.status === 'failed' ? '생성 실패' : '진행 중'}
           </Badge>
           {job.telegram_sent && <Badge variant="outline">Telegram 전송됨</Badge>}
         </div>
+
+        {(job.status === 'completed' || job.status === 'publish_failed') && (
+          <PublishButtonPlatform jobId={job.id} />
+        )}
 
         {/* 에러 */}
         {job.error_message && (
           <Card>
             <CardContent className="py-4">
               <p className="text-sm text-red-600">오류: {job.error_message}</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {job.published_url && (
+          <Card>
+            <CardContent className="py-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">발행 URL</p>
+                  <a href={job.published_url} target="_blank" rel="noopener noreferrer"
+                     className="text-emerald-600 hover:underline text-sm">
+                    {job.published_url}
+                  </a>
+                </div>
+                <CopyButton text={job.published_url} label="URL 복사" />
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {job.publish_error && (
+          <Card>
+            <CardContent className="py-4">
+              {job.publish_error_type === 'session_expired' ? (
+                <div>
+                  <p className="text-sm text-amber-600 font-medium">세션 만료 — 재로그인 필요</p>
+                  <p className="text-xs text-gray-500 mt-1">워커 PC에서 blogctl login --blog {job.blog_id} 실행 후 재시도하세요.</p>
+                </div>
+              ) : (
+                <p className="text-sm text-red-600">발행 오류: {job.publish_error}</p>
+              )}
+              {job.publish_attempts > 0 && (
+                <p className="text-xs text-gray-400 mt-1">시도 횟수: {job.publish_attempts}/3</p>
+              )}
             </CardContent>
           </Card>
         )}
