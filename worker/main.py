@@ -5,7 +5,7 @@ import signal
 from datetime import datetime, timezone
 
 from config import (
-    get_supabase, WORKER_USER_ID, HEARTBEAT_INTERVAL,
+    get_supabase, get_async_supabase, WORKER_USER_ID, HEARTBEAT_INTERVAL,
     POLL_INTERVAL, MAX_PUBLISH_ATTEMPTS,
 )
 from publisher import publish_job
@@ -194,34 +194,39 @@ async def main():
     # 초기 heartbeat
     await send_heartbeat()
 
-    # Realtime 콜백에서 asyncio 태스크 생성을 위해 루프 캡처
-    loop = asyncio.get_running_loop()
+    # Realtime 구독 시도 (실패 시 폴링으로 폴백)
+    realtime_ok = False
+    async_supabase = None
+    channel = None
+    try:
+        async_supabase = await get_async_supabase()
+        loop = asyncio.get_running_loop()
 
-    def on_realtime_change(payload):
-        """Realtime 이벤트 핸들러 (별도 스레드에서 호출됨)"""
-        new = payload.get("new") or payload.get("record", {})
-        if not new:
-            return
+        def on_realtime_change(payload):
+            new = payload.get("new") or payload.get("record", {})
+            if not new:
+                return
+            if new.get("status") == "publish_requested" and new.get("user_id") == WORKER_USER_ID:
+                job_id = new["id"]
+                logger.info(f"Realtime: publish_requested 감지 — Job {job_id}")
+                loop.call_soon_threadsafe(
+                    lambda jid=job_id: loop.create_task(claim_and_process(jid))
+                )
 
-        if new.get("status") == "publish_requested" and new.get("user_id") == WORKER_USER_ID:
-            job_id = new["id"]
-            logger.info(f"Realtime: publish_requested 감지 — Job {job_id}")
-            # 별도 스레드에서 호출되므로 call_soon_threadsafe 사용
-            loop.call_soon_threadsafe(
-                lambda jid=job_id: loop.create_task(claim_and_process(jid))
-            )
-
-    # Realtime 구독
-    channel = supabase.channel("publish-jobs-worker")
-    channel.on_postgres_changes(
-        event="*",
-        schema="public",
-        table="publish_jobs",
-        filter=f"user_id=eq.{WORKER_USER_ID}",
-        callback=on_realtime_change,
-    )
-    channel.subscribe()
-    logger.info("Supabase Realtime 구독 시작")
+        channel = async_supabase.channel("publish-jobs-worker")
+        channel.on_postgres_changes(
+            event="*",
+            schema="public",
+            table="publish_jobs",
+            filter=f"user_id=eq.{WORKER_USER_ID}",
+            callback=on_realtime_change,
+        )
+        await channel.subscribe()
+        realtime_ok = True
+        logger.info("Supabase Realtime 구독 시작")
+    except Exception as e:
+        logger.warning(f"Realtime 구독 실패, 폴링 모드로 동작 — {e}")
+        realtime_ok = False
 
     # 시작 시 미처리 job 확인
     await poll_pending_jobs()
@@ -249,7 +254,11 @@ async def main():
         "last_heartbeat_at": datetime.now(timezone.utc).isoformat(),
     }).eq("user_id", WORKER_USER_ID).eq("worker_name", "default").execute()
 
-    supabase.remove_channel(channel)
+    if async_supabase and channel:
+        try:
+            await async_supabase.remove_channel(channel)
+        except Exception:
+            pass
     logger.info("워커 종료 완료")
 
 
