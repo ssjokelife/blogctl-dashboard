@@ -30,6 +30,53 @@ signal.signal(signal.SIGINT, handle_shutdown)
 signal.signal(signal.SIGTERM, handle_shutdown)
 
 
+async def auto_index(job_id: int, url: str):
+    """발행 후 자동 GSC 인덱싱 요청"""
+    try:
+        import httpx
+        # 대시보드 API를 통하지 않고 직접 Google API 호출
+        from google.oauth2 import service_account
+        from google.auth.transport.requests import Request as GoogleRequest
+        import json
+        import os
+
+        key_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_KEY")
+        if not key_json:
+            logger.info(f"  Job {job_id}: GSC 인덱싱 건너뜀 (GOOGLE_SERVICE_ACCOUNT_KEY 미설정)")
+            return
+
+        credentials = service_account.Credentials.from_service_account_info(
+            json.loads(key_json),
+            scopes=["https://www.googleapis.com/auth/indexing"],
+        )
+        credentials.refresh(GoogleRequest())
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://indexing.googleapis.com/v3/urlNotifications:publish",
+                headers={
+                    "Authorization": f"Bearer {credentials.token}",
+                    "Content-Type": "application/json",
+                },
+                json={"url": url, "type": "URL_UPDATED"},
+            )
+
+        if response.status_code == 200:
+            supabase.table("publish_jobs").update({
+                "index_status": "requested",
+                "indexed_at": datetime.now(timezone.utc).isoformat(),
+            }).eq("id", job_id).execute()
+            logger.info(f"  Job {job_id}: GSC 인덱싱 요청 완료 — {url}")
+        else:
+            logger.warning(f"  Job {job_id}: GSC 인덱싱 실패 — {response.status_code}: {response.text}")
+            supabase.table("publish_jobs").update({
+                "index_status": "failed",
+            }).eq("id", job_id).execute()
+
+    except Exception as e:
+        logger.warning(f"  Job {job_id}: GSC 인덱싱 오류 — {e}")
+
+
 async def claim_and_process(job_id: int):
     """원자적 클레임 + 발행 처리"""
     # 원자적 클레임: publish_requested → publishing (전체 컬럼 반환)
@@ -65,6 +112,10 @@ async def claim_and_process(job_id: int):
             }).eq("id", job["keyword_id"]).eq("user_id", WORKER_USER_ID).execute()
 
         logger.info(f"  Job {job_id}: 발행 성공 — {pub_result['published_url']}")
+
+        # GSC 자동 인덱싱 요청
+        if pub_result["published_url"]:
+            await auto_index(job_id, pub_result["published_url"])
     else:
         # 발행 실패
         attempts = (job.get("publish_attempts") or 0) + 1
