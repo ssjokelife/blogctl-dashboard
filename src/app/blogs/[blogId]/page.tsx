@@ -9,6 +9,7 @@ import {
 import { PublishButton } from '@/components/publish-button'
 import { KeywordSuggest } from '@/components/keyword-suggest'
 import { RenovatePanel } from '@/components/renovate-panel'
+import { PreviewButton } from '@/components/preview-button'
 import { updatePersona, addKeyword, updateKeywordStatus, deleteKeyword } from './actions'
 
 export default async function BlogDetailPage({
@@ -133,6 +134,40 @@ export default async function BlogDetailPage({
                 </div>
               </div>
 
+              {/* 목소리 설정 (Medium 6) */}
+              <div className="border-t pt-4 mt-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-3">목소리 설정</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-gray-700">관점</label>
+                    <input
+                      name="perspective"
+                      defaultValue={(blog.voice as Record<string, unknown>)?.perspective as string || ''}
+                      placeholder="예: 실무 경험 기반 1인칭"
+                      className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-gray-700">자주 쓰는 표현</label>
+                    <input
+                      name="catchphrases"
+                      defaultValue={((blog.voice as Record<string, unknown>)?.catchphrases as string[] || []).join(', ')}
+                      placeholder="표현1, 표현2 (쉼표 구분)"
+                      className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-gray-700">감정 범위</label>
+                    <input
+                      name="emotionalRange"
+                      defaultValue={((blog.voice as Record<string, unknown>)?.emotional_range as string[] || []).join(', ')}
+                      placeholder="공감, 호기심, 열정 (쉼표 구분)"
+                      className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <button
                 type="submit"
                 className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition-colors"
@@ -232,6 +267,7 @@ export default async function BlogDetailPage({
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <PublishButton blogId={blogId} keywordId={kw.id} keyword={kw.keyword} />
+                          <PreviewButton blogId={blogId} keywordId={kw.id} keyword={kw.keyword} />
                           <form action={deleteKeyword}>
                             <input type="hidden" name="keywordId" value={kw.id} />
                             <input type="hidden" name="blogId" value={blogId} />

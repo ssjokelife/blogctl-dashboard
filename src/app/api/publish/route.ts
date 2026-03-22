@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { blogId, keywordId, keyword } = body
+  const { blogId, keywordId, keyword, dryRun } = body
 
   if (!blogId || !keyword) {
     return NextResponse.json({ error: 'blogId and keyword are required' }, { status: 400 })
@@ -56,6 +56,35 @@ export async function POST(request: Request) {
     const description = blog.description || ''
     const categories = (blog.categories || []).join(', ')
 
+    // 검색 의도 감지 (Medium 7)
+    function detectSearchIntent(kw: string): string {
+      if (/비교|vs|차이|어떤게|뭐가 더/.test(kw)) return 'comparison'
+      if (/추천|순위|TOP|베스트|인기/.test(kw)) return 'transactional'
+      if (/사이트|공식|홈페이지|로그인/.test(kw)) return 'navigational'
+      return 'informational'
+    }
+    const searchIntent = detectSearchIntent(keyword)
+
+    const intentInstructions: Record<string, string> = {
+      informational: '정보 제공형: 개념 설명 → 상세 분석 → 실용적 팁 → 요약 구조로 작성',
+      comparison: '비교 분석형: 비교 기준 제시 → 항목별 비교 표 → 장단점 → 추천 결론 구조로 작성',
+      transactional: '추천/구매가이드형: 선정 기준 → 순위별 소개 → 각 항목 장단점 → 최종 추천 구조로 작성',
+      navigational: '안내형: 핵심 정보 요약 → 단계별 가이드 → FAQ → 관련 링크 구조로 작성',
+    }
+
+    // 페르소나 목소리 설정 (Medium 6)
+    const voice = (blog.voice || {}) as Record<string, unknown>
+    const voiceInstructions = voice.perspective ? `
+
+## 글쓰기 관점 & 목소리
+- 관점: ${voice.perspective}
+- 의견 스타일: ${voice.opinion_style || '분석적'}
+- 감정 범위: ${(voice.emotional_range as string[])?.join(', ') || '중립적'}
+- 자주 쓰는 표현: ${(voice.catchphrases as string[])?.join(', ') || ''}
+- 스토리텔링 방식: ${voice.storytelling || 'general'}
+- 최소 ${voice.min_opinions || 2}개 이상의 개인 의견/판단을 포함
+- 최소 ${voice.min_emotions || 1}가지 감정 표현 포함` : ''
+
     const isCoupang = blog.adapter === 'coupang'
     const affiliateInstructions = isCoupang ? `
 
@@ -83,7 +112,8 @@ ${description}
 5. 독자에게 실용적인 정보 제공
 6. 마지막에 정리/요약 섹션 포함
 7. <p>, <ul>, <ol>, <strong>, <em> 태그 활용
-8. 코드가 필요하면 <pre><code> 태그 사용${affiliateInstructions}`
+8. 코드가 필요하면 <pre><code> 태그 사용
+9. 콘텐츠 구조: ${intentInstructions[searchIntent]}${affiliateInstructions}${voiceInstructions}`
 
     const userPrompt = `다음 키워드로 블로그 글을 작성해주세요.
 
@@ -130,7 +160,7 @@ ${description}
       }
 
       finalTitle = parsed.title || keyword
-      finalHtml = fixHtml(parsed.html || raw, { keyword, blogId })
+      finalHtml = fixHtml(parsed.html || raw, { keyword, blogId, blogUrl: blog.url })
       finalTags = parsed.tags || []
       finalMetaDescription = parsed.meta_description || ''
 
@@ -144,6 +174,23 @@ ${description}
       if (attempt < maxRetries) {
         console.log(`Quality retry ${attempt + 1}: score ${qualityResult.totalScore}/100`)
       }
+    }
+
+    // Medium 10: Dry-run preview mode
+    if (dryRun) {
+      // dryRun일 때는 job을 삭제하고 미리보기만 반환
+      await supabase.from('publish_jobs').delete().eq('id', job.id)
+      return NextResponse.json({
+        preview: true,
+        title: finalTitle,
+        html: finalHtml,
+        tags: finalTags,
+        metaDescription: finalMetaDescription,
+        qualityScore: qualityResult?.totalScore,
+        qualityPassed: qualityResult?.passed,
+        qualityChecks: qualityResult?.checks,
+        tokens: totalTokens,
+      })
     }
 
     // Telegram 알림
