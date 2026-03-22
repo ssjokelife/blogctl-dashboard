@@ -26,6 +26,14 @@ export default async function JobDetailPage({
 
   if (!job) redirect('/')
 
+  // 블로그 정보 (플랫폼 표시용)
+  const { data: blog } = await supabase
+    .from('blogs')
+    .select('platform, label')
+    .eq('id', job.blog_id)
+    .eq('user_id', user.id)
+    .single()
+
   const metadata = (job.metadata || {}) as Record<string, unknown>
   const tags = (metadata.tags as string[]) || []
   const metaDescription = (metadata.meta_description as string) || ''
@@ -214,14 +222,25 @@ export default async function JobDetailPage({
                 <CardTitle className="text-sm text-gray-500">작업 정보</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-6 gap-4 text-sm">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 text-sm">
                   <div>
                     <p className="text-gray-400">키워드</p>
                     <p className="font-medium">{job.keyword}</p>
                   </div>
                   <div>
                     <p className="text-gray-400">블로그</p>
-                    <p className="font-medium">{job.blog_id}</p>
+                    <p className="font-medium">{blog?.label || job.blog_id}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400">플랫폼</p>
+                    <p className="font-medium">
+                      {blog?.platform === 'tistory' ? 'Tistory' :
+                       blog?.platform === 'naver' ? 'Naver' :
+                       blog?.platform === 'wordpress' ? 'WordPress' :
+                       blog?.platform === 'blogger' ? 'Blogger' :
+                       blog?.platform === 'hashnode' ? 'Hashnode' :
+                       blog?.platform === 'devto' ? 'Dev.to' : blog?.platform || '-'}
+                    </p>
                   </div>
                   <div>
                     <p className="text-gray-400">생성일</p>

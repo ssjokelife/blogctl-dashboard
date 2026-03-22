@@ -184,9 +184,10 @@ export default async function BlogDetailPage({
               </div>
               <div className="w-24 space-y-1">
                 <label className="text-xs text-gray-500">우선순위</label>
-                <select name="priority" className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                <select name="priority" defaultValue="medium" className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                  <option value="urgent">긴급</option>
                   <option value="high">높음</option>
-                  <option value="medium" selected>중간</option>
+                  <option value="medium">중간</option>
                   <option value="low">낮음</option>
                 </select>
               </div>
@@ -217,11 +218,12 @@ export default async function BlogDetailPage({
                       <TableCell className="text-gray-500 text-sm">{kw.category || '-'}</TableCell>
                       <TableCell>
                         <Badge className={
+                          kw.priority === 'urgent' ? 'bg-purple-100 text-purple-700' :
                           kw.priority === 'high' ? 'bg-red-100 text-red-700' :
                           kw.priority === 'medium' ? 'bg-amber-100 text-amber-700' :
                           'bg-gray-100 text-gray-600'
                         }>
-                          {kw.priority === 'high' ? '높음' : kw.priority === 'medium' ? '중간' : '낮음'}
+                          {kw.priority === 'urgent' ? '긴급' : kw.priority === 'high' ? '높음' : kw.priority === 'medium' ? '중간' : '낮음'}
                         </Badge>
                       </TableCell>
                       <TableCell className="tabular-nums text-gray-500">

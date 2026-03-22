@@ -56,6 +56,16 @@ export async function POST(request: Request) {
     const description = blog.description || ''
     const categories = (blog.categories || []).join(', ')
 
+    const isCoupang = blog.adapter === 'coupang'
+    const affiliateInstructions = isCoupang ? `
+
+## 쿠팡 파트너스 콘텐츠 규칙
+1. 제품 리뷰/비교 형식으로 작성
+2. 제품의 장단점을 객관적으로 설명
+3. "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다" 문구를 글 마지막에 포함
+4. 구매 가이드, 체크리스트 형식 활용
+5. 가격대별 추천 또는 용도별 추천 구조 사용` : ''
+
     const systemPrompt = `당신은 "${persona}"입니다.
 ${description}
 
@@ -73,7 +83,7 @@ ${description}
 5. 독자에게 실용적인 정보 제공
 6. 마지막에 정리/요약 섹션 포함
 7. <p>, <ul>, <ol>, <strong>, <em> 태그 활용
-8. 코드가 필요하면 <pre><code> 태그 사용`
+8. 코드가 필요하면 <pre><code> 태그 사용${affiliateInstructions}`
 
     const userPrompt = `다음 키워드로 블로그 글을 작성해주세요.
 
@@ -125,7 +135,7 @@ ${description}
       finalMetaDescription = parsed.meta_description || ''
 
       // 품질 검증
-      qualityResult = validateContent(finalHtml, keyword)
+      qualityResult = validateContent(finalHtml, keyword, blog.adapter)
 
       if (qualityResult.passed) {
         break // 품질 통과
