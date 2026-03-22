@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { LogoutButton } from './logout-button'
 import { WorkerStatus } from './worker-status'
+import { MobileNav } from './mobile-nav'
 
 export async function Header({ active }: { active: 'dashboard' | 'keywords' | 'publish-log' | 'settings' }) {
   const supabase = await createClient()
@@ -17,13 +18,15 @@ export async function Header({ active }: { active: 'dashboard' | 'keywords' | 'p
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email
 
   return (
-    <header className="bg-white border-b px-6 py-4">
+    <header className="bg-white border-b px-4 md:px-6 py-3 md:py-4">
       <div className="mx-auto max-w-7xl flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-emerald-600 flex items-center justify-center text-sm font-bold text-white">B</div>
           <h1 className="text-lg font-semibold text-gray-900">BlogCtl</h1>
         </div>
-        <div className="flex items-center gap-6">
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-6">
           <nav className="flex gap-6 text-sm">
             {navItems.map((item) => (
               <a
@@ -45,10 +48,16 @@ export async function Header({ active }: { active: 'dashboard' | 'keywords' | 'p
                   {(displayName || '?')[0]}
                 </div>
               )}
-              <span className="text-sm text-gray-600 hidden md:block">{displayName}</span>
+              <span className="text-sm text-gray-600">{displayName}</span>
               <LogoutButton />
             </div>
           )}
+        </div>
+
+        {/* Mobile nav */}
+        <div className="md:hidden flex items-center gap-3">
+          <WorkerStatus />
+          <MobileNav active={active} navItems={navItems} />
         </div>
       </div>
     </header>
