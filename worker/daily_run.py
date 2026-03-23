@@ -22,10 +22,10 @@ def collect_analysis(supabase) -> dict:
     ).execute()
     blogs = blogs_result.data or []
 
-    # 측정 데이터 (14일)
+    # 측정 데이터 (14일) — 컬럼명: measured_at
     measurements_result = supabase.table("measurements").select("*").eq(
         "user_id", WORKER_USER_ID
-    ).gte("date", fourteen_days_ago[:10]).execute()
+    ).gte("measured_at", fourteen_days_ago[:10]).execute()
     measurements = measurements_result.data or []
 
     # 키워드
@@ -42,8 +42,8 @@ def collect_analysis(supabase) -> dict:
 
     # 측정 데이터를 날짜 기준으로 분류 (최근 7일 vs 이전 7일)
     seven_days_ago_date = (now - timedelta(days=7)).strftime("%Y-%m-%d")
-    recent_measurements = [m for m in measurements if m.get("date", "") >= seven_days_ago_date]
-    prev_measurements = [m for m in measurements if m.get("date", "") < seven_days_ago_date]
+    recent_measurements = [m for m in measurements if m.get("measured_at", "") >= seven_days_ago_date]
+    prev_measurements = [m for m in measurements if m.get("measured_at", "") < seven_days_ago_date]
 
     # 수익 집계
     def sum_revenue(mlist):
@@ -393,6 +393,7 @@ async def run_daily_workflow(run_id, supabase) -> None:
         # Phase 1: 분석
         supabase.table("daily_runs").update({
             "status": "analyzing",
+            "started_at": datetime.now(timezone.utc).isoformat(),
         }).eq("id", run_id).execute()
 
         analysis = collect_analysis(supabase)
