@@ -1,7 +1,9 @@
 import { getDashboardData, getRecentPublished, getPublishTrend, getRevenueTrend, BLOG_LABELS } from "@/lib/data";
+import { getTodayRun } from "@/lib/daily-run";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Header } from "@/components/header";
+import { DailyRunCard } from "@/components/daily-run-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -28,10 +30,13 @@ export default async function Dashboard() {
     if (!count || count === 0) redirect("/onboarding");
   }
 
-  const { publishStats, keywordStats, blogList } = await getDashboardData();
-  const recentPublished = await getRecentPublished(15);
-  const publishTrend = await getPublishTrend(14);
-  const revenueTrend = await getRevenueTrend(14);
+  const [{ publishStats, keywordStats, blogList }, recentPublished, publishTrend, revenueTrend, todayRun] = await Promise.all([
+    getDashboardData(),
+    getRecentPublished(15),
+    getPublishTrend(14),
+    getRevenueTrend(14),
+    getTodayRun(),
+  ]);
   const latestRevenue = revenueTrend.length > 0 ? revenueTrend[revenueTrend.length - 1] : null;
   const totalRevenueToday = (latestRevenue?.adsense || 0) + (latestRevenue?.coupang || 0);
   const totalPending = Object.values(keywordStats).reduce((s, v) => s + v.pending, 0);
@@ -42,6 +47,9 @@ export default async function Dashboard() {
       <Header active="dashboard" />
 
       <main className="mx-auto max-w-7xl px-6 py-8 space-y-6">
+        {/* Daily Run */}
+        <DailyRunCard initialRun={todayRun} />
+
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
