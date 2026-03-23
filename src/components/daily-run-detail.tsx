@@ -136,6 +136,79 @@ function Stepper({ status }: { status: string }) {
 
 // --- Analysis Section ---
 
+// --- Token Usage ---
+
+function TokenUsage({ analysis }: { analysis: Record<string, unknown> | null }) {
+  const tokenUsage = (analysis?.token_usage || null) as {
+    analysis?: number; plan?: number; content?: number; report?: number; total?: number
+  } | null
+  if (!tokenUsage || !tokenUsage.total) return null
+
+  const items = [
+    { label: '사전분석', value: tokenUsage.analysis || 0 },
+    { label: '계획', value: tokenUsage.plan || 0 },
+    { label: '콘텐츠', value: tokenUsage.content || 0 },
+    { label: '사후분석', value: tokenUsage.report || 0 },
+  ]
+
+  return (
+    <div className="flex flex-wrap gap-3 text-xs text-gray-500 bg-gray-50 rounded-lg px-4 py-2">
+      <span className="font-medium text-gray-700">토큰 사용량</span>
+      {items.map(item => item.value > 0 && (
+        <span key={item.label}>{item.label}: {item.value.toLocaleString()}</span>
+      ))}
+      <span className="font-medium text-gray-900">총 {(tokenUsage.total || 0).toLocaleString()}</span>
+    </div>
+  )
+}
+
+// --- AI Insights ---
+
+function AiInsightsSection({ analysis }: { analysis: Record<string, unknown> | null }) {
+  const insights = (analysis?.ai_insights || null) as {
+    insights?: { topic: string; finding: string; action: string }[]
+    risk_alerts?: string[]
+    summary?: string
+  } | null
+  if (!insights) return null
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">AI 사전분석</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {insights.summary && (
+          <p className="text-sm text-gray-700 font-medium">{insights.summary}</p>
+        )}
+
+        {insights.risk_alerts && insights.risk_alerts.length > 0 && (
+          <div className="space-y-1">
+            {insights.risk_alerts.map((alert, i) => (
+              <div key={i} className="flex items-start gap-2 text-xs text-amber-700 bg-amber-50 rounded px-3 py-1.5">
+                <span className="shrink-0">⚠️</span>
+                <span>{alert}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {insights.insights && insights.insights.length > 0 && (
+          <div className="space-y-2">
+            {insights.insights.map((item, i) => (
+              <div key={i} className="border rounded-lg px-3 py-2 space-y-0.5">
+                <div className="text-xs font-medium text-gray-800">{item.topic}</div>
+                <div className="text-xs text-gray-600">{item.finding}</div>
+                <div className="text-xs text-blue-600">→ {item.action}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
 function AnalysisSection({ analysis, blogList }: {
   analysis: Record<string, unknown> | null
   blogList: BlogList
@@ -153,7 +226,7 @@ function AnalysisSection({ analysis, blogList }: {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">블로그 분석</CardTitle>
+        <CardTitle className="text-base">블로그 현황</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -568,7 +641,13 @@ export function DailyRunDetail({ initialRun, initialJobs, initialLogs = [], blog
         </Card>
       )}
 
-      {/* Analysis */}
+      {/* Token Usage */}
+      <TokenUsage analysis={run.analysis} />
+
+      {/* AI Insights */}
+      <AiInsightsSection analysis={run.analysis} />
+
+      {/* Blog Data */}
       <AnalysisSection analysis={run.analysis} blogList={blogList} />
 
       {/* Publish */}

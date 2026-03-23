@@ -46,7 +46,7 @@ export async function POST(request: Request) {
   const categories = (blog.categories || []).join(', ')
 
   const completion = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'gpt-4o-mini',
     messages: [
       {
         role: 'system',

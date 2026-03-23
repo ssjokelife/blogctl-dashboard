@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   const postList = posts.map(p => `- ${p.title} (${p.published_at?.slice(0, 10)})`).join('\n')
 
   const completion = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'gpt-4o-mini',
     messages: [
       {
         role: 'system',

@@ -167,6 +167,62 @@ def collect_analysis(supabase) -> dict:
     }
 
 
+def generate_ai_insights(analysis: dict) -> tuple:
+    """GPT-4o 사전 분석 — 수집된 데이터에서 인사이트 도출"""
+    import openai
+
+    system_prompt = """당신은 블로그 포트폴리오 분석가입니다.
+블로그 현황 데이터를 분석하여 핵심 인사이트를 도출해주세요.
+
+분석 관점:
+1. 트래픽/수익 추세 (최근 7일 vs 이전 7일)
+2. 키워드풀 건강도 (대기 키워드 비율, urgent/high 비율)
+3. 블로그별 성과 차이와 집중 전략
+4. 수익 구조 (애드센스 vs 쿠팡)
+5. 인덱싱 현황과 개선점
+
+JSON으로 응답:
+{
+  "insights": [
+    {"topic": "주제", "finding": "발견 사항", "action": "권장 조치"}
+  ],
+  "focus_blogs": ["집중해야 할 blog_id 목록"],
+  "risk_alerts": ["주의가 필요한 사항"],
+  "summary": "전체 현황 한 줄 요약"
+}"""
+
+    user_prompt = f"""블로그 분석 데이터:
+{json.dumps(analysis, ensure_ascii=False, default=str)}"""
+
+    tokens_used = 0
+    try:
+        client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            max_tokens=2000,
+            temperature=0.3,
+            response_format={"type": "json_object"},
+        )
+
+        tokens_used = completion.usage.total_tokens if completion.usage else 0
+        raw = completion.choices[0].message.content or "{}"
+        parsed = json.loads(raw)
+        return parsed, tokens_used
+
+    except Exception as e:
+        logger.error(f"AI 사전분석 실패: {e}")
+        return {
+            "insights": [],
+            "focus_blogs": [],
+            "risk_alerts": [f"AI 분석 실패: {str(e)[:100]}"],
+            "summary": "AI 분석을 수행할 수 없어 데이터 기반 계획으로 진행합니다.",
+        }, tokens_used
+
+
 def select_top_keywords(supabase, blog_id, count) -> list:
     """우선순위 기반 키워드 선택"""
     result = supabase.table("keywords").select("*").eq(
@@ -208,8 +264,8 @@ def fallback_plan(supabase, analysis) -> dict:
     return {"blogs": blogs_plan, "total_jobs": total}
 
 
-def generate_publish_plan(supabase, analysis) -> dict:
-    """GPT-4o 기반 발행 계획 생성"""
+def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
+    """GPT-4o 기반 발행 계획 생성. (plan_dict, tokens_used) 반환"""
     import openai
 
     # 각 블로그의 available keywords 수집
@@ -219,6 +275,13 @@ def generate_publish_plan(supabase, analysis) -> dict:
             "blog_id", blog_id
         ).eq("user_id", WORKER_USER_ID).eq("status", "pending").limit(50).execute()
         available_keywords[blog_id] = kws.data or []
+
+    insights_section = ""
+    if ai_insights:
+        insights_section = f"""
+
+아래는 사전 AI 분석 결과입니다. 이 인사이트를 계획에 반영해주세요:
+{json.dumps(ai_insights, ensure_ascii=False, default=str)}"""
 
     system_prompt = """당신은 블로그 운영 전략가입니다.
 블로그 분석 데이터와 사용 가능한 키워드를 보고, 오늘의 발행 계획을 세워주세요.
@@ -245,12 +308,13 @@ def generate_publish_plan(supabase, analysis) -> dict:
 {json.dumps(analysis, ensure_ascii=False, default=str)}
 
 사용 가능한 키워드:
-{json.dumps(available_keywords, ensure_ascii=False, default=str)}"""
+{json.dumps(available_keywords, ensure_ascii=False, default=str)}{insights_section}"""
 
+    tokens_used = 0
     try:
         client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
         completion = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -260,6 +324,7 @@ def generate_publish_plan(supabase, analysis) -> dict:
             response_format={"type": "json_object"},
         )
 
+        tokens_used = completion.usage.total_tokens if completion.usage else 0
         raw = completion.choices[0].message.content or "{}"
         parsed = json.loads(raw)
 
@@ -298,15 +363,15 @@ def generate_publish_plan(supabase, analysis) -> dict:
             }
             total += len(blogs_plan[blog_id]["keywords"])
 
-        return {"blogs": blogs_plan, "total_jobs": total}
+        return {"blogs": blogs_plan, "total_jobs": total}, tokens_used
 
     except Exception as e:
         logger.error(f"GPT 발행 계획 생성 실패: {e}")
-        return fallback_plan(supabase, analysis)
+        return fallback_plan(supabase, analysis), tokens_used
 
 
-def generate_report(supabase, analysis, plan, job_ids) -> tuple:
-    """GPT-4o 리포트 생성"""
+def generate_report(supabase, analysis, plan, job_ids, ai_insights=None) -> tuple:
+    """GPT-4o 사후분석 리포트 생성. (report, todos, tokens_used) 반환"""
     import openai
 
     # 결과 일괄 조회
@@ -315,14 +380,33 @@ def generate_report(supabase, analysis, plan, job_ids) -> tuple:
         results = supabase.table("publish_jobs").select("*").in_("id", job_ids).execute()
         job_results = results.data or []
 
+    # 콘텐츠 생성에 사용된 총 토큰 집계
+    content_tokens = sum(
+        (j.get("metadata") or {}).get("tokens", 0)
+        for j in job_results
+    )
+
+    insights_section = ""
+    if ai_insights:
+        insights_section = f"""
+
+사전 분석 인사이트:
+{json.dumps(ai_insights, ensure_ascii=False, default=str)}"""
+
+    tokens_used = 0
     try:
         client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-        system_prompt = """당신은 블로그 운영 리포트 작성자입니다.
-오늘의 분석, 계획, 실행 결과를 보고 마크다운 리포트와 TODO를 작성해주세요.
+        system_prompt = """당신은 블로그 운영 분석가입니다.
+오늘의 사전분석, 계획, 실행 결과를 종합하여 **사후분석 리포트**를 작성해주세요.
 
-리포트: 오늘의 실행 요약, 성과, 개선점을 포함한 마크다운
-TODO: 블로그 운영자가 해야 할 작업 목록
+리포트에 포함할 내용:
+1. **실행 요약** — 계획 대비 실제 결과 (성공/실패/미발행)
+2. **성과 분석** — 사전분석 인사이트가 계획에 잘 반영되었는지, 발행 품질
+3. **문제점 & 개선** — 실패 원인, 반복되는 패턴, 다음 실행에서 개선할 점
+4. **다음 단계** — 내일/이번 주 집중할 사항
+
+TODO: 블로그 운영자가 직접 해야 할 작업 목록
 
 JSON으로 응답:
 {
@@ -339,7 +423,7 @@ JSON으로 응답:
 }"""
 
         user_prompt = f"""분석:
-{json.dumps(analysis, ensure_ascii=False, default=str)}
+{json.dumps(analysis, ensure_ascii=False, default=str)}{insights_section}
 
 계획:
 {json.dumps(plan, ensure_ascii=False, default=str)}
@@ -353,10 +437,14 @@ JSON으로 응답:
     "title": j.get("title"),
     "published_url": j.get("published_url"),
     "publish_error": j.get("publish_error"),
-} for j in job_results], ensure_ascii=False, default=str)}"""
+    "tokens": (j.get("metadata") or {}).get("tokens", 0),
+    "quality_score": (j.get("metadata") or {}).get("quality_score", 0),
+} for j in job_results], ensure_ascii=False, default=str)}
+
+콘텐츠 생성 총 토큰: {content_tokens}"""
 
         completion = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -366,6 +454,7 @@ JSON으로 응답:
             response_format={"type": "json_object"},
         )
 
+        tokens_used = completion.usage.total_tokens if completion.usage else 0
         raw = completion.choices[0].message.content or "{}"
         parsed = json.loads(raw)
 
@@ -385,7 +474,7 @@ JSON으로 응답:
                 "done": False,
             })
 
-        return report, todos
+        return report, todos, tokens_used
 
     except Exception as e:
         logger.error(f"GPT 리포트 생성 실패: {e}")
@@ -397,19 +486,22 @@ JSON으로 응답:
         report = f"""# Daily Run 리포트
 
 ## 요약
-- 총 블로그: {analysis['summary']['total_blogs']}개
+- 총 블로그: {analysis.get('summary', {}).get('total_blogs', 0)}개
 - 생성 요청: {len(job_ids)}건
 - 발행 완료: {published}건
 - 콘텐츠 완료 (미발행): {completed}건
 - 실패: {failed}건
-- 주간 수익: {analysis['summary']['weekly_revenue']}원
+- 콘텐츠 생성 토큰: {content_tokens}
 """
-        return report, []
+        return report, [], tokens_used
 
 
 async def run_daily_workflow(run_id, supabase) -> None:
-    """메인 3단계 파이프라인: 분석 → 계획 → 생성 → 대기 → 리포트"""
+    """메인 파이프라인: 데이터수집 → AI사전분석 → 계획 → 생성/발행 → AI사후분석"""
     logger.info(f"Daily Run {run_id}: 워크플로우 시작")
+
+    # 단계별 토큰 추적
+    token_usage = {"analysis": 0, "plan": 0, "content": 0, "report": 0, "total": 0}
 
     try:
         # run 정보 조회
@@ -417,29 +509,42 @@ async def run_daily_workflow(run_id, supabase) -> None:
         run_data = run_result.data
         mode = run_data.get("mode", "auto")
 
-        # Phase 1: 분석
+        # Phase 1a: 데이터 수집
         supabase.table("daily_runs").update({
             "status": "analyzing",
             "started_at": datetime.now(timezone.utc).isoformat(),
         }).eq("id", run_id).execute()
-        log_event(supabase, run_id, f"📊 분석 시작 — 블로그 현황 수집 중")
+        log_event(supabase, run_id, "📊 분석 시작 — 블로그 현황 수집 중")
 
         analysis = collect_analysis(supabase)
+        summary = analysis.get("summary", {})
+        log_event(supabase, run_id, f"📊 데이터 수집 완료 — {summary.get('total_blogs', 0)}개 블로그, 키워드 {summary.get('total_pending_keywords', 0)}개 대기")
+
+        # Phase 1b: AI 사전분석
+        log_event(supabase, run_id, "🧠 AI 사전분석 중 — 인사이트 도출...")
+        ai_insights, analysis_tokens = generate_ai_insights(analysis)
+        token_usage["analysis"] = analysis_tokens
+
+        # analysis에 AI 인사이트 포함하여 저장
+        analysis["ai_insights"] = ai_insights
         supabase.table("daily_runs").update({
             "analysis": analysis,
         }).eq("id", run_id).execute()
-        summary = analysis.get("summary", {})
-        log_event(supabase, run_id, f"📊 분석 완료 — {summary.get('total_blogs', 0)}개 블로그, 키워드 {summary.get('total_pending_keywords', 0)}개 대기")
-        logger.info(f"Daily Run {run_id}: 분석 완료 — {summary.get('total_blogs', 0)}개 블로그")
 
-        # Phase 2: 계획
+        insights_count = len(ai_insights.get("insights", []))
+        alerts_count = len(ai_insights.get("risk_alerts", []))
+        log_event(supabase, run_id, f"🧠 AI 분석 완료 — 인사이트 {insights_count}건, 주의사항 {alerts_count}건 ({analysis_tokens} tokens)")
+        logger.info(f"Daily Run {run_id}: AI 분석 완료 — {insights_count} 인사이트")
+
+        # Phase 2: 계획 (AI 인사이트 반영)
         log_event(supabase, run_id, "🤖 GPT-4o 발행 계획 수립 중...")
-        plan = generate_publish_plan(supabase, analysis)
+        plan, plan_tokens = generate_publish_plan(supabase, analysis, ai_insights)
+        token_usage["plan"] = plan_tokens
         supabase.table("daily_runs").update({
             "plan": plan,
             "status": "plan_ready",
         }).eq("id", run_id).execute()
-        log_event(supabase, run_id, f"📋 계획 완료 — {plan['total_jobs']}건 발행 예정")
+        log_event(supabase, run_id, f"📋 계획 완료 — {plan['total_jobs']}건 발행 예정 ({plan_tokens} tokens)")
         logger.info(f"Daily Run {run_id}: 계획 완료 — {plan['total_jobs']}건 예정")
 
         # Phase 3: Job 생성
@@ -568,23 +673,37 @@ async def run_daily_workflow(run_id, supabase) -> None:
             log_event(supabase, run_id, f"⏰ 타임아웃 ({timeout_hours}시간) — 현재 결과로 보고 진행", "warning")
             logger.warning(f"Daily Run {run_id}: 타임아웃 ({timeout_hours}h)")
 
-        # Phase 5: 리포트
+        # Phase 5: AI 사후분석 리포트
         supabase.table("daily_runs").update({
             "status": "reporting",
         }).eq("id", run_id).execute()
-        log_event(supabase, run_id, "📝 AI 리포트 생성 중...")
+        log_event(supabase, run_id, "📝 AI 사후분석 리포트 생성 중...")
 
-        report, todos = generate_report(supabase, analysis, plan, job_ids)
+        # 콘텐츠 생성 토큰 집계
+        if job_ids:
+            jobs_for_tokens = supabase.table("publish_jobs").select("metadata").in_("id", job_ids).execute()
+            token_usage["content"] = sum(
+                (j.get("metadata") or {}).get("tokens", 0)
+                for j in (jobs_for_tokens.data or [])
+            )
+
+        report, todos, report_tokens = generate_report(supabase, analysis, plan, job_ids, ai_insights)
+        token_usage["report"] = report_tokens
+        token_usage["total"] = sum(token_usage[k] for k in ("analysis", "plan", "content", "report"))
+
+        # token_usage를 analysis에 저장
+        analysis["token_usage"] = token_usage
         supabase.table("daily_runs").update({
             "status": "completed",
+            "analysis": analysis,
             "report": report,
             "todos": todos,
             "completed_at": datetime.now(timezone.utc).isoformat(),
         }).eq("id", run_id).execute()
 
         todo_count = len(todos) if todos else 0
-        log_event(supabase, run_id, f"🎉 워크플로우 완료 — TODO {todo_count}건")
-        logger.info(f"Daily Run {run_id}: 워크플로우 완료")
+        log_event(supabase, run_id, f"🎉 워크플로우 완료 — TODO {todo_count}건, 총 토큰 {token_usage['total']:,}")
+        logger.info(f"Daily Run {run_id}: 워크플로우 완료 — 토큰 {token_usage}")
 
     except Exception as e:
         logger.error(f"Daily Run {run_id}: 워크플로우 실패 — {e}", exc_info=True)
@@ -641,7 +760,8 @@ async def resume_stalled_runs(run_id: str | None, supabase):
             }).eq("id", rid).execute()
             log_event(supabase, rid, "📝 AI 리포트 생성 중...")
 
-            report, todos = generate_report(supabase, analysis, plan, job_ids)
+            ai_insights = (analysis.get("ai_insights")) if analysis else None
+            report, todos, report_tokens = generate_report(supabase, analysis, plan, job_ids, ai_insights)
 
             supabase.table("daily_runs").update({
                 "status": "completed",
@@ -651,7 +771,7 @@ async def resume_stalled_runs(run_id: str | None, supabase):
             }).eq("id", rid).execute()
 
             todo_count = len(todos) if todos else 0
-            log_event(supabase, rid, f"🎉 워크플로우 완료 — TODO {todo_count}건")
+            log_event(supabase, rid, f"🎉 워크플로우 완료 — TODO {todo_count}건 ({report_tokens} tokens)")
             logger.info(f"Daily Run {rid}: 복구 완료")
 
         except Exception as e:
