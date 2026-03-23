@@ -1,12 +1,15 @@
 import { getDailyRun } from '@/lib/daily-run'
-import { BLOG_LABELS } from '@/lib/data'
+import { getBlogList } from '@/lib/data'
 import { Header } from '@/components/header'
 import { DailyRunDetail } from '@/components/daily-run-detail'
 import { redirect } from 'next/navigation'
 
 export default async function DailyRunPage({ params }: { params: Promise<{ runId: string }> }) {
   const { runId } = await params
-  const result = await getDailyRun(runId)
+  const [result, blogList] = await Promise.all([
+    getDailyRun(runId),
+    getBlogList(),
+  ])
 
   if (!result) redirect('/')
 
@@ -18,7 +21,7 @@ export default async function DailyRunPage({ params }: { params: Promise<{ runId
           initialRun={result.run}
           initialJobs={result.jobs}
           initialLogs={result.logs}
-          blogLabels={BLOG_LABELS}
+          blogList={blogList}
         />
       </main>
     </div>

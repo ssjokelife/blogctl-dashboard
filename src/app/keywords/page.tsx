@@ -1,4 +1,5 @@
-import { getAllKeywordStats, getKeywordPool, BLOG_LABELS } from "@/lib/data";
+import { getAllKeywordStats, getKeywordPool, getBlogList } from "@/lib/data";
+import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +12,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const BLOGS = Object.keys(BLOG_LABELS);
+const PLATFORM_LABELS: Record<string, string> = {
+  tistory: "T",
+  naver: "N",
+  wordpress: "WP",
+  blogger: "BG",
+  hashnode: "HN",
+  devto: "DV",
+};
+
+const PLATFORM_COLORS: Record<string, string> = {
+  tistory: "bg-orange-100 text-orange-700",
+  naver: "bg-green-100 text-green-700",
+  wordpress: "bg-blue-100 text-blue-700",
+  blogger: "bg-amber-100 text-amber-700",
+};
 
 function PriorityBadge({ priority }: { priority: string }) {
   if (priority === "high") return <Badge className="bg-red-100 text-red-700 border-red-200">높음</Badge>;
@@ -26,8 +41,36 @@ export default async function KeywordsPage({
 }) {
   const params = await searchParams;
   const selectedBlog = params.blog || "kyeyangdak";
-  const pool = await getKeywordPool(selectedBlog);
-  const allStats = await getAllKeywordStats();
+  const [pool, allStats, blogList] = await Promise.all([
+    getKeywordPool(selectedBlog),
+    getAllKeywordStats(),
+    getBlogList(),
+  ]);
+
+  // 발행된 키워드의 URL 조회 (publish_jobs에서)
+  const supabase = await createClient();
+  const publishedKeywordNames = pool?.keywords
+    .filter((k) => k.status === "published")
+    .map((k) => k.keyword) || [];
+
+  let publishedUrls: Record<string, string> = {};
+  if (publishedKeywordNames.length > 0) {
+    const { data: jobs } = await supabase
+      .from("publish_jobs")
+      .select("keyword, published_url")
+      .eq("blog_id", selectedBlog)
+      .eq("status", "published")
+      .not("published_url", "is", null);
+    if (jobs) {
+      publishedUrls = Object.fromEntries(
+        jobs.map((j) => [j.keyword, j.published_url])
+      );
+    }
+  }
+
+  const BLOGS = Object.keys(blogList).length > 0
+    ? Object.keys(blogList)
+    : Object.keys(allStats);
 
   const pendingKeywords = pool?.keywords
     .filter((k) => k.status !== "published")
@@ -60,19 +103,26 @@ export default async function KeywordsPage({
         <div className="flex flex-wrap gap-2">
           {BLOGS.map((blog) => {
             const stat = allStats[blog];
+            const info = blogList[blog];
+            const platform = info?.platform || "";
             const isSelected = blog === selectedBlog;
             return (
               <a
                 key={blog}
                 href={`/keywords?blog=${blog}`}
-                className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border transition-colors ${
                   isSelected
                     ? "bg-emerald-600 text-white border-emerald-600"
                     : "bg-white text-gray-700 border-gray-200 hover:border-emerald-300"
                 }`}
               >
-                {BLOG_LABELS[blog]}
-                {stat && <span className="ml-1 opacity-70">({stat.pending})</span>}
+                {platform && !isSelected && (
+                  <span className={`text-[10px] px-1 rounded ${PLATFORM_COLORS[platform] || "bg-gray-100 text-gray-600"}`}>
+                    {PLATFORM_LABELS[platform] || platform}
+                  </span>
+                )}
+                {info?.label || blog}
+                {stat && <span className="opacity-70">({stat.pending})</span>}
               </a>
             );
           })}
@@ -151,17 +201,29 @@ export default async function KeywordsPage({
                   <TableHead>키워드</TableHead>
                   <TableHead>카테고리</TableHead>
                   <TableHead>발행일</TableHead>
+                  <TableHead>URL</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {publishedKeywords.slice(0, 20).map((kw) => {
                   const cat = kw.category || "-";
+                  const url = publishedUrls[kw.keyword];
                   return (
                     <TableRow key={kw.keyword}>
                       <TableCell className="font-medium">{kw.keyword}</TableCell>
                       <TableCell className="text-gray-500 text-sm">{cat}</TableCell>
                       <TableCell className="text-gray-500 tabular-nums text-sm">
                         {kw.published_at?.slice(0, 10) || "-"}
+                      </TableCell>
+                      <TableCell>
+                        {url ? (
+                          <a href={url} target="_blank" rel="noopener noreferrer"
+                             className="text-xs text-emerald-600 hover:text-emerald-700 truncate block max-w-[200px]">
+                            {url.replace(/https?:\/\//, "").slice(0, 40)}...
+                          </a>
+                        ) : (
+                          <span className="text-gray-300 text-xs">-</span>
+                        )}
                       </TableCell>
                     </TableRow>
                   );

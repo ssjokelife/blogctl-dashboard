@@ -7,6 +7,28 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { DailyRun, DailyRunJob } from '@/lib/daily-run'
 
+// --- Blog info type ---
+type BlogInfo = { label: string; url: string; platform: string; adapter: string }
+type BlogList = Record<string, BlogInfo>
+
+const PLATFORM_LABELS: Record<string, string> = {
+  tistory: 'T',
+  naver: 'N',
+  wordpress: 'WP',
+  blogger: 'BG',
+  hashnode: 'HN',
+  devto: 'DV',
+}
+
+const PLATFORM_COLORS: Record<string, string> = {
+  tistory: 'bg-orange-100 text-orange-700',
+  naver: 'bg-green-100 text-green-700',
+  wordpress: 'bg-blue-100 text-blue-700',
+  blogger: 'bg-amber-100 text-amber-700',
+  hashnode: 'bg-indigo-100 text-indigo-700',
+  devto: 'bg-gray-100 text-gray-700',
+}
+
 // --- Status labels & colors ---
 
 const STATUS_LABELS: Record<string, string> = {
@@ -114,9 +136,9 @@ function Stepper({ status }: { status: string }) {
 
 // --- Analysis Section ---
 
-function AnalysisSection({ analysis, blogLabels }: {
+function AnalysisSection({ analysis, blogList }: {
   analysis: Record<string, unknown> | null
-  blogLabels: Record<string, string>
+  blogList: BlogList
 }) {
   if (!analysis) return null
 
@@ -137,7 +159,7 @@ function AnalysisSection({ analysis, blogLabels }: {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Object.entries(blogs).map(([blogId, data]) => (
             <div key={blogId} className="border rounded-lg p-4 space-y-2">
-              <div className="font-medium text-sm">{blogLabels[blogId] || blogId}</div>
+              <div className="font-medium text-sm">{blogList[blogId]?.label || blogId}</div>
               <div className="text-xs text-gray-500 space-y-1">
                 <div className="flex justify-between">
                   <span>트래픽</span>
@@ -166,11 +188,11 @@ function AnalysisSection({ analysis, blogLabels }: {
 
 // --- Publish Section ---
 
-function PublishSection({ plan, jobs, run, blogLabels, onContinue }: {
+function PublishSection({ plan, jobs, run, blogList, onContinue }: {
   plan: Record<string, unknown> | null
   jobs: DailyRunJob[]
   run: DailyRun
-  blogLabels: Record<string, string>
+  blogList: BlogList
   onContinue: () => void
 }) {
   const reasons = (plan?.reasons || []) as string[]
@@ -204,9 +226,16 @@ function PublishSection({ plan, jobs, run, blogLabels, onContinue }: {
                   <div className="text-sm font-medium truncate">{job.keyword}</div>
                   {job.title && <div className="text-xs text-gray-400 truncate">{job.title}</div>}
                 </div>
-                <Badge variant="outline" className="text-xs shrink-0">
-                  {blogLabels[job.blog_id] || job.blog_id}
-                </Badge>
+                <div className="flex items-center gap-1 shrink-0">
+                  {blogList[job.blog_id]?.platform && (
+                    <Badge className={`text-[10px] px-1 py-0 ${PLATFORM_COLORS[blogList[job.blog_id].platform] || 'bg-gray-100 text-gray-600'}`}>
+                      {PLATFORM_LABELS[blogList[job.blog_id].platform] || blogList[job.blog_id].platform}
+                    </Badge>
+                  )}
+                  <Badge variant="outline" className="text-xs">
+                    {blogList[job.blog_id]?.label || job.blog_id}
+                  </Badge>
+                </div>
                 <Badge className={`text-xs shrink-0 ${JOB_STATUS_COLORS[job.status] || 'bg-gray-100 text-gray-700'}`}>
                   {JOB_STATUS_LABELS[job.status] || job.status}
                 </Badge>
@@ -341,11 +370,11 @@ function LogPanel({ logs }: { logs: LogEntry[] }) {
 
 // --- Main Component ---
 
-export function DailyRunDetail({ initialRun, initialJobs, initialLogs = [], blogLabels }: {
+export function DailyRunDetail({ initialRun, initialJobs, initialLogs = [], blogList }: {
   initialRun: DailyRun
   initialJobs: DailyRunJob[]
   initialLogs?: LogEntry[]
-  blogLabels: Record<string, string>
+  blogList: BlogList
 }) {
   const [run, setRun] = useState<DailyRun>(initialRun)
   const [jobs, setJobs] = useState<DailyRunJob[]>(initialJobs)
@@ -513,14 +542,14 @@ export function DailyRunDetail({ initialRun, initialJobs, initialLogs = [], blog
       )}
 
       {/* Analysis */}
-      <AnalysisSection analysis={run.analysis} blogLabels={blogLabels} />
+      <AnalysisSection analysis={run.analysis} blogList={blogList} />
 
       {/* Publish */}
       <PublishSection
         plan={run.plan}
         jobs={jobs}
         run={run}
-        blogLabels={blogLabels}
+        blogList={blogList}
         onContinue={handleContinue}
       />
 
