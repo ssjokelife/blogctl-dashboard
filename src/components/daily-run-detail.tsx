@@ -121,11 +121,11 @@ function AnalysisSection({ analysis, blogLabels }: {
   if (!analysis) return null
 
   const blogs = (analysis.blogs || {}) as Record<string, {
-    traffic_trend?: string | null
-    revenue?: number | null
-    keywords_pending?: number
-    keywords_total?: number
-    indexing_rate?: number | null
+    traffic?: number | null
+    revenue?: { recent_7d?: number; prev_7d?: number; coupang_clicks_recent?: number } | null
+    keywords?: { pending?: number; total?: number; urgent?: number; high?: number }
+    recent_posts?: number
+    indexing?: number | null
   }>
 
   return (
@@ -140,20 +140,20 @@ function AnalysisSection({ analysis, blogLabels }: {
               <div className="font-medium text-sm">{blogLabels[blogId] || blogId}</div>
               <div className="text-xs text-gray-500 space-y-1">
                 <div className="flex justify-between">
-                  <span>트래픽 추세</span>
-                  <span>{data.traffic_trend || '데이터 수집 중'}</span>
+                  <span>트래픽</span>
+                  <span>{data.traffic != null ? data.traffic.toLocaleString() + '뷰' : '데이터 수집 중'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>수익</span>
-                  <span>{data.revenue != null ? `\u20A9${data.revenue.toLocaleString()}` : '-'}</span>
+                  <span>수익 (7일)</span>
+                  <span>{data.revenue?.recent_7d != null ? `\u20A9${data.revenue.recent_7d.toLocaleString()}` : '-'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>키워드</span>
-                  <span>{data.keywords_pending ?? 0}/{data.keywords_total ?? 0}</span>
+                  <span>{data.keywords?.pending ?? 0}/{data.keywords?.total ?? 0}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>색인율</span>
-                  <span>{data.indexing_rate != null ? `${Math.round(data.indexing_rate * 100)}%` : '-'}</span>
+                  <span>{data.indexing != null ? `${Math.round(data.indexing)}%` : '-'}</span>
                 </div>
               </div>
             </div>
