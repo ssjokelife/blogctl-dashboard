@@ -12,6 +12,7 @@ from config import (
     POLL_INTERVAL, MAX_PUBLISH_ATTEMPTS,
 )
 from publisher import publish_job
+from daily_run import run_daily_workflow
 
 logging.basicConfig(
     level=logging.INFO,
@@ -422,63 +423,19 @@ async def poll_pending_jobs():
 
 
 async def scheduled_publish():
-    """자동 발행 — 매일 블로그별 1건씩 콘텐츠 생성 + 발행"""
-    logger.info("=== 자동 발행 스케줄 시작 ===")
-
-    # 모든 블로그 조회
-    blogs_result = supabase.table("blogs").select("id, user_id, adapter").in_(
-        "adapter", ["keyword", "coupang"]
-    ).eq("user_id", WORKER_USER_ID).execute()
-
-    if not blogs_result.data:
-        logger.info("자동 발행 대상 블로그 없음")
-        return
-
-    for blog in blogs_result.data:
-        # 오늘 이미 발행했는지 확인
-        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        existing = supabase.table("publish_jobs").select("id", count="exact").eq(
-            "blog_id", blog["id"]
-        ).eq("user_id", WORKER_USER_ID).gte(
-            "created_at", f"{today}T00:00:00"
-        ).execute()
-
-        if existing.count and existing.count > 0:
-            continue
-
-        # 다음 키워드 선택 (우선순위)
-        kw_result = supabase.table("keywords").select("*").eq(
-            "blog_id", blog["id"]
-        ).eq("user_id", WORKER_USER_ID).eq(
-            "status", "pending"
-        ).limit(50).execute()
-
-        if not kw_result.data:
-            continue
-
-        priority_order = {"urgent": 0, "high": 1, "medium": 2, "low": 3}
-        sorted_kw = sorted(kw_result.data, key=lambda k: (
-            priority_order.get(k.get("priority", "medium"), 2),
-            -(k.get("expected_clicks_4w") or 0)
-        ))
-        next_kw = sorted_kw[0]
-
-        # 키워드 상태 변경
-        supabase.table("keywords").update({"status": "generating"}).eq("id", next_kw["id"]).execute()
-
-        # job 생성
-        job_result = supabase.table("publish_jobs").insert({
-            "user_id": WORKER_USER_ID,
-            "blog_id": blog["id"],
-            "keyword_id": next_kw["id"],
-            "keyword": next_kw["keyword"],
-            "status": "generate_requested",
-            "started_at": datetime.now(timezone.utc).isoformat(),
-        }).execute()
-
-        if job_result.data:
-            logger.info(f"  자동 발행: {blog['id']} — {next_kw['keyword']}")
-
+    """자동 발행 — daily run 워크플로우 실행"""
+    logger.info("=== 자동 발행 스케줄 시작 (Daily Run) ===")
+    run_result = supabase.table("daily_runs").insert({
+        "user_id": WORKER_USER_ID,
+        "status": "pending",
+        "mode": "auto",
+        "trigger_type": "scheduled",
+    }).execute()
+    if run_result.data:
+        run_id = run_result.data[0]["id"]
+        await run_daily_workflow(run_id, supabase)
+    else:
+        logger.error("Daily Run 생성 실패")
     logger.info("=== 자동 발행 스케줄 완료 ===")
 
 
@@ -499,6 +456,7 @@ async def main():
     realtime_ok = False
     async_supabase = None
     channel = None
+    daily_channel = None
     try:
         async_supabase = await get_async_supabase()
         loop = asyncio.get_running_loop()
@@ -546,6 +504,24 @@ async def main():
         await channel.subscribe()
         realtime_ok = True
         logger.info("Supabase Realtime 구독 시작")
+
+        # daily_runs 구독
+        daily_channel = async_supabase.channel("daily-runs-worker")
+        daily_channel.on_postgres_changes(
+            event="INSERT",
+            schema="public",
+            table="daily_runs",
+            filter=f"user_id=eq.{WORKER_USER_ID}",
+            callback=lambda payload: (
+                loop.call_soon_threadsafe(
+                    lambda rid=payload["new"]["id"]: loop.create_task(
+                        run_daily_workflow(rid, supabase)
+                    )
+                ) if payload.get("new", {}).get("status") == "pending" else None
+            ),
+        )
+        await daily_channel.subscribe()
+        logger.info("Daily Runs Realtime 구독 시작")
     except Exception as e:
         logger.warning(f"Realtime 구독 실패, 폴링 모드로 동작 — {e}")
         realtime_ok = False
@@ -581,11 +557,13 @@ async def main():
         "last_heartbeat_at": datetime.now(timezone.utc).isoformat(),
     }).eq("user_id", WORKER_USER_ID).eq("worker_name", "default").execute()
 
-    if async_supabase and channel:
-        try:
-            await async_supabase.remove_channel(channel)
-        except Exception:
-            pass
+    if async_supabase:
+        for ch in [channel, daily_channel]:
+            if ch:
+                try:
+                    await async_supabase.remove_channel(ch)
+                except Exception:
+                    pass
     logger.info("워커 종료 완료")
 
 
