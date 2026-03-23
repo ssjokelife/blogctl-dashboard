@@ -388,17 +388,27 @@ async def send_heartbeat():
 
 
 async def poll_pending_jobs():
-    """폴링 — 미처리 job 확인"""
-    # 콘텐츠 생성 요청
-    gen_result = supabase.table("publish_jobs").select("id").eq(
-        "status", "generate_requested"
+    """폴링 — 미처리 job + daily_run 확인"""
+    # daily_runs를 먼저 체크 (블로킹 방지 — job 생성보다 우선)
+    run_result = supabase.table("daily_runs").select("id").eq(
+        "status", "pending"
     ).eq("user_id", WORKER_USER_ID).execute()
 
+    if run_result.data:
+        logger.info(f"폴링: {len(run_result.data)}개 대기 daily_run 발견")
+        for run in run_result.data:
+            await run_daily_workflow(run["id"], supabase)
+        return  # daily_run 처리 후 다음 폴링에서 job 처리
+
+    # 콘텐츠 생성 요청 (daily_run 외 개별 생성 요청)
+    gen_result = supabase.table("publish_jobs").select("id").eq(
+        "status", "generate_requested"
+    ).eq("user_id", WORKER_USER_ID).is_("daily_run_id", "null").execute()
+
     if gen_result.data:
-        logger.info(f"폴링: {len(gen_result.data)}개 콘텐츠 생성 job 발견")
+        logger.info(f"폴링: {len(gen_result.data)}개 개별 콘텐츠 생성 job 발견")
         for job in gen_result.data:
             try:
-                # 상태를 generating으로 변경 (중복 방지)
                 claim = supabase.table("publish_jobs").update({
                     "status": "generating",
                 }).eq("id", job["id"]).eq("status", "generate_requested").execute()
@@ -421,20 +431,24 @@ async def poll_pending_jobs():
         for job in pub_result.data:
             await claim_and_process(job["id"])
 
-    # pending daily_runs 확인 (Realtime 놓친 경우 폴백)
-    run_result = supabase.table("daily_runs").select("id").eq(
-        "status", "pending"
-    ).eq("user_id", WORKER_USER_ID).execute()
-
-    if run_result.data:
-        logger.info(f"폴링: {len(run_result.data)}개 대기 daily_run 발견")
-        for run in run_result.data:
-            await run_daily_workflow(run["id"], supabase)
-
 
 async def scheduled_publish():
     """자동 발행 — daily run 워크플로우 실행"""
     logger.info("=== 자동 발행 스케줄 시작 (Daily Run) ===")
+
+    # 중복 방지: 오늘 이미 진행 중인 run 확인
+    from datetime import date
+    today = date.today().isoformat()
+    existing = supabase.table("daily_runs").select("id, status").eq(
+        "user_id", WORKER_USER_ID
+    ).gte("created_at", f"{today}T00:00:00").not_.in_(
+        "status", ["completed", "failed", "cancelled"]
+    ).execute()
+
+    if existing.data:
+        logger.info(f"자동 발행 건너뜀 — 이미 진행 중: {existing.data[0]['id']} ({existing.data[0]['status']})")
+        return
+
     run_result = supabase.table("daily_runs").insert({
         "user_id": WORKER_USER_ID,
         "status": "pending",
