@@ -389,6 +389,19 @@ async def send_heartbeat():
 
 async def poll_pending_jobs():
     """폴링 — 미처리 job + daily_run 확인"""
+    global supabase
+    try:
+        return await _poll_pending_jobs_inner()
+    except Exception as e:
+        logger.warning(f"폴링 오류, Supabase 재연결: {e}")
+        try:
+            supabase = get_supabase()
+        except Exception:
+            pass
+
+
+async def _poll_pending_jobs_inner():
+    """폴링 내부 구현"""
     # daily_runs를 먼저 체크 (블로킹 방지 — job 생성보다 우선)
     run_result = supabase.table("daily_runs").select("id, status").eq(
         "user_id", WORKER_USER_ID
