@@ -10,6 +10,18 @@ from config import WORKER_USER_ID
 logger = logging.getLogger("daily_run")
 
 
+def log_event(supabase, run_id: str, message: str, level: str = "info"):
+    """daily_run_logs에 이벤트 기록 (Realtime으로 UI에 즉시 전달)"""
+    try:
+        supabase.table("daily_run_logs").insert({
+            "daily_run_id": run_id,
+            "level": level,
+            "message": message,
+        }).execute()
+    except Exception as e:
+        logger.warning(f"로그 기록 실패: {e}")
+
+
 def collect_analysis(supabase) -> dict:
     """블로그 분석 데이터 수집"""
     now = datetime.now(timezone.utc)
@@ -395,19 +407,24 @@ async def run_daily_workflow(run_id, supabase) -> None:
             "status": "analyzing",
             "started_at": datetime.now(timezone.utc).isoformat(),
         }).eq("id", run_id).execute()
+        log_event(supabase, run_id, f"📊 분석 시작 — 블로그 현황 수집 중")
 
         analysis = collect_analysis(supabase)
         supabase.table("daily_runs").update({
             "analysis": analysis,
         }).eq("id", run_id).execute()
-        logger.info(f"Daily Run {run_id}: 분석 완료 — {analysis['summary']['total_blogs']}개 블로그")
+        summary = analysis.get("summary", {})
+        log_event(supabase, run_id, f"📊 분석 완료 — {summary.get('total_blogs', 0)}개 블로그, 키워드 {summary.get('total_pending_keywords', 0)}개 대기")
+        logger.info(f"Daily Run {run_id}: 분석 완료 — {summary.get('total_blogs', 0)}개 블로그")
 
         # Phase 2: 계획
+        log_event(supabase, run_id, "🤖 GPT-4o 발행 계획 수립 중...")
         plan = generate_publish_plan(supabase, analysis)
         supabase.table("daily_runs").update({
             "plan": plan,
             "status": "plan_ready",
         }).eq("id", run_id).execute()
+        log_event(supabase, run_id, f"📋 계획 완료 — {plan['total_jobs']}건 발행 예정")
         logger.info(f"Daily Run {run_id}: 계획 완료 — {plan['total_jobs']}건 예정")
 
         # Phase 3: Job 생성
@@ -432,11 +449,13 @@ async def run_daily_workflow(run_id, supabase) -> None:
 
                 if job_result.data:
                     job_ids.append(job_result.data[0]["id"])
+                    log_event(supabase, run_id, f"📝 Job 생성: {kw['keyword']}")
                     logger.info(f"Daily Run {run_id}: Job 생성 — {kw['keyword']}")
 
         supabase.table("daily_runs").update({
             "status": "publishing",
         }).eq("id", run_id).execute()
+        log_event(supabase, run_id, f"⚙️ {len(job_ids)}개 Job 생성 완료 — 콘텐츠 생성 대기 중")
         logger.info(f"Daily Run {run_id}: {len(job_ids)}개 Job 생성 완료, 대기 시작")
 
         # Phase 4: Job 완료 대기
@@ -444,6 +463,7 @@ async def run_daily_workflow(run_id, supabase) -> None:
         timeout_at = datetime.now(timezone.utc) + timedelta(hours=timeout_hours)
         terminal_auto = {"published", "publish_failed", "failed"}
         terminal_manual = {"published", "publish_failed", "failed", "completed"}
+        prev_statuses = {}  # 상태 변화 감지용
 
         while datetime.now(timezone.utc) < timeout_at:
             await asyncio.sleep(10)
@@ -452,6 +472,7 @@ async def run_daily_workflow(run_id, supabase) -> None:
             run_check = supabase.table("daily_runs").select("status").eq("id", run_id).single().execute()
             current_status = run_check.data.get("status") if run_check.data else None
             if current_status in ("cancelled", "finalize_requested"):
+                log_event(supabase, run_id, f"⏹️ {current_status} 감지 — 보고 단계로 이동")
                 logger.info(f"Daily Run {run_id}: {current_status} 감지, 리포트 진행")
                 break
 
@@ -459,9 +480,41 @@ async def run_daily_workflow(run_id, supabase) -> None:
             if not job_ids:
                 break
 
-            jobs_check = supabase.table("publish_jobs").select("id, status").in_("id", job_ids).execute()
+            jobs_check = supabase.table("publish_jobs").select("id, status, keyword, title, published_url, publish_error, publish_error_type, metadata").in_("id", job_ids).execute()
             jobs = jobs_check.data or []
             statuses = {j["id"]: j["status"] for j in jobs}
+
+            # 상태 변화 로그
+            for j in jobs:
+                jid = j["id"]
+                new_status = j["status"]
+                old_status = prev_statuses.get(jid)
+                if old_status and old_status != new_status:
+                    kw = j.get("keyword", "")
+                    if new_status == "generating":
+                        done = sum(1 for s in statuses.values() if s not in ("generate_requested", "generating"))
+                        log_event(supabase, run_id, f"⚙️ 콘텐츠 생성 중: {kw} ({done + 1}/{len(job_ids)})")
+                    elif new_status == "completed":
+                        meta = j.get("metadata") or {}
+                        score = meta.get("quality_score", "?")
+                        log_event(supabase, run_id, f"✅ 생성 완료: {kw} (품질 {score}/100)")
+                    elif new_status == "publish_requested":
+                        log_event(supabase, run_id, f"🚀 발행 요청: {kw}")
+                    elif new_status == "publishing":
+                        log_event(supabase, run_id, f"🚀 발행 중: {kw}")
+                    elif new_status == "published":
+                        url = j.get("published_url", "")
+                        log_event(supabase, run_id, f"✅ 발행 완료: {kw} — {url}")
+                    elif new_status == "failed":
+                        log_event(supabase, run_id, f"❌ 생성 실패: {kw}", "error")
+                    elif new_status == "publish_failed":
+                        err_type = j.get("publish_error_type", "")
+                        err = j.get("publish_error", "")[:80] if j.get("publish_error") else ""
+                        if err_type == "session_expired":
+                            log_event(supabase, run_id, f"❌ 발행 실패: {kw} — 세션 만료 (blogctl login 필요)", "error")
+                        else:
+                            log_event(supabase, run_id, f"❌ 발행 실패: {kw} — {err}", "error")
+            prev_statuses = statuses.copy()
 
             # Auto 모드: completed → publish_requested 자동 전환
             if mode == "auto":
@@ -475,15 +528,20 @@ async def run_daily_workflow(run_id, supabase) -> None:
             # 종료 조건 체크
             terminal = terminal_auto if mode == "auto" else terminal_manual
             if all(s in terminal for s in statuses.values()):
+                published = sum(1 for s in statuses.values() if s == "published")
+                failed = sum(1 for s in statuses.values() if s in ("failed", "publish_failed"))
+                log_event(supabase, run_id, f"📊 전체 완료 — 성공 {published}건, 실패 {failed}건")
                 logger.info(f"Daily Run {run_id}: 모든 Job 완료")
                 break
         else:
+            log_event(supabase, run_id, f"⏰ 타임아웃 ({timeout_hours}시간) — 현재 결과로 보고 진행", "warning")
             logger.warning(f"Daily Run {run_id}: 타임아웃 ({timeout_hours}h)")
 
         # Phase 5: 리포트
         supabase.table("daily_runs").update({
             "status": "reporting",
         }).eq("id", run_id).execute()
+        log_event(supabase, run_id, "📝 AI 리포트 생성 중...")
 
         report, todos = generate_report(supabase, analysis, plan, job_ids)
         supabase.table("daily_runs").update({
@@ -493,10 +551,13 @@ async def run_daily_workflow(run_id, supabase) -> None:
             "completed_at": datetime.now(timezone.utc).isoformat(),
         }).eq("id", run_id).execute()
 
+        todo_count = len(todos) if todos else 0
+        log_event(supabase, run_id, f"🎉 워크플로우 완료 — TODO {todo_count}건")
         logger.info(f"Daily Run {run_id}: 워크플로우 완료")
 
     except Exception as e:
         logger.error(f"Daily Run {run_id}: 워크플로우 실패 — {e}", exc_info=True)
+        log_event(supabase, run_id, f"💥 워크플로우 실패 — {str(e)[:200]}", "error")
         try:
             supabase.table("daily_runs").update({
                 "status": "failed",

@@ -17,6 +17,7 @@ export default async function DailyRunPage({ params }: { params: Promise<{ runId
         <DailyRunDetail
           initialRun={result.run}
           initialJobs={result.jobs}
+          initialLogs={result.logs}
           blogLabels={BLOG_LABELS}
         />
       </main>

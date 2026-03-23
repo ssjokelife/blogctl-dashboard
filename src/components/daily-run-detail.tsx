@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -292,15 +292,64 @@ function ReportSection({ report, todos, onToggleTodo }: {
   )
 }
 
+// --- Log Entry ---
+interface LogEntry {
+  id: number
+  level: string
+  message: string
+  created_at: string
+}
+
+// --- Log Panel ---
+function LogPanel({ logs }: { logs: LogEntry[] }) {
+  const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [logs.length])
+
+  if (logs.length === 0) return null
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">진행 로그</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="max-h-80 overflow-y-auto space-y-1 font-mono text-xs">
+          {logs.map((log) => (
+            <div
+              key={log.id}
+              className={`flex gap-2 py-0.5 ${
+                log.level === 'error' ? 'text-red-600' :
+                log.level === 'warning' ? 'text-amber-600' :
+                'text-gray-600'
+              }`}
+            >
+              <span className="text-gray-400 shrink-0">
+                {new Date(log.created_at).toLocaleTimeString('ko-KR')}
+              </span>
+              <span>{log.message}</span>
+            </div>
+          ))}
+          <div ref={bottomRef} />
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 // --- Main Component ---
 
-export function DailyRunDetail({ initialRun, initialJobs, blogLabels }: {
+export function DailyRunDetail({ initialRun, initialJobs, initialLogs = [], blogLabels }: {
   initialRun: DailyRun
   initialJobs: DailyRunJob[]
+  initialLogs?: LogEntry[]
   blogLabels: Record<string, string>
 }) {
   const [run, setRun] = useState<DailyRun>(initialRun)
   const [jobs, setJobs] = useState<DailyRunJob[]>(initialJobs)
+  const [logs, setLogs] = useState<LogEntry[]>(initialLogs)
   const [actionLoading, setActionLoading] = useState(false)
 
   // Realtime subscriptions
@@ -340,9 +389,22 @@ export function DailyRunDetail({ initialRun, initialJobs, blogLabels }: {
       })
       .subscribe()
 
+    const logChannel = supabase
+      .channel(`daily-run-logs-${initialRun.id}`)
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'daily_run_logs',
+        filter: `daily_run_id=eq.${initialRun.id}`,
+      }, (payload) => {
+        setLogs(prev => [...prev, payload.new as LogEntry])
+      })
+      .subscribe()
+
     return () => {
       supabase.removeChannel(runChannel)
       supabase.removeChannel(jobChannel)
+      supabase.removeChannel(logChannel)
     }
   }, [initialRun.id])
 
@@ -437,6 +499,9 @@ export function DailyRunDetail({ initialRun, initialJobs, blogLabels }: {
           )}
         </div>
       </div>
+
+      {/* Log Panel */}
+      <LogPanel logs={logs} />
 
       {/* Error */}
       {run.error && (

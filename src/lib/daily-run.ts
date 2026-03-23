@@ -51,9 +51,17 @@ export async function getTodayRun(): Promise<DailyRun | null> {
   return data
 }
 
+export interface DailyRunLog {
+  id: number
+  level: string
+  message: string
+  created_at: string
+}
+
 export async function getDailyRun(runId: string): Promise<{
   run: DailyRun
   jobs: DailyRunJob[]
+  logs: DailyRunLog[]
 } | null> {
   const supabase = await createClient()
 
@@ -65,11 +73,18 @@ export async function getDailyRun(runId: string): Promise<{
 
   if (!run) return null
 
-  const { data: jobs } = await supabase
-    .from('publish_jobs')
-    .select('id, blog_id, keyword, status, title, published_url, publish_error, created_at')
-    .eq('daily_run_id', runId)
-    .order('created_at')
+  const [{ data: jobs }, { data: logs }] = await Promise.all([
+    supabase
+      .from('publish_jobs')
+      .select('id, blog_id, keyword, status, title, published_url, publish_error, created_at')
+      .eq('daily_run_id', runId)
+      .order('created_at'),
+    supabase
+      .from('daily_run_logs')
+      .select('id, level, message, created_at')
+      .eq('daily_run_id', runId)
+      .order('created_at'),
+  ])
 
-  return { run, jobs: jobs || [] }
+  return { run, jobs: jobs || [], logs: logs || [] }
 }
