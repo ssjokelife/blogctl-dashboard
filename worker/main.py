@@ -421,6 +421,16 @@ async def poll_pending_jobs():
         for job in pub_result.data:
             await claim_and_process(job["id"])
 
+    # pending daily_runs 확인 (Realtime 놓친 경우 폴백)
+    run_result = supabase.table("daily_runs").select("id").eq(
+        "status", "pending"
+    ).eq("user_id", WORKER_USER_ID).execute()
+
+    if run_result.data:
+        logger.info(f"폴링: {len(run_result.data)}개 대기 daily_run 발견")
+        for run in run_result.data:
+            await run_daily_workflow(run["id"], supabase)
+
 
 async def scheduled_publish():
     """자동 발행 — daily run 워크플로우 실행"""
