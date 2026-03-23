@@ -597,3 +597,63 @@ async def run_daily_workflow(run_id, supabase) -> None:
             }).eq("id", run_id).execute()
         except Exception:
             logger.error(f"Daily Run {run_id}: 실패 상태 업데이트도 실패")
+
+
+async def resume_stalled_runs(run_id: str | None, supabase):
+    """중단된 daily_run 복구 — finalize_requested 처리 또는 중단된 publishing run 보고서 생성"""
+    if run_id:
+        # 특정 run 처리
+        runs_to_resume = [{"id": run_id}]
+    else:
+        # publishing 상태인데 30분 이상 변경 없는 run 찾기 (워크플로우 중단 감지)
+        stale_cutoff = (datetime.now(timezone.utc) - timedelta(minutes=30)).isoformat()
+        result = supabase.table("daily_runs").select("id").eq(
+            "user_id", WORKER_USER_ID
+        ).in_("status", ["publishing", "finalize_requested"]).lt(
+            "started_at", stale_cutoff
+        ).execute()
+        runs_to_resume = result.data or []
+
+    for run_data in runs_to_resume:
+        rid = run_data["id"]
+        try:
+            logger.info(f"Daily Run {rid}: 중단된 run 복구 — 보고서 생성")
+            log_event(supabase, rid, "🔄 워크플로우 복구 — 보고서 생성 시작")
+
+            # run 데이터 조회
+            run_result = supabase.table("daily_runs").select("*").eq("id", rid).single().execute()
+            run = run_result.data
+            if not run:
+                continue
+
+            analysis = run.get("analysis") or {}
+            plan = run.get("plan") or {}
+
+            # 연결된 job_ids 조회
+            jobs_result = supabase.table("publish_jobs").select("id").eq(
+                "daily_run_id", rid
+            ).execute()
+            job_ids = [j["id"] for j in (jobs_result.data or [])]
+
+            # 보고서 생성
+            supabase.table("daily_runs").update({
+                "status": "reporting",
+            }).eq("id", rid).execute()
+            log_event(supabase, rid, "📝 AI 리포트 생성 중...")
+
+            report, todos = generate_report(supabase, analysis, plan, job_ids)
+
+            supabase.table("daily_runs").update({
+                "status": "completed",
+                "report": report,
+                "todos": todos,
+                "completed_at": datetime.now(timezone.utc).isoformat(),
+            }).eq("id", rid).execute()
+
+            todo_count = len(todos) if todos else 0
+            log_event(supabase, rid, f"🎉 워크플로우 완료 — TODO {todo_count}건")
+            logger.info(f"Daily Run {rid}: 복구 완료")
+
+        except Exception as e:
+            logger.error(f"Daily Run {rid}: 복구 실패 — {e}")
+            log_event(supabase, rid, f"💥 복구 실패 — {str(e)[:200]}", "error")

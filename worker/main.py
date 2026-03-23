@@ -12,7 +12,7 @@ from config import (
     POLL_INTERVAL, MAX_PUBLISH_ATTEMPTS,
 )
 from publisher import publish_job
-from daily_run import run_daily_workflow
+from daily_run import run_daily_workflow, resume_stalled_runs
 
 logging.basicConfig(
     level=logging.INFO,
@@ -390,15 +390,22 @@ async def send_heartbeat():
 async def poll_pending_jobs():
     """폴링 — 미처리 job + daily_run 확인"""
     # daily_runs를 먼저 체크 (블로킹 방지 — job 생성보다 우선)
-    run_result = supabase.table("daily_runs").select("id").eq(
-        "status", "pending"
-    ).eq("user_id", WORKER_USER_ID).execute()
+    run_result = supabase.table("daily_runs").select("id, status").eq(
+        "user_id", WORKER_USER_ID
+    ).in_("status", ["pending", "finalize_requested"]).execute()
 
     if run_result.data:
-        logger.info(f"폴링: {len(run_result.data)}개 대기 daily_run 발견")
         for run in run_result.data:
-            await run_daily_workflow(run["id"], supabase)
-        return  # daily_run 처리 후 다음 폴링에서 job 처리
+            if run["status"] == "pending":
+                logger.info(f"폴링: 대기 daily_run 발견 — {run['id']}")
+                await run_daily_workflow(run["id"], supabase)
+            elif run["status"] == "finalize_requested":
+                logger.info(f"폴링: finalize 요청 daily_run 발견 — {run['id']}")
+                await resume_stalled_runs(run["id"], supabase)
+        return
+
+    # 중단된 run 복구 (publishing 상태인데 워크플로우가 안 돌고 있는 경우)
+    await resume_stalled_runs(None, supabase)
 
     # 콘텐츠 생성 요청 (daily_run 외 개별 생성 요청)
     gen_result = supabase.table("publish_jobs").select("id").eq(
