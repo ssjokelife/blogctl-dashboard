@@ -5,9 +5,24 @@ import logging
 import os
 from datetime import datetime, timezone, timedelta
 
-from config import WORKER_USER_ID
+from config import WORKER_USER_ID, get_supabase
 
 logger = logging.getLogger("daily_run")
+
+
+def safe_query(supabase, fn, retries=2):
+    """DB 쿼리 실행 + 연결 끊김 시 클라이언트 재생성하여 재시도"""
+    for attempt in range(retries + 1):
+        try:
+            return fn(supabase)
+        except Exception as e:
+            err_str = str(e).lower()
+            if attempt < retries and ("disconnect" in err_str or "connection" in err_str or "closed" in err_str or "timeout" in err_str):
+                logger.warning(f"DB 연결 오류, 재연결 시도 ({attempt + 1}/{retries}): {e}")
+                supabase = get_supabase()  # 새 클라이언트 생성
+                continue
+            raise
+    return None  # unreachable
 
 
 def log_event(supabase, run_id: str, message: str, level: str = "info"):
@@ -458,81 +473,97 @@ async def run_daily_workflow(run_id, supabase) -> None:
         log_event(supabase, run_id, f"⚙️ {len(job_ids)}개 Job 생성 완료 — 콘텐츠 생성 대기 중")
         logger.info(f"Daily Run {run_id}: {len(job_ids)}개 Job 생성 완료, 대기 시작")
 
-        # Phase 4: Job 완료 대기
+        # Phase 4: Job 완료 대기 (연결 끊김 대비 재연결 포함)
         timeout_hours = 4 if mode == "auto" else 24
         timeout_at = datetime.now(timezone.utc) + timedelta(hours=timeout_hours)
         terminal_auto = {"published", "publish_failed", "failed"}
         terminal_manual = {"published", "publish_failed", "failed", "completed"}
         prev_statuses = {}  # 상태 변화 감지용
+        consecutive_errors = 0
 
         while datetime.now(timezone.utc) < timeout_at:
             await asyncio.sleep(10)
 
-            # Run 상태 체크 (취소/종료 요청)
-            run_check = supabase.table("daily_runs").select("status").eq("id", run_id).single().execute()
-            current_status = run_check.data.get("status") if run_check.data else None
-            if current_status in ("cancelled", "finalize_requested"):
-                log_event(supabase, run_id, f"⏹️ {current_status} 감지 — 보고 단계로 이동")
-                logger.info(f"Daily Run {run_id}: {current_status} 감지, 리포트 진행")
-                break
+            try:
+                # 연결 끊김이 반복되면 클라이언트 재생성
+                if consecutive_errors >= 3:
+                    logger.warning(f"Daily Run {run_id}: 연속 {consecutive_errors}회 오류, Supabase 재연결")
+                    supabase = get_supabase()
+                    consecutive_errors = 0
 
-            # Job 상태 확인
-            if not job_ids:
-                break
+                # Run 상태 체크 (취소/종료 요청)
+                run_check = supabase.table("daily_runs").select("status").eq("id", run_id).single().execute()
+                current_status = run_check.data.get("status") if run_check.data else None
+                if current_status in ("cancelled", "finalize_requested"):
+                    log_event(supabase, run_id, f"⏹️ {current_status} 감지 — 보고 단계로 이동")
+                    logger.info(f"Daily Run {run_id}: {current_status} 감지, 리포트 진행")
+                    break
 
-            jobs_check = supabase.table("publish_jobs").select("id, status, keyword, title, published_url, publish_error, publish_error_type, metadata").in_("id", job_ids).execute()
-            jobs = jobs_check.data or []
-            statuses = {j["id"]: j["status"] for j in jobs}
+                # Job 상태 확인
+                if not job_ids:
+                    break
 
-            # 상태 변화 로그
-            for j in jobs:
-                jid = j["id"]
-                new_status = j["status"]
-                old_status = prev_statuses.get(jid)
-                if old_status and old_status != new_status:
-                    kw = j.get("keyword", "")
-                    if new_status == "generating":
-                        done = sum(1 for s in statuses.values() if s not in ("generate_requested", "generating"))
-                        log_event(supabase, run_id, f"⚙️ 콘텐츠 생성 중: {kw} ({done + 1}/{len(job_ids)})")
-                    elif new_status == "completed":
-                        meta = j.get("metadata") or {}
-                        score = meta.get("quality_score", "?")
-                        log_event(supabase, run_id, f"✅ 생성 완료: {kw} (품질 {score}/100)")
-                    elif new_status == "publish_requested":
-                        log_event(supabase, run_id, f"🚀 발행 요청: {kw}")
-                    elif new_status == "publishing":
-                        log_event(supabase, run_id, f"🚀 발행 중: {kw}")
-                    elif new_status == "published":
-                        url = j.get("published_url", "")
-                        log_event(supabase, run_id, f"✅ 발행 완료: {kw} — {url}")
-                    elif new_status == "failed":
-                        log_event(supabase, run_id, f"❌ 생성 실패: {kw}", "error")
-                    elif new_status == "publish_failed":
-                        err_type = j.get("publish_error_type", "")
-                        err = j.get("publish_error", "")[:80] if j.get("publish_error") else ""
-                        if err_type == "session_expired":
-                            log_event(supabase, run_id, f"❌ 발행 실패: {kw} — 세션 만료 (blogctl login 필요)", "error")
-                        else:
-                            log_event(supabase, run_id, f"❌ 발행 실패: {kw} — {err}", "error")
-            prev_statuses = statuses.copy()
+                jobs_check = supabase.table("publish_jobs").select("id, status, keyword, title, published_url, publish_error, publish_error_type, metadata").in_("id", job_ids).execute()
+                jobs = jobs_check.data or []
+                statuses = {j["id"]: j["status"] for j in jobs}
 
-            # Auto 모드: completed → publish_requested 자동 전환
-            if mode == "auto":
+                # 상태 변화 로그
                 for j in jobs:
-                    if j["status"] == "completed":
-                        supabase.table("publish_jobs").update({
-                            "status": "publish_requested",
-                        }).eq("id", j["id"]).execute()
-                        logger.info(f"Daily Run {run_id}: Job {j['id']} → publish_requested")
+                    jid = j["id"]
+                    new_status = j["status"]
+                    old_status = prev_statuses.get(jid)
+                    if old_status and old_status != new_status:
+                        kw = j.get("keyword", "")
+                        if new_status == "generating":
+                            done = sum(1 for s in statuses.values() if s not in ("generate_requested", "generating"))
+                            log_event(supabase, run_id, f"⚙️ 콘텐츠 생성 중: {kw} ({done + 1}/{len(job_ids)})")
+                        elif new_status == "completed":
+                            meta = j.get("metadata") or {}
+                            score = meta.get("quality_score", "?")
+                            log_event(supabase, run_id, f"✅ 생성 완료: {kw} (품질 {score}/100)")
+                        elif new_status == "publish_requested":
+                            log_event(supabase, run_id, f"🚀 발행 요청: {kw}")
+                        elif new_status == "publishing":
+                            log_event(supabase, run_id, f"🚀 발행 중: {kw}")
+                        elif new_status == "published":
+                            url = j.get("published_url", "")
+                            log_event(supabase, run_id, f"✅ 발행 완료: {kw} — {url}")
+                        elif new_status == "failed":
+                            log_event(supabase, run_id, f"❌ 생성 실패: {kw}", "error")
+                        elif new_status == "publish_failed":
+                            err_type = j.get("publish_error_type", "")
+                            err = j.get("publish_error", "")[:80] if j.get("publish_error") else ""
+                            if err_type == "session_expired":
+                                log_event(supabase, run_id, f"❌ 발행 실패: {kw} — 세션 만료 (blogctl login 필요)", "error")
+                            else:
+                                log_event(supabase, run_id, f"❌ 발행 실패: {kw} — {err}", "error")
+                prev_statuses = statuses.copy()
 
-            # 종료 조건 체크
-            terminal = terminal_auto if mode == "auto" else terminal_manual
-            if all(s in terminal for s in statuses.values()):
-                published = sum(1 for s in statuses.values() if s == "published")
-                failed = sum(1 for s in statuses.values() if s in ("failed", "publish_failed"))
-                log_event(supabase, run_id, f"📊 전체 완료 — 성공 {published}건, 실패 {failed}건")
-                logger.info(f"Daily Run {run_id}: 모든 Job 완료")
-                break
+                # Auto 모드: completed → publish_requested 자동 전환
+                if mode == "auto":
+                    for j in jobs:
+                        if j["status"] == "completed":
+                            supabase.table("publish_jobs").update({
+                                "status": "publish_requested",
+                            }).eq("id", j["id"]).execute()
+                            logger.info(f"Daily Run {run_id}: Job {j['id']} → publish_requested")
+
+                # 종료 조건 체크
+                terminal = terminal_auto if mode == "auto" else terminal_manual
+                if all(s in terminal for s in statuses.values()):
+                    published = sum(1 for s in statuses.values() if s == "published")
+                    failed = sum(1 for s in statuses.values() if s in ("failed", "publish_failed"))
+                    log_event(supabase, run_id, f"📊 전체 완료 — 성공 {published}건, 실패 {failed}건")
+                    logger.info(f"Daily Run {run_id}: 모든 Job 완료")
+                    break
+
+                consecutive_errors = 0  # 성공하면 리셋
+
+            except Exception as poll_err:
+                consecutive_errors += 1
+                logger.warning(f"Daily Run {run_id}: 대기 루프 오류 ({consecutive_errors}회): {poll_err}")
+                await asyncio.sleep(5)  # 짧게 대기 후 재시도
+                continue
         else:
             log_event(supabase, run_id, f"⏰ 타임아웃 ({timeout_hours}시간) — 현재 결과로 보고 진행", "warning")
             logger.warning(f"Daily Run {run_id}: 타임아웃 ({timeout_hours}h)")
