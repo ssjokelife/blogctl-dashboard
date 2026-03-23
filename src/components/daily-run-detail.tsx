@@ -197,7 +197,8 @@ function PublishSection({ plan, jobs, run, blogList, onContinue }: {
 }) {
   const reasons = (plan?.reasons || []) as string[]
   const isManual = run.mode === 'manual'
-  const canContinue = isManual && run.status === 'plan_ready'
+  const hasCompletedJobs = jobs.some(j => j.status === 'completed')
+  const canContinue = isManual && ['plan_ready', 'publishing'].includes(run.status) && hasCompletedJobs
 
   return (
     <Card>
@@ -219,46 +220,72 @@ function PublishSection({ plan, jobs, run, blogList, onContinue }: {
         )}
 
         {jobs.length > 0 && (
-          <div className="space-y-2">
-            {jobs.map((job) => (
-              <div key={job.id} className="flex items-center gap-3 border rounded-lg px-4 py-3">
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium truncate">{job.keyword}</div>
-                  {job.title && <div className="text-xs text-gray-400 truncate">{job.title}</div>}
-                </div>
-                <div className="flex items-center gap-1 shrink-0">
-                  {blogList[job.blog_id]?.platform && (
-                    <Badge className={`text-[10px] px-1 py-0 ${PLATFORM_COLORS[blogList[job.blog_id].platform] || 'bg-gray-100 text-gray-600'}`}>
-                      {PLATFORM_LABELS[blogList[job.blog_id].platform] || blogList[job.blog_id].platform}
+          <div className="space-y-3">
+            {/* 요약 */}
+            <div className="flex gap-4 text-xs text-gray-500 bg-gray-50 rounded-lg px-4 py-2">
+              <span>전체 {jobs.length}건</span>
+              {(() => {
+                const published = jobs.filter(j => j.status === 'published').length
+                const completed = jobs.filter(j => j.status === 'completed').length
+                const failed = jobs.filter(j => j.status === 'publish_failed' || j.status === 'failed').length
+                const inProgress = jobs.filter(j => ['generate_requested', 'generating', 'publishing', 'publish_requested'].includes(j.status)).length
+                return (
+                  <>
+                    {published > 0 && <span className="text-emerald-600">발행 {published}</span>}
+                    {completed > 0 && <span className="text-blue-600">생성완료 {completed}</span>}
+                    {inProgress > 0 && <span className="text-amber-600">진행중 {inProgress}</span>}
+                    {failed > 0 && <span className="text-red-600">실패 {failed}</span>}
+                  </>
+                )
+              })()}
+            </div>
+
+            {jobs.map((job) => {
+              const blog = blogList[job.blog_id]
+              const platform = blog?.platform || ''
+              return (
+                <div key={job.id} className="border rounded-lg px-4 py-3 space-y-1">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium truncate">{job.keyword}</div>
+                      {job.title && <div className="text-xs text-gray-400 truncate">{job.title}</div>}
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      {platform && (
+                        <Badge className={`text-[10px] px-1 py-0 ${PLATFORM_COLORS[platform] || 'bg-gray-100 text-gray-600'}`}>
+                          {PLATFORM_LABELS[platform] || platform}
+                        </Badge>
+                      )}
+                      <Badge variant="outline" className="text-xs">
+                        {blog?.label || job.blog_id}
+                      </Badge>
+                    </div>
+                    <Badge className={`text-xs shrink-0 ${JOB_STATUS_COLORS[job.status] || 'bg-gray-100 text-gray-700'}`}>
+                      {JOB_STATUS_LABELS[job.status] || job.status}
                     </Badge>
+                    <a href={`/jobs/${job.id}`} className="text-xs text-gray-400 hover:text-gray-600 shrink-0">
+                      상세
+                    </a>
+                  </div>
+                  {/* 발행 완료: URL 표시 */}
+                  {job.published_url && (
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="text-gray-400">URL:</span>
+                      <a href={job.published_url} target="_blank" rel="noopener noreferrer"
+                         className="text-emerald-600 hover:text-emerald-700 truncate">
+                        {job.published_url.replace(/https?:\/\//, '')}
+                      </a>
+                    </div>
                   )}
-                  <Badge variant="outline" className="text-xs">
-                    {blogList[job.blog_id]?.label || job.blog_id}
-                  </Badge>
+                  {/* 발행 실패: 에러 표시 */}
+                  {job.publish_error && (
+                    <div className="text-xs text-red-500 truncate">
+                      {job.publish_error}
+                    </div>
+                  )}
                 </div>
-                <Badge className={`text-xs shrink-0 ${JOB_STATUS_COLORS[job.status] || 'bg-gray-100 text-gray-700'}`}>
-                  {JOB_STATUS_LABELS[job.status] || job.status}
-                </Badge>
-                {job.published_url && (
-                  <a
-                    href={job.published_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-emerald-600 hover:text-emerald-700 shrink-0"
-                  >
-                    보기
-                  </a>
-                )}
-                {job.status === 'completed' && (
-                  <a
-                    href={`/jobs/${job.id}`}
-                    className="text-xs text-blue-600 hover:text-blue-700 shrink-0"
-                  >
-                    상세
-                  </a>
-                )}
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
 
