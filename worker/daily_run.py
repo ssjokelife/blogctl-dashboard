@@ -223,6 +223,47 @@ JSON으로 응답:
         }, tokens_used
 
 
+def get_published_keywords(supabase, blog_id) -> set:
+    """블로그의 실제 발행된 키워드/제목 목록 수집 (중복 방지용)"""
+    published = set()
+
+    # publish_jobs에서 발행 완료된 키워드
+    jobs_result = supabase.table("publish_jobs").select("keyword, title").eq(
+        "blog_id", blog_id
+    ).eq("user_id", WORKER_USER_ID).eq("status", "published").execute()
+    for j in (jobs_result.data or []):
+        if j.get("keyword"):
+            published.add(j["keyword"].strip().lower())
+        if j.get("title"):
+            published.add(j["title"].strip().lower())
+
+    # publish_logs에서 기존 발행 기록
+    logs_result = supabase.table("publish_logs").select("title").eq(
+        "blog_id", blog_id
+    ).eq("user_id", WORKER_USER_ID).execute()
+    for l in (logs_result.data or []):
+        if l.get("title"):
+            published.add(l["title"].strip().lower())
+
+    return published
+
+
+def is_duplicate_keyword(keyword: str, published_set: set) -> bool:
+    """키워드가 이미 발행된 내역과 중복인지 확인"""
+    kw_lower = keyword.strip().lower()
+
+    # 정확히 같은 키워드
+    if kw_lower in published_set:
+        return True
+
+    # 발행된 제목에 키워드가 포함되어 있거나, 키워드에 발행 제목이 포함
+    for pub in published_set:
+        if kw_lower in pub or pub in kw_lower:
+            return True
+
+    return False
+
+
 def select_top_keywords(supabase, blog_id, count) -> list:
     """우선순위 기반 키워드 선택"""
     result = supabase.table("keywords").select("*").eq(
@@ -562,10 +603,20 @@ async def run_daily_workflow(run_id, supabase) -> None:
         log_event(supabase, run_id, f"📋 계획 완료 — {plan['total_jobs']}건 발행 예정 ({plan_tokens} tokens)")
         logger.info(f"Daily Run {run_id}: 계획 완료 — {plan['total_jobs']}건 예정")
 
-        # Phase 3: Job 생성
+        # Phase 3: Job 생성 (실제 발행 내역 기반 중복 체크)
         job_ids = []
+        skipped = 0
         for blog_id, blog_plan in plan.get("blogs", {}).items():
+            published_set = get_published_keywords(supabase, blog_id)
+
             for kw in blog_plan.get("keywords", []):
+                # 실제 발행 내역과 중복 체크
+                if is_duplicate_keyword(kw["keyword"], published_set):
+                    log_event(supabase, run_id, f"⏭️ 중복 건너뜀: {kw['keyword']} (이미 발행됨)")
+                    logger.info(f"Daily Run {run_id}: 중복 건너뜀 — {kw['keyword']}")
+                    skipped += 1
+                    continue
+
                 # 키워드 상태 변경
                 supabase.table("keywords").update({
                     "status": "generating",
@@ -584,8 +635,12 @@ async def run_daily_workflow(run_id, supabase) -> None:
 
                 if job_result.data:
                     job_ids.append(job_result.data[0]["id"])
+                    published_set.add(kw["keyword"].strip().lower())  # 방금 생성한 것도 추가
                     log_event(supabase, run_id, f"📝 Job 생성: {kw['keyword']}")
                     logger.info(f"Daily Run {run_id}: Job 생성 — {kw['keyword']}")
+
+        if skipped:
+            log_event(supabase, run_id, f"⏭️ 중복 {skipped}건 건너뜀")
 
         supabase.table("daily_runs").update({
             "status": "publishing",
