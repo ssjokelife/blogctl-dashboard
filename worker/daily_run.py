@@ -9,6 +9,10 @@ from config import WORKER_USER_ID, get_supabase
 
 logger = logging.getLogger("daily_run")
 
+# 발행 건수 상한
+MAX_JOBS_PER_BLOG = 3   # 블로그당 최대 3건
+MAX_JOBS_PER_RUN = 15   # 1회 실행 최대 15건
+
 
 def safe_query(supabase, fn, retries=2):
     """DB 쿼리 실행 + 연결 끊김 시 클라이언트 재생성하여 재시도"""
@@ -282,10 +286,12 @@ def select_top_keywords(supabase, blog_id, count) -> list:
 
 
 def fallback_plan(supabase, analysis) -> dict:
-    """GPT 실패 시 기본 플랜: 블로그당 1건"""
+    """GPT 실패 시 기본 플랜: 블로그당 1건 (상한 적용)"""
     blogs_plan = {}
     total = 0
     for blog_id, info in analysis["blogs"].items():
+        if total >= MAX_JOBS_PER_RUN:
+            break
         if info["keywords"]["pending"] == 0:
             blogs_plan[blog_id] = {
                 "recommended_count": 0,
@@ -329,6 +335,7 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
 
 규칙:
 - **필수**: 대기 키워드가 1개 이상인 모든 블로그에 최소 1건 배정
+- **상한**: 블로그당 최대 3건, 전체 최대 15건을 절대 초과하지 마세요
 - 집중 블로그 (키워드 풀이 크고 수익이 좋은): 2-3개 포스트
 - 일반 블로그: 1개 포스트
 - 키워드 풀이 적은 블로그 (5개 미만): 1개
@@ -399,15 +406,24 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
                 top_kw = select_top_keywords(supabase, blog_id, recommended)
                 validated_keywords = [{"id": k["id"], "keyword": k["keyword"], "priority": k.get("priority", "medium")} for k in top_kw]
 
+            # 하드 캡: 블로그당 MAX_JOBS_PER_BLOG, 전체 MAX_JOBS_PER_RUN
+            capped = min(recommended, MAX_JOBS_PER_BLOG)
+            remaining = MAX_JOBS_PER_RUN - total
+            if remaining <= 0:
+                break
+            capped = min(capped, remaining)
             blogs_plan[blog_id] = {
-                "recommended_count": recommended,
+                "recommended_count": capped,
                 "reason": plan_data.get("reason", ""),
-                "keywords": validated_keywords[:recommended],
+                "keywords": validated_keywords[:capped],
             }
             total += len(blogs_plan[blog_id]["keywords"])
 
         # GPT가 누락한 블로그 보충 — 키워드가 있는 모든 블로그에 최소 1건
         for blog_id, kws in available_keywords.items():
+            if total >= MAX_JOBS_PER_RUN:
+                logger.info(f"계획 보충 중단 — 전체 상한 {MAX_JOBS_PER_RUN}건 도달")
+                break
             if blog_id not in blogs_plan and len(kws) > 0:
                 top_kw = select_top_keywords(supabase, blog_id, 1)
                 if top_kw:
@@ -649,7 +665,15 @@ async def run_daily_workflow(run_id, supabase) -> None:
         logger.info(f"Daily Run {run_id}: {len(job_ids)}개 Job 생성 완료, 콘텐츠 생성 시작")
 
         # 콘텐츠 생성 직접 실행 (Realtime 미작동 대비)
-        import main as main_module
+        # __main__ 모듈에서 generate_content 가져오기 (main.py가 엔트리포인트)
+        # 주의: `import main`은 sys.path에 따라 다른 main.py를 가져올 수 있음
+        import sys
+        main_module = sys.modules.get("__main__")
+        if main_module is None or not hasattr(main_module, "generate_content"):
+            worker_dir = os.path.dirname(os.path.abspath(__file__))
+            if worker_dir not in sys.path:
+                sys.path.insert(0, worker_dir)
+            import main as main_module
         main_module.supabase = supabase  # daily_run의 supabase 공유
         for jid in job_ids:
             try:
@@ -823,8 +847,8 @@ async def resume_stalled_runs(run_id: str | None, supabase):
     for run_data in runs_to_resume:
         rid = run_data["id"]
         try:
-            logger.info(f"Daily Run {rid}: 중단된 run 복구 — 보고서 생성")
-            log_event(supabase, rid, "🔄 워크플로우 복구 — 보고서 생성 시작")
+            logger.info(f"Daily Run {rid}: 중단된 run 복구 시작")
+            log_event(supabase, rid, "🔄 워크플로우 복구 시작")
 
             # run 데이터 조회
             run_result = supabase.table("daily_runs").select("*").eq("id", rid).single().execute()
@@ -834,12 +858,42 @@ async def resume_stalled_runs(run_id: str | None, supabase):
 
             analysis = run.get("analysis") or {}
             plan = run.get("plan") or {}
+            mode = run.get("mode", "auto")
 
-            # 연결된 job_ids 조회
-            jobs_result = supabase.table("publish_jobs").select("id").eq(
+            # 연결된 job 조회 (상태 포함)
+            jobs_result = supabase.table("publish_jobs").select("id, status").eq(
                 "daily_run_id", rid
             ).execute()
-            job_ids = [j["id"] for j in (jobs_result.data or [])]
+            jobs = jobs_result.data or []
+            job_ids = [j["id"] for j in jobs]
+
+            # 미발행 job 복구: generate_requested/generating → 콘텐츠 생성, completed → 발행 요청
+            stalled_gen = [j for j in jobs if j["status"] in ("generate_requested", "generating")]
+            stalled_pub = [j for j in jobs if j["status"] == "completed" and mode == "auto"]
+
+            if stalled_gen:
+                log_event(supabase, rid, f"🔄 미생성 {len(stalled_gen)}건 콘텐츠 생성 재시도")
+                import sys
+                main_module = sys.modules.get("__main__")
+                if main_module and hasattr(main_module, "generate_content"):
+                    main_module.supabase = supabase
+                    for j in stalled_gen:
+                        try:
+                            claim = supabase.table("publish_jobs").update({
+                                "status": "generating",
+                            }).eq("id", j["id"]).execute()
+                            if claim.data:
+                                await main_module.generate_content(j["id"])
+                        except Exception as e:
+                            logger.error(f"  Job {j['id']}: 복구 생성 실패 — {e}")
+
+            if stalled_pub:
+                log_event(supabase, rid, f"🚀 미발행 {len(stalled_pub)}건 발행 요청 전환")
+                for j in stalled_pub:
+                    supabase.table("publish_jobs").update({
+                        "status": "publish_requested",
+                    }).eq("id", j["id"]).execute()
+                    logger.info(f"  Job {j['id']}: completed → publish_requested (복구)")
 
             # 보고서 생성
             supabase.table("daily_runs").update({
