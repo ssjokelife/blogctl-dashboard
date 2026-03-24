@@ -594,14 +594,15 @@ async def run_daily_workflow(run_id, supabase) -> None:
         logger.info(f"Daily Run {run_id}: {len(job_ids)}개 Job 생성 완료, 콘텐츠 생성 시작")
 
         # 콘텐츠 생성 직접 실행 (Realtime 미작동 대비)
-        from main import generate_content
+        import main as main_module
+        main_module.supabase = supabase  # daily_run의 supabase 공유
         for jid in job_ids:
             try:
                 claim = supabase.table("publish_jobs").update({
                     "status": "generating",
                 }).eq("id", jid).eq("status", "generate_requested").execute()
                 if claim.data:
-                    await generate_content(jid)
+                    await main_module.generate_content(jid)
             except Exception as e:
                 logger.error(f"  Job {jid}: 콘텐츠 생성 실패 — {e}")
                 supabase.table("publish_jobs").update({
