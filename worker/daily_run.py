@@ -287,9 +287,11 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
 블로그 분석 데이터와 사용 가능한 키워드를 보고, 오늘의 발행 계획을 세워주세요.
 
 규칙:
+- **필수**: 대기 키워드가 1개 이상인 모든 블로그에 최소 1건 배정
 - 집중 블로그 (키워드 풀이 크고 수익이 좋은): 2-3개 포스트
 - 일반 블로그: 1개 포스트
-- 키워드 풀이 적은 블로그 (5개 미만): 0-1개
+- 키워드 풀이 적은 블로그 (5개 미만): 1개
+- 키워드가 0개인 블로그만 0건
 - urgent/high 우선순위 키워드를 우선 선택
 - expected_clicks_4w가 높은 키워드 우선
 
@@ -362,6 +364,19 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
                 "keywords": validated_keywords[:recommended],
             }
             total += len(blogs_plan[blog_id]["keywords"])
+
+        # GPT가 누락한 블로그 보충 — 키워드가 있는 모든 블로그에 최소 1건
+        for blog_id, kws in available_keywords.items():
+            if blog_id not in blogs_plan and len(kws) > 0:
+                top_kw = select_top_keywords(supabase, blog_id, 1)
+                if top_kw:
+                    blogs_plan[blog_id] = {
+                        "recommended_count": 1,
+                        "reason": "GPT 계획에서 누락 — 최소 1건 자동 배정",
+                        "keywords": [{"id": k["id"], "keyword": k["keyword"], "priority": k.get("priority", "medium")} for k in top_kw],
+                    }
+                    total += 1
+                    logger.info(f"계획 보충: {blog_id} — GPT 누락, 1건 자동 배정")
 
         return {"blogs": blogs_plan, "total_jobs": total}, tokens_used
 
