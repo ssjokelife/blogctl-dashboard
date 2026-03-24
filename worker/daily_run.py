@@ -575,8 +575,24 @@ async def run_daily_workflow(run_id, supabase) -> None:
         supabase.table("daily_runs").update({
             "status": "publishing",
         }).eq("id", run_id).execute()
-        log_event(supabase, run_id, f"⚙️ {len(job_ids)}개 Job 생성 완료 — 콘텐츠 생성 대기 중")
-        logger.info(f"Daily Run {run_id}: {len(job_ids)}개 Job 생성 완료, 대기 시작")
+        log_event(supabase, run_id, f"⚙️ {len(job_ids)}개 Job 생성 완료 — 콘텐츠 생성 시작")
+        logger.info(f"Daily Run {run_id}: {len(job_ids)}개 Job 생성 완료, 콘텐츠 생성 시작")
+
+        # 콘텐츠 생성 직접 실행 (Realtime 미작동 대비)
+        from main import generate_content
+        for jid in job_ids:
+            try:
+                claim = supabase.table("publish_jobs").update({
+                    "status": "generating",
+                }).eq("id", jid).eq("status", "generate_requested").execute()
+                if claim.data:
+                    await generate_content(jid)
+            except Exception as e:
+                logger.error(f"  Job {jid}: 콘텐츠 생성 실패 — {e}")
+                supabase.table("publish_jobs").update({
+                    "status": "failed",
+                    "error_message": str(e),
+                }).eq("id", jid).execute()
 
         # Phase 4: Job 완료 대기 (연결 끊김 대비 재연결 포함)
         timeout_hours = 4 if mode == "auto" else 24

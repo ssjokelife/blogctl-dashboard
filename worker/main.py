@@ -420,10 +420,10 @@ async def _poll_pending_jobs_inner():
     # 중단된 run 복구 (publishing 상태인데 워크플로우가 안 돌고 있는 경우)
     await resume_stalled_runs(None, supabase)
 
-    # 콘텐츠 생성 요청 (daily_run 외 개별 생성 요청)
+    # 콘텐츠 생성 요청 (개별 + daily_run 포함)
     gen_result = supabase.table("publish_jobs").select("id").eq(
         "status", "generate_requested"
-    ).eq("user_id", WORKER_USER_ID).is_("daily_run_id", "null").execute()
+    ).eq("user_id", WORKER_USER_ID).execute()
 
     if gen_result.data:
         logger.info(f"폴링: {len(gen_result.data)}개 개별 콘텐츠 생성 job 발견")
