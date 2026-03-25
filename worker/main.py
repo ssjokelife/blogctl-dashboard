@@ -292,7 +292,13 @@ async def auto_index(job_id: int, url: str):
 
 
 async def claim_and_process(job_id: int):
-    """원자적 클레임 + 발행 처리"""
+    """원자적 클레임 + 발행 처리 (세마포어로 동시 발행 방지)"""
+    async with publish_semaphore:
+        await _claim_and_process_inner(job_id)
+
+
+async def _claim_and_process_inner(job_id: int):
+    """발행 처리 내부 구현"""
     # 원자적 클레임: publish_requested → publishing
     claim_result = supabase.table("publish_jobs").update({
         "status": "publishing",
@@ -446,7 +452,10 @@ async def _poll_pending_jobs_inner():
 
     if pub_result.data:
         logger.info(f"폴링: {len(pub_result.data)}개 발행 job 발견")
-        for job in pub_result.data:
+        for i, job in enumerate(pub_result.data):
+            if i > 0:
+                # Chromium 프로필 충돌 방지: 이전 브라우저 프로세스 종료 대기
+                await asyncio.sleep(3)
             await claim_and_process(job["id"])
 
 
@@ -479,6 +488,10 @@ async def scheduled_publish():
     else:
         logger.error("Daily Run 생성 실패")
     logger.info("=== 자동 발행 스케줄 완료 ===")
+
+
+# Chromium 프로필 충돌 방지: 발행은 한 번에 하나씩만
+publish_semaphore = asyncio.Semaphore(1)
 
 
 async def main():
