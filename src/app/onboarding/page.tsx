@@ -81,6 +81,20 @@ export default async function OnboardingPage() {
                 </select>
               </div>
 
+              <div className="space-y-2">
+                <label htmlFor="purpose" className="text-sm font-medium text-gray-700">블로그 목적</label>
+                <select
+                  id="purpose"
+                  name="purpose"
+                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                >
+                  <option value="adsense">애드센스 수익</option>
+                  <option value="coupang">쿠팡 파트너스</option>
+                  <option value="naver_experience">네이버 체험단</option>
+                </select>
+                <p className="text-xs text-gray-400">블로그의 주 수익 모델을 선택하세요.</p>
+              </div>
+
               <button
                 type="submit"
                 className="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 transition-colors"
