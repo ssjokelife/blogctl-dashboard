@@ -1,5 +1,7 @@
 import { getDashboardData, getRecentPublished, getPublishTrend, getRevenueTrend, BLOG_LABELS } from "@/lib/data";
 import { getTodayRun } from "@/lib/daily-run";
+import { PURPOSE_LABELS, PURPOSE_COLORS } from '@/lib/purpose';
+import type { BlogPurpose } from '@/lib/purpose';
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Header } from "@/components/header";
@@ -135,6 +137,7 @@ export default async function Dashboard() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>블로그</TableHead>
+                      <TableHead>목적</TableHead>
                       <TableHead>URL</TableHead>
                       <TableHead className="text-right">총 발행</TableHead>
                       <TableHead className="text-right">오늘</TableHead>
@@ -159,6 +162,11 @@ export default async function Dashboard() {
                               <a href={`/blogs/${blog}`} className="hover:text-emerald-600">
                                 {info?.label || BLOG_LABELS[blog] || blog}
                               </a>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={PURPOSE_COLORS[(info?.purpose || 'adsense') as BlogPurpose]}>
+                                {PURPOSE_LABELS[(info?.purpose || 'adsense') as BlogPurpose]}
+                              </Badge>
                             </TableCell>
                             <TableCell>
                               <a href={blogUrl} target="_blank" rel="noopener noreferrer"
