@@ -169,14 +169,14 @@ export async function getBlogList() {
 
   const { data } = await supabase
     .from("blogs")
-    .select("id, label, url, platform, adapter");
+    .select("id, label, url, platform, adapter, purpose");
 
   return (data || []).reduce(
     (acc, b) => {
-      acc[b.id] = { label: b.label, url: b.url, platform: b.platform, adapter: b.adapter };
+      acc[b.id] = { label: b.label, url: b.url, platform: b.platform, adapter: b.adapter, purpose: b.purpose };
       return acc;
     },
-    {} as Record<string, { label: string; url: string; platform: string; adapter: string }>,
+    {} as Record<string, { label: string; url: string; platform: string; adapter: string; purpose: string }>,
   );
 }
 
