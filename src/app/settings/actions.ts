@@ -13,6 +13,7 @@ export async function addBlog(formData: FormData) {
   const label = (formData.get('label') as string)?.trim()
   const url = (formData.get('url') as string)?.trim()
   const platform = (formData.get('platform') as string) || 'tistory'
+  const purpose = (formData.get('purpose') as string) || 'adsense'
 
   if (!blogId || !label) return
 
@@ -28,6 +29,7 @@ export async function addBlog(formData: FormData) {
     url,
     platform,
     url_pattern: urlPattern,
+    purpose,
   }, { onConflict: 'id,user_id' })
 
   revalidatePath('/settings')

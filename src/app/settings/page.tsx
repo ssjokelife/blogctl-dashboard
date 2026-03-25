@@ -12,6 +12,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { addBlog, deleteBlog } from './actions'
+import { PURPOSE_LABELS, PURPOSE_COLORS } from '@/lib/purpose'
+import type { BlogPurpose } from '@/lib/purpose'
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -75,6 +77,7 @@ export default async function SettingsPage() {
                     <TableHead>이름</TableHead>
                     <TableHead>ID</TableHead>
                     <TableHead>플랫폼</TableHead>
+                    <TableHead>목적</TableHead>
                     <TableHead>URL</TableHead>
                     <TableHead className="w-20"></TableHead>
                   </TableRow>
@@ -88,6 +91,11 @@ export default async function SettingsPage() {
                       <TableCell className="text-gray-500 text-sm font-mono">{blog.id}</TableCell>
                       <TableCell>
                         <Badge variant="outline">{blog.platform}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge className={PURPOSE_COLORS[(blog.purpose || 'adsense') as BlogPurpose]}>
+                          {PURPOSE_LABELS[(blog.purpose || 'adsense') as BlogPurpose]}
+                        </Badge>
                       </TableCell>
                       <TableCell className="text-sm text-gray-500 max-w-48 truncate">
                         {blog.url || '-'}
@@ -112,7 +120,7 @@ export default async function SettingsPage() {
             {/* 블로그 추가 폼 */}
             <div className="border-t pt-6">
               <h3 className="text-sm font-medium text-gray-700 mb-4">블로그 추가</h3>
-              <form action={addBlog} className="grid grid-cols-1 md:grid-cols-5 gap-3 items-end">
+              <form action={addBlog} className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
                 <div className="space-y-1">
                   <label htmlFor="label" className="text-xs text-gray-500">이름</label>
                   <input
@@ -147,6 +155,18 @@ export default async function SettingsPage() {
                     <option value="naver">네이버</option>
                     <option value="wordpress">워드프레스</option>
                     <option value="other">기타</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label htmlFor="purpose" className="text-xs text-gray-500">목적</label>
+                  <select
+                    id="purpose"
+                    name="purpose"
+                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  >
+                    <option value="adsense">애드센스 수익</option>
+                    <option value="coupang">쿠팡 파트너스</option>
+                    <option value="naver_experience">네이버 체험단</option>
                   </select>
                 </div>
                 <div className="space-y-1">
