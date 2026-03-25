@@ -13,6 +13,7 @@ from config import (
 )
 from publisher import publish_job
 from daily_run import run_daily_workflow, resume_stalled_runs
+from prompts import get_content_strategy
 
 logging.basicConfig(
     level=logging.INFO,
@@ -54,6 +55,7 @@ async def generate_content(job_id: int):
     description = blog.get("description", "")
     categories = ", ".join(blog.get("categories", []))
     adapter = blog.get("adapter", "keyword")
+    purpose = blog.get("purpose", "adsense")
     voice = blog.get("voice") or {}
 
     # 검색 의도 감지
@@ -78,15 +80,10 @@ async def generate_content(job_id: int):
 - 최소 {voice.get('min_opinions', 2)}개 이상의 개인 의견/판단을 포함
 """
 
-    # 쿠팡 어필리에이트
-    affiliate = ""
-    if adapter == "coupang":
-        affiliate = """
-## 쿠팡 파트너스 콘텐츠 규칙
-1. 제품 리뷰/비교 형식으로 작성
-2. 제품의 장단점을 객관적으로 설명
-3. "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다" 문구를 글 마지막에 포함
-"""
+    # 목적별 전략
+    strategy = get_content_strategy(purpose)
+    purpose_instructions = strategy["system_addendum"]
+    quality_threshold = strategy["quality_threshold"]
 
     system_prompt = f'''당신은 "{persona}"입니다.
 {description}
@@ -106,7 +103,8 @@ async def generate_content(job_id: int):
 5. 독자에게 실용적인 정보 제공
 6. 마지막에 정리/요약 섹션 포함
 7. <p>, <ul>, <ol>, <strong>, <em> 태그 활용
-{voice_instructions}{affiliate}'''
+{voice_instructions}
+{purpose_instructions}'''
 
     user_prompt = f'''다음 키워드로 블로그 글을 작성해주세요.
 
@@ -192,7 +190,7 @@ async def generate_content(job_id: int):
         else: suggestions.append("마무리/요약 섹션 추가 권장")
 
         quality_score = score
-        threshold = 70 if adapter == "coupang" else 75
+        threshold = quality_threshold
         quality_passed = quality_score >= threshold
 
         if quality_passed:
