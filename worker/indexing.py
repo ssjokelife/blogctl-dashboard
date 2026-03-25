@@ -13,7 +13,10 @@ load_dotenv()
 logger = logging.getLogger("worker.indexing")
 
 TOKEN_PATH = Path(__file__).parent / ".google_token.json"
-SCOPES = ["https://www.googleapis.com/auth/indexing"]
+SCOPES = [
+    "https://www.googleapis.com/auth/indexing",
+    "https://www.googleapis.com/auth/webmasters.readonly",
+]
 
 
 def _get_credentials():

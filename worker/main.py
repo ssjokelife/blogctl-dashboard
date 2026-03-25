@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 
 from config import (
     get_supabase, get_async_supabase, WORKER_USER_ID, HEARTBEAT_INTERVAL,
-    POLL_INTERVAL, MAX_PUBLISH_ATTEMPTS,
+    POLL_INTERVAL, MAX_PUBLISH_ATTEMPTS, PUBLISH_DELAY_SECONDS, DAILY_PUBLISH_LIMIT,
 )
 from publisher import publish_job
 from daily_run import run_daily_workflow, resume_stalled_runs
@@ -297,6 +297,18 @@ async def claim_and_process(job_id: int):
         await _claim_and_process_inner(job_id)
 
 
+def _get_daily_publish_count(blog_id: str) -> int:
+    """오늘 해당 블로그에서 발행된 건수 (KST 기준)"""
+    from datetime import date, timedelta
+    today_kst = (datetime.now(timezone.utc) + timedelta(hours=9)).date().isoformat()
+    result = supabase.table("publish_jobs").select("id", count="exact").eq(
+        "blog_id", blog_id
+    ).eq("user_id", WORKER_USER_ID).eq(
+        "status", "published"
+    ).gte("published_at", f"{today_kst}T00:00:00+09:00").execute()
+    return result.count or 0
+
+
 async def _claim_and_process_inner(job_id: int):
     """발행 처리 내부 구현"""
     # 원자적 클레임: publish_requested → publishing
@@ -311,7 +323,18 @@ async def _claim_and_process_inner(job_id: int):
     # 전체 데이터 조회
     job_result = supabase.table("publish_jobs").select("*").eq("id", job_id).single().execute()
     job = job_result.data
-    logger.info(f"  Job {job_id}: 클레임 성공 — blog={job['blog_id']}, keyword={job['keyword']}")
+    blog_id = job["blog_id"]
+    logger.info(f"  Job {job_id}: 클레임 성공 — blog={blog_id}, keyword={job['keyword']}")
+
+    # 일일 발행 한도 체크
+    limit = DAILY_PUBLISH_LIMIT.get(blog_id, DAILY_PUBLISH_LIMIT["default"])
+    today_count = _get_daily_publish_count(blog_id)
+    if today_count >= limit:
+        logger.warning(f"  Job {job_id}: 일일 한도 초과 ({blog_id}: {today_count}/{limit}건) — 내일 재시도")
+        supabase.table("publish_jobs").update({
+            "status": "publish_requested",
+        }).eq("id", job_id).execute()
+        return
 
     # blogctl로 발행
     pub_result = await publish_job(job)
@@ -454,8 +477,8 @@ async def _poll_pending_jobs_inner():
         logger.info(f"폴링: {len(pub_result.data)}개 발행 job 발견")
         for i, job in enumerate(pub_result.data):
             if i > 0:
-                # Chromium 프로필 충돌 방지: 이전 브라우저 프로세스 종료 대기
-                await asyncio.sleep(3)
+                # Chromium 충돌 + 캡챠 방지 대기
+                await asyncio.sleep(PUBLISH_DELAY_SECONDS)
             await claim_and_process(job["id"])
 
 
