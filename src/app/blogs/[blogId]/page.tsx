@@ -11,6 +11,12 @@ import { KeywordSuggest } from '@/components/keyword-suggest'
 import { RenovatePanel } from '@/components/renovate-panel'
 import { PreviewButton } from '@/components/preview-button'
 import { updatePersona, addKeyword, updateKeywordStatus, deleteKeyword } from './actions'
+import { PURPOSE_LABELS, PURPOSE_COLORS } from '@/lib/purpose'
+import type { BlogPurpose } from '@/lib/purpose'
+import { AdsenseMetrics } from '@/components/purpose/adsense-metrics'
+import { CoupangMetrics } from '@/components/purpose/coupang-metrics'
+import { NaverMetrics } from '@/components/purpose/naver-metrics'
+import { getLatestMeasurement } from '@/lib/data'
 
 export default async function BlogDetailPage({
   params,
@@ -31,6 +37,8 @@ export default async function BlogDetailPage({
 
   if (!blog) redirect('/settings')
 
+  const measurement = await getLatestMeasurement()
+
   const { data: keywords } = await supabase
     .from('keywords')
     .select('*')
@@ -50,7 +58,9 @@ export default async function BlogDetailPage({
           <a href="/settings" className="text-gray-400 hover:text-gray-600 text-sm">&larr; 설정</a>
           <h2 className="text-2xl font-bold text-gray-900">{blog.label}</h2>
           <Badge variant="outline">{blog.platform}</Badge>
-          {blog.adapter === 'coupang' && <Badge className="bg-orange-100 text-orange-700">쿠팡</Badge>}
+          <Badge className={PURPOSE_COLORS[(blog.purpose || 'adsense') as BlogPurpose]}>
+            {PURPOSE_LABELS[(blog.purpose || 'adsense') as BlogPurpose]}
+          </Badge>
         </div>
 
         {/* 페르소나 설정 */}
@@ -177,6 +187,11 @@ export default async function BlogDetailPage({
             </form>
           </CardContent>
         </Card>
+
+        {/* 목적별 지표 */}
+        {blog.purpose === 'coupang' && <CoupangMetrics data={measurement?.data} />}
+        {blog.purpose === 'naver_experience' && <NaverMetrics data={measurement?.data} />}
+        {(!blog.purpose || blog.purpose === 'adsense') && <AdsenseMetrics data={measurement?.data} />}
 
         {/* 키워드 관리 */}
         <Card>
