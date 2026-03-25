@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getKeywordStrategy } from '@/lib/prompts'
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
@@ -22,6 +23,8 @@ export async function POST(request: Request) {
     .single()
 
   if (!blog) return NextResponse.json({ error: 'Blog not found' }, { status: 404 })
+
+  const strategy = getKeywordStrategy(blog.purpose || 'adsense')
 
   // 기존 키워드 가져오기 (중복 방지)
   const { data: existingKw } = await supabase
@@ -52,11 +55,7 @@ export async function POST(request: Request) {
         role: 'system',
         content: `당신은 블로그 키워드 리서치 전문가입니다. 블로그의 페르소나와 기존 콘텐츠를 분석해서 다음에 작성할 키워드를 추천합니다.
 
-추천 기준:
-1. 검색 볼륨이 있고 경쟁이 낮은 롱테일 키워드
-2. 기존 발행 글과 겹치지 않는 콘텐츠 갭
-3. 블로그 카테고리와 페르소나에 맞는 주제
-4. 검색 의도가 명확한 키워드 (how-to, 비교, 추천, 방법 등)
+${strategy.systemAddendum}
 
 JSON 배열로 응답해주세요. 각 항목: {"keyword": "...", "category": "...", "priority": "high|medium|low", "reason": "추천 이유"}`
       },
