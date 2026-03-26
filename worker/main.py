@@ -10,10 +10,64 @@ from datetime import datetime, timezone
 from config import (
     get_supabase, get_async_supabase, WORKER_USER_ID, HEARTBEAT_INTERVAL,
     POLL_INTERVAL, MAX_PUBLISH_ATTEMPTS, PUBLISH_DELAY_SECONDS, DAILY_PUBLISH_LIMIT,
+    COUPANG_PARTNERS_URL,
 )
-from publisher import publish_job
+from publisher import publish_job, check_session_valid
 from daily_run import run_daily_workflow, resume_stalled_runs
 from prompts import get_content_strategy
+from gsc_keywords import sync_gsc_keywords
+
+def _build_coupang_search_url(keyword: str) -> str:
+    """쿠팡 검색 URL 생성 — 파트너스 URL이 있으면 사용, 없으면 일반 검색 폴백"""
+    from urllib.parse import quote
+    if COUPANG_PARTNERS_URL:
+        # 파트너스 URL에 검색 키워드 파라미터 추가
+        sep = "&" if "?" in COUPANG_PARTNERS_URL else "?"
+        return f"{COUPANG_PARTNERS_URL}{sep}q={quote(keyword)}"
+    # 폴백: 일반 쿠팡 검색 (커미션 없음)
+    return f"https://www.coupang.com/np/search?component=&q={quote(keyword)}&channel=user"
+
+
+def _insert_coupang_links(html: str, keyword: str) -> str:
+    """쿠팡 purpose 블로그 HTML에 파트너스 검색 링크를 삽입
+
+    1. 본문 내 유도문구("가격 확인", "할인 중인지 확인" 등) 뒤에 인라인 링크 삽입
+    2. 글 하단에 CTA 블록 추가
+    """
+    search_url = _build_coupang_search_url(keyword)
+
+    # 키워드에서 핵심 상품명 추출 (추천/비교/TOP 등 수식어 제거)
+    product_keyword = re.sub(r'(추천|비교|순위|TOP\s*\d*|베스트|인기|가성비|리뷰)', '', keyword).strip()
+    if not product_keyword:
+        product_keyword = keyword
+
+    # (1) 유도문구 뒤에 인라인 링크 삽입
+    # "가격 확인은 아래 링크를 참고하세요" → "가격 확인은 아래 링크를 참고하세요 → [쿠팡에서 최저가 확인]"
+    cta_patterns = [
+        (r'(가격\s*확인[^<]*?)(<)', r'\1 → <a href="' + search_url + r'" target="_blank" rel="noopener noreferrer nofollow" style="color:#e53e3e;font-weight:bold">쿠팡에서 최저가 확인하기</a>\2'),
+        (r'(할인\s*중인지\s*확인[^<]*?)(<)', r'\1 → <a href="' + search_url + r'" target="_blank" rel="noopener noreferrer nofollow" style="color:#e53e3e;font-weight:bold">쿠팡에서 할인 확인하기</a>\2'),
+        (r'(아래를?\s*참고[^<]*?)(<)', r'\1 → <a href="' + search_url + r'" target="_blank" rel="noopener noreferrer nofollow" style="color:#e53e3e;font-weight:bold">쿠팡에서 확인하기</a>\2'),
+        (r'(아래에서\s*비교[^<]*?)(<)', r'\1 → <a href="' + search_url + r'" target="_blank" rel="noopener noreferrer nofollow" style="color:#e53e3e;font-weight:bold">쿠팡에서 비교하기</a>\2'),
+    ]
+
+    link_count = 0
+    for pattern, replacement in cta_patterns:
+        new_html, n = re.subn(pattern, replacement, html, count=3)
+        if n > 0:
+            html = new_html
+            link_count += n
+
+    # (2) 글 하단 CTA 블록 (항상 추가)
+    cta_block = f'''<div style="margin-top:2em;padding:1.2em;background:linear-gradient(135deg,#fff5f5,#ffe8e8);border:2px solid #e53e3e;border-radius:12px;text-align:center">
+<p style="margin:0 0 0.8em;font-size:1.1em;font-weight:bold;color:#c53030">&#x1F6D2; {product_keyword} 최저가 확인</p>
+<a href="{search_url}" target="_blank" rel="noopener noreferrer nofollow" style="display:inline-block;padding:0.8em 2em;background:#e53e3e;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;font-size:1em">쿠팡에서 최저가 보기 &rarr;</a>
+<p style="margin:0.8em 0 0;font-size:0.8em;color:#888">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다</p>
+</div>'''
+
+    html += cta_block
+
+    return html
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -97,12 +151,13 @@ async def generate_content(job_id: int):
 
 ## 작성 규칙
 1. HTML 형식으로 작성 (전체 페이지가 아닌 본문 콘텐츠만)
-2. h2, h3 태그로 구조화
+2. **최소 3개 이상의 H2 섹션** 필수, 각 H2 아래 H3로 세분화
 3. 최소 2000자 이상 (한국어 기준)
-4. 핵심 키워드를 자연스럽게 3-5회 포함
-5. 독자에게 실용적인 정보 제공
+4. 키워드의 핵심 단어를 본문에 자연스럽게 5~10회 포함
+5. **구체적 수치/팩트 최소 3개** 포함 (가격, 스펙, 날짜, 통계 등). "Tool A" 같은 가명 금지, 반드시 실제 이름 사용
 6. 마지막에 정리/요약 섹션 포함
 7. <p>, <ul>, <ol>, <strong>, <em> 태그 활용
+8. 각 항목의 장단점을 균형 있게 서술 (장점만 나열 금지)
 {voice_instructions}
 {purpose_instructions}'''
 
@@ -161,7 +216,15 @@ async def generate_content(job_id: int):
         text_content = re.sub(r'<[^>]+>', '', final_html).strip()
         char_count = len(text_content)
         h2_count = len(re.findall(r'<h2', final_html, re.I))
-        keyword_count = text_content.lower().count(keyword.lower())
+
+        # 키워드 매칭: 단어별 분리 매칭 (긴 키워드/영문 키워드 대응)
+        keyword_words = [w for w in keyword.lower().split() if len(w) > 1]
+        text_lower = text_content.lower()
+        if keyword_words:
+            word_matches = sum(1 for w in keyword_words if w in text_lower)
+            keyword_ratio = word_matches / len(keyword_words)
+        else:
+            keyword_ratio = 1.0 if keyword.lower() in text_lower else 0.0
 
         score = 0
         suggestions = []
@@ -177,11 +240,11 @@ async def generate_content(job_id: int):
             score += 5
             suggestions.append(f"H2 {h2_count}개 — 3개 이상 권장")
 
-        if keyword_count >= 3: score += 20
-        elif keyword_count >= 1: score += 10
+        if keyword_ratio >= 0.8: score += 20
+        elif keyword_ratio >= 0.5: score += 10
         else:
             score += 5
-            suggestions.append(f"키워드 '{keyword}' {keyword_count}회 — 3~5회 권장")
+            suggestions.append(f"키워드 '{keyword}' 반영률 {keyword_ratio:.0%} — 핵심 단어를 본문에 자연스럽게 포함")
 
         if len(re.findall(r'<(ul|ol)', final_html, re.I)) >= 1: score += 15
         else: suggestions.append("목록(ul/ol) 사용 권장")
@@ -225,6 +288,11 @@ async def generate_content(job_id: int):
     if blog_url and final_html.count(blog_url) < 2:
         link_block = f'<p style="margin-top:2em;padding:1em;background:#f8f9fa;border-radius:8px;font-size:0.9em"><strong>관련 글 더 보기</strong><br><a href="{blog_url}" target="_blank" rel="noopener noreferrer">{blog_url.replace("https://", "")} 블로그 홈</a></p>'
         final_html += link_block
+
+    # 쿠팡 파트너스 링크 삽입 (purpose=coupang 블로그만)
+    if purpose == "coupang":
+        final_html = _insert_coupang_links(final_html, keyword)
+        logger.info(f"  Job {job_id}: 쿠팡 파트너스 링크 삽입 완료 (keyword={keyword})")
 
     # job 업데이트
     supabase.table("publish_jobs").update({
@@ -325,6 +393,17 @@ async def _claim_and_process_inner(job_id: int):
     job = job_result.data
     blog_id = job["blog_id"]
     logger.info(f"  Job {job_id}: 클레임 성공 — blog={blog_id}, keyword={job['keyword']}")
+
+    # 세션 유효성 사전 검증 (브라우저 안 띄우고 쿠키 DB 확인)
+    session_valid, remaining_days = check_session_valid(blog_id)
+    if not session_valid:
+        logger.warning(f"  Job {job_id}: 세션 만료 ({blog_id}, 잔여 {remaining_days:.1f}일) — 발행 건너뜀")
+        supabase.table("publish_jobs").update({
+            "status": "publish_failed",
+            "publish_error": f"카카오 세션 만료 (잔여 {remaining_days:.1f}일)",
+            "publish_error_type": "session_expired",
+        }).eq("id", job_id).execute()
+        return
 
     # 일일 발행 한도 체크
     limit = DAILY_PUBLISH_LIMIT.get(blog_id, DAILY_PUBLISH_LIMIT["default"])
@@ -513,6 +592,22 @@ async def scheduled_publish():
     logger.info("=== 자동 발행 스케줄 완료 ===")
 
 
+async def scheduled_gsc_sync():
+    """GSC 검색어 → keywords 자동 동기화"""
+    logger.info("=== GSC 키워드 동기화 스케줄 시작 ===")
+    try:
+        result = sync_gsc_keywords(supabase)
+        logger.info(
+            f"GSC 동기화 결과: {result['new_keywords']}개 신규, "
+            f"{result['skipped_existing']}개 기존, {result['total_queries']}개 검색어"
+        )
+        if result["errors"]:
+            logger.warning(f"GSC 동기화 오류: {result['errors']}")
+    except Exception as e:
+        logger.error(f"GSC 키워드 동기화 실패: {e}")
+    logger.info("=== GSC 키워드 동기화 스케줄 완료 ===")
+
+
 # Chromium 프로필 충돌 방지: 발행은 한 번에 하나씩만
 publish_semaphore = asyncio.Semaphore(1)
 
@@ -627,6 +722,10 @@ async def main():
         now = datetime.now(timezone.utc)
         if now.hour == 1 and now.minute == 0 and heartbeat_counter == 0:
             await scheduled_publish()
+
+        # GSC 키워드 동기화 (매일 11:00 KST = 02:00 UTC)
+        if now.hour == 2 and now.minute == 0 and heartbeat_counter == 0:
+            await scheduled_gsc_sync()
 
     # 종료 처리
     logger.info("워커 종료 중...")

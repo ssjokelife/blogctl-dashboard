@@ -2,12 +2,66 @@
 import sys
 import json
 import logging
+import sqlite3
+import os
 from pathlib import Path
 from typing import Any
+from datetime import datetime, timezone
 
 from config import BLOGCTL_PATH
 
 logger = logging.getLogger("worker.publisher")
+
+# 티스토리 블로그 목록 (카카오 로그인 필요)
+TISTORY_BLOGS = {
+    "jokelife", "kyeyangdak", "healthnote", "moneysave",  # ssjokelife
+    "yejeolsa", "kkumpuri",                                  # newjokelife
+    "lukulu", "lifezig",                                      # god1072
+}
+
+
+def check_session_valid(blog_id: str) -> tuple[bool, float]:
+    """쿠키 DB에서 _kahai 만료 시간 확인 — (유효여부, 잔여일수) 반환"""
+    if blog_id not in TISTORY_BLOGS:
+        return True, 999.0  # 비티스토리는 항상 유효
+
+    cookie_path = Path(f"/home/user/.cache/blogctl-browser/{blog_id}/Default/Cookies")
+    if not cookie_path.exists():
+        # Cookies 파일 자체가 없으면 → 한 번도 로그인 안 한 상태
+        logger.warning(f"[SESSION] {blog_id}: Cookies DB 없음 — 최초 로그인 필요")
+        return False, 0.0
+
+    try:
+        conn = sqlite3.connect(str(cookie_path))
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT expires_utc FROM cookies "
+            "WHERE host_key LIKE '%kakao.com' AND name = '_kahai' "
+            "ORDER BY expires_utc DESC LIMIT 1"
+        )
+        row = cur.fetchone()
+        conn.close()
+
+        if not row or row[0] == 0:
+            logger.warning(f"[SESSION] {blog_id}: _kahai 쿠키 없음 — 로그인 필요")
+            return False, 0.0
+
+        # Chromium epoch (1601-01-01) → Unix timestamp
+        expires_unix = (row[0] / 1_000_000) - 11644473600
+        remaining = expires_unix - datetime.now(timezone.utc).timestamp()
+        remaining_days = remaining / 86400
+
+        if remaining_days <= 0:
+            logger.warning(f"[SESSION] {blog_id}: _kahai 만료됨 ({remaining_days:.1f}일)")
+            return False, remaining_days
+        elif remaining_days < 7:
+            logger.warning(f"[SESSION] {blog_id}: _kahai 만료 임박 ({remaining_days:.1f}일 남음)")
+
+        return True, remaining_days
+
+    except Exception as e:
+        logger.warning(f"[SESSION] {blog_id}: 쿠키 확인 실패 — {e}")
+        return True, 999.0  # 확인 불가 시 발행 시도
 
 
 def _ensure_blogctl_path():

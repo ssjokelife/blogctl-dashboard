@@ -6,12 +6,15 @@ import os
 from datetime import datetime, timezone, timedelta
 
 from config import WORKER_USER_ID, get_supabase
+from publisher import check_session_valid, TISTORY_BLOGS
+from naver_searchad import verify_keywords_search_volume, NaverSearchAdClient
 
 logger = logging.getLogger("daily_run")
 
 # 발행 건수 상한
 MAX_JOBS_PER_BLOG = 3   # 블로그당 최대 3건
 MAX_JOBS_PER_RUN = 15   # 1회 실행 최대 15건
+MIN_SEARCH_VOLUME = 100  # 검색량 100+ 미만 키워드는 발행 제외
 
 
 def safe_query(supabase, fn, retries=2):
@@ -269,7 +272,7 @@ def is_duplicate_keyword(keyword: str, published_set: set) -> bool:
 
 
 def select_top_keywords(supabase, blog_id, count) -> list:
-    """우선순위 기반 키워드 선택"""
+    """우선순위 기반 키워드 선택 (검색량 100+ 미만 제외)"""
     result = supabase.table("keywords").select("*").eq(
         "blog_id", blog_id
     ).eq("user_id", WORKER_USER_ID).eq(
@@ -277,9 +280,24 @@ def select_top_keywords(supabase, blog_id, count) -> list:
     ).limit(100).execute()
 
     keywords = result.data or []
+
+    # 검색량 100+ 미만 키워드 제외 (미검증 키워드는 통과 — 아직 검색량 데이터 없음)
+    filtered = [
+        k for k in keywords
+        if not k.get("verified") or (k.get("search_volume") or 0) >= MIN_SEARCH_VOLUME
+    ]
+
+    if not filtered and keywords:
+        # 검색량 100+ 키워드가 하나도 없으면 미검증 키워드라도 사용
+        filtered = [k for k in keywords if not k.get("verified")]
+        if not filtered:
+            logger.warning(f"  {blog_id}: 검색량 {MIN_SEARCH_VOLUME}+ 키워드 없음, 발행 건너뜀")
+            return []
+
     priority_order = {"urgent": 0, "high": 1, "medium": 2, "low": 3}
-    sorted_kw = sorted(keywords, key=lambda k: (
+    sorted_kw = sorted(filtered, key=lambda k: (
         priority_order.get(k.get("priority", "medium"), 2),
+        -(k.get("search_volume") or 0),  # 검색량 높은 순
         -(k.get("expected_clicks_4w") or 0),
     ))
     return sorted_kw[:count]
@@ -311,6 +329,140 @@ def fallback_plan(supabase, analysis) -> dict:
     return {"blogs": blogs_plan, "total_jobs": total}
 
 
+def _update_search_volumes(supabase, volume_data: dict, keywords_by_text: dict):
+    """검색량 데이터를 keywords 테이블에 업데이트"""
+    for kw_text, vol in volume_data.items():
+        kw_lower = kw_text.strip().lower()
+        for stored_text, kw_ids in keywords_by_text.items():
+            if stored_text.strip().lower() == kw_lower:
+                for kw_id in kw_ids:
+                    try:
+                        supabase.table("keywords").update({
+                            "search_volume": vol["total"],
+                            "verified": True,
+                            "verified_at": datetime.now(timezone.utc).isoformat(),
+                        }).eq("id", kw_id).execute()
+                    except Exception as e:
+                        logger.warning(f"검색량 업데이트 실패 (keyword_id={kw_id}): {e}")
+
+
+def _verify_plan_keywords(supabase, plan: dict, available_keywords: dict) -> dict:
+    """플랜의 키워드에 대해 네이버 검색량 검증 + DB 업데이트.
+    검색량 0인 키워드는 대체 키워드로 교체 시도.
+    """
+    client = NaverSearchAdClient()
+    if not client.available:
+        logger.info("네이버 검색광고 API 비활성 — 검색량 검증 건너뜀")
+        return plan
+
+    # 플랜에 포함된 모든 키워드 수집
+    all_plan_keywords = []
+    keywords_by_text: dict[str, list] = {}  # keyword_text → [keyword_id, ...]
+    for blog_id, blog_plan in plan.get("blogs", {}).items():
+        for kw in blog_plan.get("keywords", []):
+            kw_text = kw["keyword"]
+            all_plan_keywords.append(kw_text)
+            keywords_by_text.setdefault(kw_text, []).append(kw["id"])
+
+    if not all_plan_keywords:
+        return plan
+
+    # 검색량 일괄 조회
+    volume_data = client.get_search_volume(list(set(all_plan_keywords)))
+    logger.info(f"검색량 조회 완료: {len(volume_data)}개 키워드")
+
+    # DB에 검색량 업데이트
+    _update_search_volumes(supabase, volume_data, keywords_by_text)
+
+    # 검색량 0인 키워드 대체 시도
+    min_volume = 10
+    for blog_id, blog_plan in plan.get("blogs", {}).items():
+        verified_keywords = []
+        for kw in blog_plan.get("keywords", []):
+            kw_text = kw["keyword"]
+            vol = _find_plan_volume(kw_text, volume_data)
+            total = vol["total"] if vol else 0
+
+            if total >= min_volume:
+                verified_keywords.append(kw)
+                logger.info(f"✓ 검색량 확인: '{kw_text}' — 월간 {total}회")
+            else:
+                logger.warning(f"✗ 검색량 미달: '{kw_text}' — 월간 {total}회")
+                # 대체 키워드 탐색 (같은 블로그의 available 키워드 중 미선택된 것)
+                selected_ids = {k["id"] for k in verified_keywords}
+                selected_ids.update(k["id"] for k in blog_plan.get("keywords", []))
+                replacement = _find_replacement_keyword(
+                    supabase, client, blog_id, available_keywords.get(blog_id, []),
+                    selected_ids, min_volume
+                )
+                if replacement:
+                    verified_keywords.append(replacement)
+                    logger.info(f"→ 대체 키워드: '{replacement['keyword']}'")
+                else:
+                    # 대체 불가 — 그래도 포함 (검색량 검증 실패해도 발행은 진행)
+                    verified_keywords.append(kw)
+                    logger.warning(f"→ 대체 불가, 원래 키워드 유지: '{kw_text}'")
+
+        blog_plan["keywords"] = verified_keywords
+        blog_plan["recommended_count"] = len(verified_keywords)
+
+    return plan
+
+
+def _find_plan_volume(keyword: str, volume_data: dict) -> dict | None:
+    """volume_data에서 키워드 검색량 찾기 (대소문자/공백 무시)"""
+    kw_lower = keyword.strip().lower()
+    for data_kw, vol in volume_data.items():
+        if data_kw.strip().lower() == kw_lower:
+            return vol
+    return None
+
+
+def _find_replacement_keyword(
+    supabase, client: NaverSearchAdClient, blog_id: str,
+    available: list[dict], excluded_ids: set, min_volume: int
+) -> dict | None:
+    """검색량이 있는 대체 키워드 찾기"""
+    candidates = [
+        kw for kw in available
+        if kw["id"] not in excluded_ids
+    ]
+    # 우선순위 순 정렬
+    priority_order = {"urgent": 0, "high": 1, "medium": 2, "low": 3}
+    candidates.sort(key=lambda k: (
+        priority_order.get(k.get("priority", "medium"), 2),
+        -(k.get("expected_clicks_4w") or 0),
+    ))
+
+    # 최대 10개까지 검색량 확인
+    check_batch = candidates[:10]
+    if not check_batch:
+        return None
+
+    batch_keywords = [kw["keyword"] for kw in check_batch]
+    volume_data = client.get_search_volume(batch_keywords)
+
+    for kw in check_batch:
+        vol = _find_plan_volume(kw["keyword"], volume_data)
+        if vol and vol["total"] >= min_volume:
+            # DB에도 검색량 업데이트
+            try:
+                supabase.table("keywords").update({
+                    "search_volume": vol["total"],
+                    "verified": True,
+                    "verified_at": datetime.now(timezone.utc).isoformat(),
+                }).eq("id", kw["id"]).execute()
+            except Exception:
+                pass
+            return {
+                "id": kw["id"],
+                "keyword": kw["keyword"],
+                "priority": kw.get("priority", "medium"),
+            }
+
+    return None
+
+
 def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
     """GPT-4o 기반 발행 계획 생성. (plan_dict, tokens_used) 반환"""
     import openai
@@ -334,14 +486,13 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
 블로그 분석 데이터와 사용 가능한 키워드를 보고, 오늘의 발행 계획을 세워주세요.
 
 규칙:
-- **필수**: 대기 키워드가 1개 이상인 모든 블로그에 최소 1건 배정
+- **절대 규칙**: 대기 키워드가 1개 이상인 모든 블로그에 반드시 최소 1건 배정. 어떤 블로그도 빠뜨리면 안 됩니다!
 - **상한**: 블로그당 최대 3건, 전체 최대 15건을 절대 초과하지 마세요
-- 집중 블로그 (키워드 풀이 크고 수익이 좋은): 2-3개 포스트
-- 일반 블로그: 1개 포스트
-- 키워드 풀이 적은 블로그 (5개 미만): 1개
+- 먼저 모든 블로그에 1건씩 배정한 뒤, 남은 여유분을 성과 좋은 블로그에 추가 배정
 - 키워드가 0개인 블로그만 0건
 - urgent/high 우선순위 키워드를 우선 선택
 - expected_clicks_4w가 높은 키워드 우선
+- 측정 데이터나 수익이 없는 블로그도 반드시 포함 (신규/성장 중인 블로그)
 
 반드시 JSON으로 응답:
 {
@@ -383,9 +534,30 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
         for blog_id, kws in available_keywords.items():
             valid_kw_ids[blog_id] = {k["id"]: k for k in kws}
 
+        # Step 1: 키워드가 있는 모든 블로그에 최소 1건 선배정 (공평성 보장)
         blogs_plan = {}
         total = 0
+        blogs_with_keywords = [bid for bid, kws in available_keywords.items() if len(kws) > 0]
+        reserved_count = min(len(blogs_with_keywords), MAX_JOBS_PER_RUN)
+
+        for blog_id in blogs_with_keywords:
+            if total >= reserved_count:
+                break
+            top_kw = select_top_keywords(supabase, blog_id, 1)
+            if top_kw:
+                blogs_plan[blog_id] = {
+                    "recommended_count": 1,
+                    "reason": "최소 1건 보장 배정",
+                    "keywords": [{"id": k["id"], "keyword": k["keyword"], "priority": k.get("priority", "medium")} for k in top_kw],
+                }
+                total += 1
+                logger.info(f"최소 배정: {blog_id} — 1건 보장")
+
+        # Step 2: GPT 계획 기반으로 추가 배정 (최소 1건 위에 더 얹기)
         for blog_id, plan_data in parsed.get("blogs", {}).items():
+            if total >= MAX_JOBS_PER_RUN:
+                break
+
             gpt_ids = plan_data.get("keyword_ids", [])
             valid_ids = valid_kw_ids.get(blog_id, {})
 
@@ -406,36 +578,47 @@ def generate_publish_plan(supabase, analysis, ai_insights=None) -> tuple:
                 top_kw = select_top_keywords(supabase, blog_id, recommended)
                 validated_keywords = [{"id": k["id"], "keyword": k["keyword"], "priority": k.get("priority", "medium")} for k in top_kw]
 
-            # 하드 캡: 블로그당 MAX_JOBS_PER_BLOG, 전체 MAX_JOBS_PER_RUN
-            capped = min(recommended, MAX_JOBS_PER_BLOG)
-            remaining = MAX_JOBS_PER_RUN - total
-            if remaining <= 0:
-                break
-            capped = min(capped, remaining)
-            blogs_plan[blog_id] = {
-                "recommended_count": capped,
-                "reason": plan_data.get("reason", ""),
-                "keywords": validated_keywords[:capped],
-            }
-            total += len(blogs_plan[blog_id]["keywords"])
+            # 이미 최소 1건 배정된 블로그: 추가분만 반영
+            existing = blogs_plan.get(blog_id)
+            if existing:
+                existing_ids = {k["id"] for k in existing["keywords"]}
+                extra_keywords = [k for k in validated_keywords if k["id"] not in existing_ids]
+                # GPT가 2건 이상 추천한 경우에만 추가
+                if recommended > 1 and extra_keywords:
+                    capped = min(recommended, MAX_JOBS_PER_BLOG)
+                    extra_slots = capped - len(existing["keywords"])
+                    remaining = MAX_JOBS_PER_RUN - total
+                    extra_slots = min(extra_slots, remaining)
+                    if extra_slots > 0:
+                        added = extra_keywords[:extra_slots]
+                        existing["keywords"].extend(added)
+                        existing["recommended_count"] = len(existing["keywords"])
+                        existing["reason"] = plan_data.get("reason", existing["reason"])
+                        total += len(added)
+            else:
+                # 최소 배정에서 빠진 블로그 (키워드 0개였던 경우)
+                capped = min(recommended, MAX_JOBS_PER_BLOG)
+                remaining = MAX_JOBS_PER_RUN - total
+                if remaining <= 0:
+                    break
+                capped = min(capped, remaining)
+                blogs_plan[blog_id] = {
+                    "recommended_count": capped,
+                    "reason": plan_data.get("reason", ""),
+                    "keywords": validated_keywords[:capped],
+                }
+                total += len(blogs_plan[blog_id]["keywords"])
 
-        # GPT가 누락한 블로그 보충 — 키워드가 있는 모든 블로그에 최소 1건
-        for blog_id, kws in available_keywords.items():
-            if total >= MAX_JOBS_PER_RUN:
-                logger.info(f"계획 보충 중단 — 전체 상한 {MAX_JOBS_PER_RUN}건 도달")
-                break
-            if blog_id not in blogs_plan and len(kws) > 0:
-                top_kw = select_top_keywords(supabase, blog_id, 1)
-                if top_kw:
-                    blogs_plan[blog_id] = {
-                        "recommended_count": 1,
-                        "reason": "GPT 계획에서 누락 — 최소 1건 자동 배정",
-                        "keywords": [{"id": k["id"], "keyword": k["keyword"], "priority": k.get("priority", "medium")} for k in top_kw],
-                    }
-                    total += 1
-                    logger.info(f"계획 보충: {blog_id} — GPT 누락, 1건 자동 배정")
+        plan = {"blogs": blogs_plan, "total_jobs": total}
 
-        return {"blogs": blogs_plan, "total_jobs": total}, tokens_used
+        # 네이버 검색량 검증 (API 키 없으면 자동 건너뜀)
+        plan = _verify_plan_keywords(supabase, plan, available_keywords)
+        plan["total_jobs"] = sum(
+            len(bp.get("keywords", []))
+            for bp in plan.get("blogs", {}).values()
+        )
+
+        return plan, tokens_used
 
     except Exception as e:
         logger.error(f"GPT 발행 계획 생성 실패: {e}")
@@ -591,6 +774,19 @@ async def run_daily_workflow(run_id, supabase) -> None:
         analysis = collect_analysis(supabase)
         summary = analysis.get("summary", {})
         log_event(supabase, run_id, f"📊 데이터 수집 완료 — {summary.get('total_blogs', 0)}개 블로그, 키워드 {summary.get('total_pending_keywords', 0)}개 대기")
+
+        # 세션 상태 사전 점검 (티스토리 블로그만)
+        expired_blogs = []
+        for blog_id in analysis.get("blogs", {}):
+            if blog_id in TISTORY_BLOGS:
+                valid, days = check_session_valid(blog_id)
+                if not valid:
+                    expired_blogs.append(blog_id)
+                elif days < 7:
+                    log_event(supabase, run_id, f"⚠️ {blog_id} 세션 만료 임박 ({days:.0f}일 남음)", "warning")
+        if expired_blogs:
+            log_event(supabase, run_id, f"🔒 세션 만료 블로그: {', '.join(expired_blogs)} — 발행 시 건너뜀", "warning")
+            logger.warning(f"Daily Run {run_id}: 세션 만료 블로그 — {expired_blogs}")
 
         # Phase 1b: AI 사전분석
         log_event(supabase, run_id, "🧠 AI 사전분석 중 — 인사이트 도출...")
