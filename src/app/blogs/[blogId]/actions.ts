@@ -71,6 +71,9 @@ export async function updateKeywordStatus(formData: FormData) {
   const status = formData.get('status') as string
   const blogId = formData.get('blogId') as string
 
+  const allowedStatuses = ['pending', 'paused', 'rejected', 'published']
+  if (!allowedStatuses.includes(status)) return
+
   await supabase
     .from('keywords')
     .update({ status })
@@ -78,6 +81,7 @@ export async function updateKeywordStatus(formData: FormData) {
     .eq('user_id', user.id)
 
   revalidatePath(`/blogs/${blogId}`)
+  revalidatePath('/keywords')
 }
 
 export async function deleteKeyword(formData: FormData) {

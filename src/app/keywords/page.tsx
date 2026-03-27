@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { updateKeywordStatus } from "@/app/blogs/[blogId]/actions";
 
 const PLATFORM_LABELS: Record<string, string> = {
   tistory: "T",
@@ -73,15 +75,15 @@ export default async function KeywordsPage({
     : Object.keys(allStats);
 
   const pendingKeywords = pool?.keywords
-    .filter((k) => k.status !== "published")
+    .filter((k) => k.status === "pending")
     .sort((a, b) => {
       const priorityOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
       const pDiff = (priorityOrder[a.priority] || 2) - (priorityOrder[b.priority] || 2);
       if (pDiff !== 0) return pDiff;
-      const aClicks = a.prediction?.expected_clicks_4w || 0;
-      const bClicks = b.prediction?.expected_clicks_4w || 0;
-      return bClicks - aClicks;
+      return (b.search_volume || 0) - (a.search_volume || 0);
     }) || [];
+
+  const rejectedKeywords = pool?.keywords.filter((k) => k.status === "rejected") || [];
 
   const publishedKeywords = pool?.keywords.filter((k) => k.status === "published") || [];
 
@@ -142,45 +144,42 @@ export default async function KeywordsPage({
                 <TableRow>
                   <TableHead className="w-8">#</TableHead>
                   <TableHead>키워드</TableHead>
-                  <TableHead>카테고리</TableHead>
-                  <TableHead>우선순위</TableHead>
-                  <TableHead className="text-right">예상 클릭</TableHead>
                   <TableHead className="text-right">검색량</TableHead>
-                  <TableHead className="text-right">난이도</TableHead>
+                  <TableHead>우선순위</TableHead>
+                  <TableHead>검증</TableHead>
+                  <TableHead className="w-16"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {pendingKeywords.slice(0, 30).map((kw, i) => {
-                  const pred = kw.prediction;
-                  const cat = kw.category || "-";
-                  return (
-                    <TableRow key={kw.keyword}>
+                {pendingKeywords.slice(0, 50).map((kw, i) => (
+                    <TableRow key={kw.id || kw.keyword}>
                       <TableCell className="text-gray-400 tabular-nums">{i + 1}</TableCell>
                       <TableCell className="font-medium">{kw.keyword}</TableCell>
-                      <TableCell className="text-gray-500 text-sm">{cat}</TableCell>
+                      <TableCell className="text-right tabular-nums text-gray-600">
+                        {kw.search_volume ? kw.search_volume.toLocaleString() : "-"}
+                      </TableCell>
                       <TableCell><PriorityBadge priority={kw.priority} /></TableCell>
-                      <TableCell className="text-right tabular-nums">
-                        {pred?.expected_clicks_4w ? (
-                          <span className="text-emerald-600 font-medium">{pred.expected_clicks_4w}</span>
+                      <TableCell>
+                        {kw.verified ? (
+                          <Badge className="bg-green-100 text-green-700 border-green-200">검증</Badge>
                         ) : (
-                          <span className="text-gray-300">-</span>
+                          <Badge variant="outline" className="text-gray-400">미검증</Badge>
                         )}
                       </TableCell>
-                      <TableCell className="text-right tabular-nums text-gray-500">
-                        {pred?.monthly_search || "-"}
-                      </TableCell>
-                      <TableCell className="text-right tabular-nums">
-                        {pred?.difficulty ? (
-                          <span className={pred.difficulty >= 7 ? "text-red-500" : pred.difficulty >= 5 ? "text-amber-500" : "text-green-500"}>
-                            {pred.difficulty}/10
-                          </span>
-                        ) : (
-                          <span className="text-gray-300">-</span>
+                      <TableCell>
+                        {kw.id && (
+                          <form action={updateKeywordStatus}>
+                            <input type="hidden" name="keywordId" value={kw.id} />
+                            <input type="hidden" name="status" value="rejected" />
+                            <input type="hidden" name="blogId" value={selectedBlog} />
+                            <Button type="submit" variant="ghost" size="sm" className="text-red-400 hover:text-red-600 hover:bg-red-50 h-7 px-2 text-xs">
+                              제외
+                            </Button>
+                          </form>
                         )}
                       </TableCell>
                     </TableRow>
-                  );
-                })}
+                ))}
               </TableBody>
             </Table>
             {pendingKeywords.length > 30 && (
@@ -188,6 +187,30 @@ export default async function KeywordsPage({
             )}
           </CardContent>
         </Card>
+
+        {/* Rejected Keywords */}
+        {rejectedKeywords.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-gray-500">제외된 키워드 ({rejectedKeywords.length}건)</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {rejectedKeywords.map((kw) => (
+                  <form key={kw.id || kw.keyword} action={updateKeywordStatus} className="inline">
+                    <input type="hidden" name="keywordId" value={kw.id || 0} />
+                    <input type="hidden" name="status" value="pending" />
+                    <input type="hidden" name="blogId" value={selectedBlog} />
+                    <button type="submit" className="inline-flex items-center gap-1 px-2 py-1 rounded bg-gray-100 text-gray-400 text-xs hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
+                      <span className="line-through">{kw.keyword}</span>
+                      <span className="text-[10px]">복구</span>
+                    </button>
+                  </form>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Published Keywords */}
         <Card>

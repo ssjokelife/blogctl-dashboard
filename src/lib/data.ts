@@ -1,11 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 
 export interface KeywordEntry {
+  id?: number;
   keyword: string;
   priority: string;
   status: string;
   category?: string;
   published_at?: string;
+  search_volume?: number;
+  verified?: boolean;
   prediction?: {
     monthly_search: number;
     difficulty: number;
@@ -85,6 +88,7 @@ export async function getKeywordPool(blogId: string) {
   return {
     blog: blogId,
     keywords: keywords.map((k) => ({
+      id: k.id,
       keyword: k.keyword,
       priority: k.priority,
       status: k.status,
