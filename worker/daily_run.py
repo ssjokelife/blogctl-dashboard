@@ -5,7 +5,7 @@ import logging
 import os
 from datetime import datetime, timezone, timedelta
 
-from config import WORKER_USER_ID, get_supabase
+from config import WORKER_USER_ID, get_supabase, MAX_SEARCH_VOLUME, IDEAL_VOLUME_RANGE
 from publisher import check_session_valid, TISTORY_BLOGS
 from naver_searchad import verify_keywords_search_volume, NaverSearchAdClient
 
@@ -272,7 +272,7 @@ def is_duplicate_keyword(keyword: str, published_set: set) -> bool:
 
 
 def select_top_keywords(supabase, blog_id, count) -> list:
-    """우선순위 기반 키워드 선택 (검색량 100+ 미만 제외)"""
+    """우선순위 기반 키워드 선택 — 롱테일 우선, 빅키워드 제외"""
     result = supabase.table("keywords").select("*").eq(
         "blog_id", blog_id
     ).eq("user_id", WORKER_USER_ID).eq(
@@ -281,25 +281,45 @@ def select_top_keywords(supabase, blog_id, count) -> list:
 
     keywords = result.data or []
 
-    # 검색량 100+ 미만 키워드 제외 (미검증 키워드는 통과 — 아직 검색량 데이터 없음)
-    filtered = [
-        k for k in keywords
-        if not k.get("verified") or (k.get("search_volume") or 0) >= MIN_SEARCH_VOLUME
-    ]
+    # 검색량 필터링
+    filtered = []
+    for k in keywords:
+        sv = k.get("search_volume") or 0
+        verified = k.get("verified", False)
+
+        if not verified:
+            # 미검증 키워드는 통과 (아직 검색량 데이터 없음)
+            filtered.append(k)
+        elif sv < MIN_SEARCH_VOLUME:
+            continue  # 검색량 너무 낮음
+        elif sv > MAX_SEARCH_VOLUME:
+            continue  # 빅키워드 제외 (경쟁 불가)
+        else:
+            filtered.append(k)
 
     if not filtered and keywords:
-        # 검색량 100+ 키워드가 하나도 없으면 미검증 키워드라도 사용
+        # 필터링 결과 0건이면 미검증 키워드라도 사용
         filtered = [k for k in keywords if not k.get("verified")]
         if not filtered:
-            logger.warning(f"  {blog_id}: 검색량 {MIN_SEARCH_VOLUME}+ 키워드 없음, 발행 건너뜀")
+            logger.warning(f"  {blog_id}: 적합한 키워드 없음 (전부 빅키워드이거나 검색량 미달)")
             return []
 
+    # 롱테일(1K~30K) 우선 정렬
     priority_order = {"urgent": 0, "high": 1, "medium": 2, "low": 3}
-    sorted_kw = sorted(filtered, key=lambda k: (
-        priority_order.get(k.get("priority", "medium"), 2),
-        -(k.get("search_volume") or 0),  # 검색량 높은 순
-        -(k.get("expected_clicks_4w") or 0),
-    ))
+
+    def sort_key(k):
+        sv = k.get("search_volume") or 0
+        verified = k.get("verified", False)
+        # 롱테일 범위 내 → 보너스 (sort key가 낮을수록 우선)
+        in_ideal = 1 if (verified and IDEAL_VOLUME_RANGE[0] <= sv <= IDEAL_VOLUME_RANGE[1]) else 2
+        return (
+            in_ideal,
+            priority_order.get(k.get("priority", "medium"), 2),
+            -(sv if verified else 0),  # 검색량 높은 순
+            -(k.get("expected_clicks_4w") or 0),
+        )
+
+    sorted_kw = sorted(filtered, key=sort_key)
     return sorted_kw[:count]
 
 
