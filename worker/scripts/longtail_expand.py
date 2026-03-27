@@ -46,6 +46,34 @@ VOLUME_STEPS = [10000, 9000, 8000, 7000, 6000, 5000, 4000, 3000, 2000, 1000]
 MAX_NEW_PER_BLOG = 30
 
 
+import re
+
+# 지역명 패턴 (특정 장소/매장 키워드 제외)
+_LOCAL_PATTERNS = re.compile(
+    r'(장례식장|병원|의원|센터|학원|마트|매장|백화점|아울렛|호텔|리조트|펜션|모텔|식당|맛집)$'
+)
+_REGION_PREFIXES = re.compile(
+    r'^(서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주'
+    r'|강남|강북|강서|강동|송파|마포|서초|용산|종로|영등포|노원|구로|관악|동대문|성북|은평'
+    r'|수원|성남|고양|용인|안양|안산|화성|평택|시흥|파주|김포|광명|하남|이천'
+    r'|해운대|사상|사하|금정|동래|연제|수영|영도|남구|북구|동구|서구|중구'
+    r'|상암|잠실|홍대|건대|신촌|이태원|압구정|청담|삼성|역삼|선릉|논현|신사|합정)'
+)
+
+
+def _is_local_keyword(keyword: str) -> bool:
+    """특정 지역/매장 키워드인지 판별"""
+    # 지역명으로 시작하는 키워드
+    if _REGION_PREFIXES.match(keyword):
+        return True
+    # 매장/시설명으로 끝나는 키워드 (특정 브랜드+장례식장 등)
+    # 시설명 앞에 고유명사가 붙은 경우 (예: "함백산장례식장", "고려병원")
+    match = _LOCAL_PATTERNS.search(keyword)
+    if match and match.start() > 0:
+        return True
+    return False
+
+
 def is_short_keyword(keyword: str) -> bool:
     """짧은 키워드인지 판별 (공백 없는 6자 이하)"""
     return " " not in keyword and len(keyword) <= 6
@@ -82,7 +110,7 @@ def find_longtail_for_seed(
     if not related:
         return []
 
-    # 롱테일 + 중복 제거
+    # 롱테일 + 중복 제거 + 품질 필터
     all_longtails = []
     for item in related:
         kw = item["keyword"]
@@ -95,6 +123,22 @@ def find_longtail_for_seed(
 
         # 롱테일이 아니면 스킵
         if not is_longtail(kw):
+            continue
+
+        # 검색량 1000 미만 제외 (트래픽 기대치 너무 낮음)
+        if vol < 1000:
+            continue
+
+        # 검색량 3만+ 제외 (신규 블로그로 상위 노출 어려움)
+        if vol > 30000:
+            continue
+
+        # 영문 단독 키워드 제외 (CHATGPT, ONEDRIVE 등 — 공식 사이트에 밀림)
+        if kw.isascii() and " " not in kw:
+            continue
+
+        # 특정 지역/매장 키워드 제외 (장례식장 이름, 지역명+업종 등)
+        if _is_local_keyword(kw):
             continue
 
         all_longtails.append({
@@ -118,12 +162,6 @@ def find_longtail_for_seed(
         if filtered:
             logger.info(f"    → 검색량 {min_vol:,}+ 기준: {len(filtered)}개 발견")
             return filtered
-
-    # 모든 기준 미달 — 1000 미만이라도 있으면 반환
-    remaining = [c for c in candidates if c["search_volume"] >= 500]
-    if remaining:
-        logger.info(f"    → 검색량 500+ 기준 (최저): {len(remaining)}개 발견")
-        return remaining
 
     return []
 
