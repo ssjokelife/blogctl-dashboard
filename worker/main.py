@@ -104,8 +104,9 @@ async def generate_content(job_id: int):
 
     logger.info(f"  Job {job_id}: 파이프라인 시작 — keyword='{keyword}', purpose={purpose}")
 
-    # 파이프라인 실행
-    result = run_pipeline(keyword, blog, purpose)
+    # 파이프라인 실행 (동기 함수를 스레드풀에서 실행하여 이벤트루프 블로킹 방지)
+    import asyncio
+    result = await asyncio.to_thread(run_pipeline, keyword, blog, purpose)
 
     final_title = result["title"]
     final_html = result["html"]
@@ -138,13 +139,13 @@ async def generate_content(job_id: int):
     )
     # 빈 태그 제거
     final_html = re.sub(r'<(p|div|span)>\s*</\1>', '', final_html)
-    # 연도 업데이트
+    # 연도 업데이트 ("2023년" → "2026년" 형식만 치환, bare number는 모델명/가격 깨짐 방지)
     for year in range(2020, int(current_year)):
-        final_title = final_title.replace(f"{year}년", f"{current_year}년")
-        final_title = final_title.replace(f"{year}", f"{current_year}")
-        final_meta = final_meta.replace(f"{year}년", f"{current_year}년")
-        final_meta = final_meta.replace(f"{year}", f"{current_year}")
-        final_html = final_html.replace(f"{year}년", f"{current_year}년")
+        year_str = f"{year}년"
+        current_year_str = f"{current_year}년"
+        final_title = final_title.replace(year_str, current_year_str)
+        final_meta = final_meta.replace(year_str, current_year_str)
+        final_html = final_html.replace(year_str, current_year_str)
 
     # 내부 링크 추가
     blog_url = blog.get("url", "")
