@@ -82,8 +82,8 @@ def find_longtail_for_seed(
     if not related:
         return []
 
-    # 롱테일 + 중복 제거 + 경쟁도 필터
-    candidates = []
+    # 롱테일 + 중복 제거
+    all_longtails = []
     for item in related:
         kw = item["keyword"]
         vol = item["total"]
@@ -97,18 +97,20 @@ def find_longtail_for_seed(
         if not is_longtail(kw):
             continue
 
-        # 경쟁도 "높음"이면 제외 (신규 블로그로 상위 노출 불가)
-        if comp == "높음":
-            continue
-
-        candidates.append({
+        all_longtails.append({
             "keyword": kw,
             "search_volume": vol,
             "competition": comp,
         })
 
-    if not candidates:
+    if not all_longtails:
         return []
+
+    # 경쟁도 낮음/중간 우선, 없으면 높음도 포함
+    candidates = [c for c in all_longtails if c["competition"] != "높음"]
+    if not candidates:
+        logger.info(f"    → 경쟁도 낮음/중간 없음, 높음 포함하여 진행")
+        candidates = all_longtails
 
     # 검색량 기준을 단계적으로 하향하며 필터
     for min_vol in VOLUME_STEPS:
