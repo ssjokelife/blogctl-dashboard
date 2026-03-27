@@ -40,7 +40,7 @@ ENGLISH_BLOGS = {"freelancehub", "aitoolspick", "seasiaguide", "codefirst", "saa
 MIN_LONGTAIL_CHARS = 7
 
 # 검색량 기준 단계별 하향
-VOLUME_STEPS = [10000, 9000, 8000, 7000, 6000, 5000, 4000, 3000, 2000, 1000]
+VOLUME_STEPS = [10000, 9000, 8000, 7000, 6000, 5000, 4000, 3000]
 
 # 블로그당 최대 새 키워드
 MAX_NEW_PER_BLOG = 30
@@ -125,8 +125,8 @@ def find_longtail_for_seed(
         if not is_longtail(kw):
             continue
 
-        # 검색량 1000 미만 제외 (트래픽 기대치 너무 낮음)
-        if vol < 1000:
+        # 검색량 3000 미만 제외 (트래픽 기대치 너무 낮음)
+        if vol < 3000:
             continue
 
         # 검색량 3만+ 제외 (신규 블로그로 상위 노출 어려움)
