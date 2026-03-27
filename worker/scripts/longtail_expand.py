@@ -82,11 +82,12 @@ def find_longtail_for_seed(
     if not related:
         return []
 
-    # 롱테일 + 중복 제거 + 빅키워드 제외 필터
+    # 롱테일 + 중복 제거 + 경쟁도 필터
     candidates = []
     for item in related:
         kw = item["keyword"]
         vol = item["total"]
+        comp = item.get("competition", "")
 
         # 이미 있는 키워드 스킵
         if kw.strip().lower() in existing:
@@ -96,14 +97,14 @@ def find_longtail_for_seed(
         if not is_longtail(kw):
             continue
 
-        # 빅키워드 제외
-        if vol > max_volume:
+        # 경쟁도 "높음"이면 제외 (신규 블로그로 상위 노출 불가)
+        if comp == "높음":
             continue
 
         candidates.append({
             "keyword": kw,
             "search_volume": vol,
-            "competition": item.get("competition", ""),
+            "competition": comp,
         })
 
     if not candidates:
