@@ -35,3 +35,26 @@ def get_supabase() -> Client:
 
 async def get_async_supabase() -> AsyncClient:
     return await create_async_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+
+
+# 콘텐츠 생성 파이프라인 설정
+CONTENT_MAX_TOKENS = 4000          # 섹션별 GPT 응답 토큰 상한 (섹션 단위이므로 4000 유지)
+CONTENT_OUTLINE_TOKENS = 2000      # 아웃라인 생성 토큰
+CONTENT_RESEARCH_TOKENS = 1500     # 리서치 단계 토큰
+CONTENT_META_TOKENS = 1000         # 제목/태그/메타 생성 토큰
+CONTENT_MIN_CHARS = {
+    "adsense": 3000,
+    "coupang": 3000,
+    "naver_experience": 2500,
+}
+CONTENT_QUALITY_THRESHOLD = {
+    "adsense": 80,
+    "coupang": 80,
+    "naver_experience": 75,
+}
+CONTENT_MAX_RETRIES = 1            # 섹션별 재시도 (섹션 단위라 1회면 충분)
+CONTENT_PIPELINE_MAX_RETRIES = 2   # 전체 파이프라인 재시도 (아웃라인부터 다시)
+
+# 키워드 검색량 필터
+MAX_SEARCH_VOLUME = 50000          # 빅키워드 상한
+IDEAL_VOLUME_RANGE = (1000, 30000) # 롱테일 이상 범위
