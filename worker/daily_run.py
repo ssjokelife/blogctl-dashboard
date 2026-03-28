@@ -272,7 +272,9 @@ def is_duplicate_keyword(keyword: str, published_set: set) -> bool:
 
 
 def select_top_keywords(supabase, blog_id, count) -> list:
-    """우선순위 기반 키워드 선택 — 롱테일 우선, 빅키워드 제외"""
+    """우선순위 기반 키워드 선택 — 롱테일 우선, 빅키워드 제외, 유사 중복 제거"""
+    from keyword_dedup import is_duplicate_of_published, is_similar
+
     result = supabase.table("keywords").select("*").eq(
         "blog_id", blog_id
     ).eq("user_id", WORKER_USER_ID).eq(
@@ -288,21 +290,26 @@ def select_top_keywords(supabase, blog_id, count) -> list:
         verified = k.get("verified", False)
 
         if not verified:
-            # 미검증 키워드는 통과 (아직 검색량 데이터 없음)
             filtered.append(k)
         elif sv < MIN_SEARCH_VOLUME:
-            continue  # 검색량 너무 낮음
+            continue
         elif sv > MAX_SEARCH_VOLUME:
-            continue  # 빅키워드 제외 (경쟁 불가)
+            continue
         else:
             filtered.append(k)
 
     if not filtered and keywords:
-        # 필터링 결과 0건이면 미검증 키워드라도 사용
         filtered = [k for k in keywords if not k.get("verified")]
         if not filtered:
             logger.warning(f"  {blog_id}: 적합한 키워드 없음 (전부 빅키워드이거나 검색량 미달)")
             return []
+
+    # 발행 내역과 유사 중복 제거
+    published_set = get_published_keywords(supabase, blog_id)
+    before_dedup = len(filtered)
+    filtered = [k for k in filtered if not is_duplicate_of_published(k["keyword"], published_set)]
+    if before_dedup != len(filtered):
+        logger.info(f"  {blog_id}: 발행 내역 유사 중복 제거 {before_dedup} → {len(filtered)}")
 
     # 롱테일(1K~30K) 우선 정렬
     priority_order = {"urgent": 0, "high": 1, "medium": 2, "low": 3}
@@ -310,17 +317,30 @@ def select_top_keywords(supabase, blog_id, count) -> list:
     def sort_key(k):
         sv = k.get("search_volume") or 0
         verified = k.get("verified", False)
-        # 롱테일 범위 내 → 보너스 (sort key가 낮을수록 우선)
         in_ideal = 1 if (verified and IDEAL_VOLUME_RANGE[0] <= sv <= IDEAL_VOLUME_RANGE[1]) else 2
         return (
             in_ideal,
             priority_order.get(k.get("priority", "medium"), 2),
-            -(sv if verified else 0),  # 검색량 높은 순
+            -(sv if verified else 0),
             -(k.get("expected_clicks_4w") or 0),
         )
 
     sorted_kw = sorted(filtered, key=sort_key)
-    return sorted_kw[:count]
+
+    # 선택된 키워드 간 유사 중복 제거 (검색량 높은 순으로 선택, 유사한 건 건너뜀)
+    selected = []
+    for k in sorted_kw:
+        if len(selected) >= count:
+            break
+        is_dup = False
+        for s in selected:
+            if is_similar(k["keyword"], s["keyword"]):
+                is_dup = True
+                break
+        if not is_dup:
+            selected.append(k)
+
+    return selected
 
 
 def fallback_plan(supabase, analysis) -> dict:

@@ -191,8 +191,13 @@ def expand_blog(
 
     logger.info(f"  {blog_id}: 짧은 키워드 {len(short_keywords)}개 발견")
 
-    # 2. 기존 키워드 세트 (중복 방지)
+    # 2. 기존 키워드 + 발행 내역 (중복 방지)
     existing = get_existing_keywords(supabase, blog_id)
+
+    # 발행된 키워드/제목도 중복 체크 대상에 포함
+    from daily_run import get_published_keywords
+    from keyword_dedup import is_duplicate_of_published
+    published_set = get_published_keywords(supabase, blog_id)
 
     # 3. 각 시드에서 롱테일 탐색
     all_new = []
@@ -211,10 +216,13 @@ def expand_blog(
             for lt in longtails:
                 lt["seed"] = seed
                 lt["seed_id"] = k["id"]
-                # 중복 방지 — 이번 실행에서 추가된 것도 제외
-                if lt["keyword"].strip().lower() not in existing:
-                    all_new.append(lt)
-                    existing.add(lt["keyword"].strip().lower())
+                # 중복 방지 — 기존 키워드 + 발행 내역 + 이번 실행 추가분
+                if lt["keyword"].strip().lower() in existing:
+                    continue
+                if is_duplicate_of_published(lt["keyword"], published_set):
+                    continue
+                all_new.append(lt)
+                existing.add(lt["keyword"].strip().lower())
         else:
             logger.info(f"    → 적합한 롱테일 없음")
 
