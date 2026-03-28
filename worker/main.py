@@ -282,6 +282,21 @@ async def _claim_and_process_inner(job_id: int):
         }).eq("id", job_id).execute()
         return
 
+    # 이미 같은 키워드/제목으로 발행된 건이 있는지 중복 체크
+    from keyword_dedup import is_duplicate_of_published
+    from daily_run import get_published_keywords
+    published_set = get_published_keywords(supabase, blog_id)
+    title = job.get("title", "")
+    keyword = job.get("keyword", "")
+    if is_duplicate_of_published(keyword, published_set) or (title and is_duplicate_of_published(title, published_set)):
+        logger.warning(f"  Job {job_id}: 이미 발행된 유사 콘텐츠 존재 — 발행 건너뜀 (keyword={keyword})")
+        supabase.table("publish_jobs").update({
+            "status": "publish_failed",
+            "publish_error": "이미 유사한 키워드/제목으로 발행됨",
+            "publish_error_type": "duplicate",
+        }).eq("id", job_id).execute()
+        return
+
     # 일일 발행 한도 체크
     limit = DAILY_PUBLISH_LIMIT.get(blog_id, DAILY_PUBLISH_LIMIT["default"])
     today_count = _get_daily_publish_count(blog_id)
