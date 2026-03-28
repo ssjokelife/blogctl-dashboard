@@ -313,6 +313,16 @@ def generate_meta(client, keyword: str, html: str, outline: dict, blog_context: 
     """조립된 본문을 보고 최종 제목 + 태그 + 메타 디스크립션 생성."""
     text_preview = re.sub(r'<[^>]+>', '', html).strip()[:1000]
 
+    # 섹션별 핵심 내용을 태그 힌트로 추출
+    sections = outline.get("sections", [])
+    section_hints = []
+    for s in sections:
+        h2 = s.get("h2", "")
+        points = s.get("key_points", [])
+        section_hints.append(f"- {h2}: {', '.join(points[:3])}")
+    section_context = "\n".join(section_hints) if section_hints else "없음"
+    num_sections = len(sections)
+
     system = f"""블로그 글의 제목, 태그, 메타 디스크립션을 작성하세요.
 
 규칙:
@@ -321,13 +331,14 @@ def generate_meta(client, keyword: str, html: str, outline: dict, blog_context: 
 - 페르소나: {blog_context.get('persona', '블로거')}
 
 ### 태그 작성 규칙 (매우 중요)
-- 10~15개 작성
+- **각 섹션에서 최소 1개씩** 고유 태그를 뽑아 총 10~15개 작성
+- 이 글은 {num_sections}개 섹션으로 구성 — 섹션별 핵심 내용에서 태그를 추출하세요
 - **이 글에만 해당하는 고유한 롱테일 태그** 위주로 작성
-- 태그는 검색 유입 경로 — 사용자가 실제로 검색할 만한 구체적 문구
+- 태그는 검색 유입 경로 — 사용자가 실제로 검색할 만한 3~6어절 구체적 문구
 - 본문에서 다루는 **구체적 제품명, 수치, 방법론, 증상명** 등을 태그에 반영
 - 금지: "건강", "다이어트", "추천", "정보", "방법" 같은 1~2어절 범용 태그
 - 금지: 블로그 내 다른 글에서도 쓸 수 있는 범용적인 태그
-- 좋은 예: "족저근막염 스트레칭", "RTG오메가3 추천", "에어프라이어 고구마 시간"
+- 좋은 예: "족저근막염 스트레칭 방법", "RTG오메가3 효능 부작용", "에어프라이어 고구마 시간 온도"
 - 나쁜 예: "건강", "오메가3", "에어프라이어"
 
 JSON으로 응답:
@@ -340,7 +351,9 @@ JSON으로 응답:
     user = f"""키워드: {keyword}
 
 아웃라인 제목 제안: {outline.get('title_suggestion', '')}
-아웃라인 태그 제안: {json.dumps(outline.get('tags_suggestion', []), ensure_ascii=False)}
+
+섹션별 핵심 내용 (각 섹션에서 최소 1개 태그 추출):
+{section_context}
 
 본문 미리보기:
 {text_preview}"""
